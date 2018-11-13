@@ -6,7 +6,7 @@ Flight::route('/', function() {
 });	
 
 Flight::route('/hello/@name', function($name) {
-    render_view('first', ['name' => $name]);
+    echo 'hello '. $name;
 });	
 
 Flight::route('/hello/*', function() {

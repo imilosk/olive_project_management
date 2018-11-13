@@ -3,7 +3,7 @@
 class HomeController {
 
     public static function index() {
-        echo '123';
+        render_view('home', ['name' => 'kraco']);
     }
 
 }
