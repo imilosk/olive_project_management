@@ -1,7 +1,7 @@
 <?php
 
 Flight::route('/api/hello/@name', function($name) {
-    echo 'hello '.$name;
+    echo 'hello ' . $name;
 });	
 
 Flight::route('/api/hello/*', function() {
