@@ -20,4 +20,16 @@ class UserController {
         echo "true";
     }
 
+    public static function update($id) {
+        $username = $_POST['username'];
+        $rating = $_POST['rating'];
+        User::update($id, $username, $rating);
+        echo "true";
+    }
+
+    public static function delete($id) {
+        User::delete($id);
+        echo "true";
+    }
+
 }

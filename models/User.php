@@ -32,14 +32,25 @@ class User {
         $statement->execute();
     }
 
-    public static function update($id) {
+    public static function update($id, $username, $rating) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
+        $statement = $db->prepare("UPDATE {$table} SET 
+            username = :username, 
+            rating = :rating
+            WHERE id = :id");
+        $statement->bindParam(":username", $username);
+        $statement->bindParam(":rating", $rating);
+        $statement->bindParam(":id", $id);
+        $statement->execute();
     }
 
     public static function delete($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
+        $statement = $db->prepare("DELETE FROM {$table} WHERE id = :id");
+        $statement->bindParam(":id", $id);
+        $statement->execute();
     } 
 
 }

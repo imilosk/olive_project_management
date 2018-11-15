@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 15, 2018 at 09:32 PM
+-- Generation Time: Nov 15, 2018 at 11:27 PM
 -- Server version: 5.7.24-0ubuntu0.16.04.1
 -- PHP Version: 7.0.32-0ubuntu0.16.04.1
 
@@ -30,19 +30,19 @@ USE `olive`;
 
 CREATE TABLE `User` (
   `id` int(11) NOT NULL,
-  `username` varchar(30) NOT NULL
+  `username` varchar(30) NOT NULL,
+  `rating` int(11) NOT NULL DEFAULT '5'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`id`, `username`) VALUES
-(1, 'nejc100par'),
-(2, 'milton124'),
-(3, 'pastaItaliana'),
-(4, 'pumpkinhead408'),
-(6, 'stopar');
+INSERT INTO `User` (`id`, `username`, `rating`) VALUES
+(1, 'nejc100par', 4),
+(2, 'pastaItaliana', 3),
+(3, 'milton124', 5),
+(4, 'pumpkinhead408', 2);
 
 --
 -- Indexes for dumped tables
@@ -62,7 +62,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
