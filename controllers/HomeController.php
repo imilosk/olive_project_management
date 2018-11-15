@@ -1,9 +1,12 @@
 <?php 
 
+require_once __DIR__ . '/../models/User.php';
+
 class HomeController {
 
     public static function index() {
-        render_view('home');
+        $users = User::get_all();
+        render_view('home', ['users' => $users]);
     }
 
 }

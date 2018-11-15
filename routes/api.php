@@ -1,14 +1,19 @@
 <?php
 
-Flight::route('/api/hello/@name', function($name) {
-    echo 'hello ' . $name;
+// include all files in controllers/api
+require_once __DIR__ . '/../controllers/api/UserController.php';
+
+// return all users
+Flight::route('/api/users', function() {
+    UserController::index();
 });	
 
-Flight::route('/api/hello/*', function() {
-    echo 'hello all';
+// return one user identified by $id
+Flight::route('/api/user/@id', function($id) {
+    UserController::show($id);
 });	
 
-Flight::route('POST /api/post', function() {
-    $data = Flight::request()->query['name'];
-    Flight::json($data);
-});	
+// add user
+Flight::route('POST /api/user', function() {
+    UserController::store();
+});
