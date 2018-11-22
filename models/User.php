@@ -4,7 +4,7 @@ require_once __DIR__ . '/../settings/DBInit.php';
 
 class User {
 
-    const TABLE_NAME = 'User';
+    const TABLE_NAME = 'users';
 
     public static function get_all() {
         $table = self::TABLE_NAME;

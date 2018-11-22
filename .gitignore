@@ -57,3 +57,4 @@ composer.phar
 /vendor/
 
 settings/DBInit.php
+cache/*
