@@ -2,7 +2,7 @@
 ## Libraries used
 * Routes library: [Flight php](http://flightphp.com/learn/)
 * Template Engine: [Blade standalone](https://github.com/jenssegers/blade), [Documentation](https://laravel.com/docs/5.7/blade)
-* Auth: [PHP-Auth](https://github.com/delight-im/PHP-Auth#creating-a-new-instance)
+* Auth: [PHP-Auth](https://github.com/delight-im/PHP-Auth)
 
 ## Folder structure
 * cache - compiled files created by Blade template engine
