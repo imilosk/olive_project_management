@@ -4,7 +4,7 @@
 require_once __DIR__ . '/../controllers/api/UserController.php';
 
 // return all users
-Flight::route('GET /api/users', function() {
+Flight::route('GET /api/users', function() {            
     UserController::index();
 });	
 // return one user identified by $id
