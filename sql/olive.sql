@@ -24,15 +24,17 @@ USE `olive`;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `users`
---
+CREATE TABLE `organisations` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `idOrganisation` int(10) UNSIGNED NOT NULL,
+   FOREIGN KEY (`idOrganisation`) REFERENCES `organisations`(`id`),
+  `email` varchar(244) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
   `status` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
   `verified` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `resettable` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
@@ -42,13 +44,88 @@ CREATE TABLE `users` (
   `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `projects` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idOrganisation` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idOrganisation`) REFERENCES `organisations`(`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `userprojects` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idUser` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idUser`) REFERENCES `users`(`id`),
+  `idProject` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idProject`) REFERENCES `projects`(`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `tasks` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idProject` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idProject`) REFERENCES `projects`(`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `PSPS` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `tasksusersprojects` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idUser` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idUser`) REFERENCES `users`(`id`),
+  `idTask` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idTask`) REFERENCES `tasks`(`id`),
+  `idPSP` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idPSP`) REFERENCES `PSPS`(`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `phases` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `PSPtasks` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idPhase` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idPhase`) REFERENCES `phases`(`id`),
+  `idPSP` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idPSP`) REFERENCES `PSPS`(`id`),
+  `startdate` date NOT NULL,
+  `finishdate` date NOT NULL,
+  `starttime` time NOT NULL,
+  `finishtime` time NOT NULL,
+  `prekinitev` int(10) UNSIGNED NOT NULL,
+  `description` text NOT NULL,
+  `units` int(10) UNSIGNED NOT NULL,
+  `estimatedtime` int(10) UNSIGNED NOT NULL,
+  `estimatedunits` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `categories` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `errors` (
+  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `idCategory` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idCategory`) REFERENCES `categories`(`id`),
+  `phaseEntry` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`phaseEntry`) REFERENCES `phases`(`id`),
+  `phaseFinish` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`phaseFinish`) REFERENCES `phases`(`id`),
+  `idPSP` int(10) UNSIGNED NOT NULL,
+  FOREIGN KEY (`idPSP`) REFERENCES `PSPS`(`id`),
+  `finishtime` time NOT NULL,
+  `description` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(6, 'milos.kostadinovski97@gmail.com', '$2y$10$fnLI8ea/Wbg7Mg9BiGW2IuRjjNMz4uJH1BwyqkdkG8I3a6AI45E4C', 'milosko', 0, 1, 1, 0, 1542896581, 1542897735, 3),
-(7, 'mihc124@gmail.com', '$2y$10$aE64rzn4kwth8ozh19wOieCMmiM/w4CKwChNuJssD/n2r2XMFuksW', 'milton124', 0, 1, 1, 0, 1542898998, 1542899110, 1);
+INSERT INTO `users` (`id`, `idOrganisation`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
+(6, null, 'milos.kostadinovski97@gmail.com', '$2y$10$fnLI8ea/Wbg7Mg9BiGW2IuRjjNMz4uJH1BwyqkdkG8I3a6AI45E4C', 'milosko', 0, 1, 1, 0, 1542896581, 1542897735, 3),
+(7, null, 'mihc124@gmail.com', '$2y$10$aE64rzn4kwth8ozh19wOieCMmiM/w4CKwChNuJssD/n2r2XMFuksW', 'milton124', 0, 1, 1, 0, 1542898998, 1542899110, 1);
 
 -- --------------------------------------------------------
 
