@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 23, 2018 at 12:53 AM
+-- Generation Time: Nov 25, 2018 at 07:03 PM
 -- Server version: 5.7.24-0ubuntu0.16.04.1
 -- PHP Version: 7.0.32-0ubuntu0.16.04.1
 
@@ -24,17 +24,142 @@ USE `olive`;
 
 -- --------------------------------------------------------
 
-CREATE TABLE `organisations` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organisations`
+--
+
+CREATE TABLE `organisations` (
+  `id` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idOrganisation` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PSPerrors`
+--
+
+CREATE TABLE `PSPerrors` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idCategory` int(10) UNSIGNED NOT NULL,
+  `phaseEntry` int(10) UNSIGNED NOT NULL,
+  `phaseFinish` int(10) UNSIGNED NOT NULL,
+  `idPSP` int(10) UNSIGNED NOT NULL,
+  `finishtime` time NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PSPphases`
+--
+
+CREATE TABLE `PSPphases` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PSPs`
+--
+
+CREATE TABLE `PSPs` (
+  `id` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PSPtasks`
+--
+
+CREATE TABLE `PSPtasks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idPhase` int(10) UNSIGNED NOT NULL,
+  `idPSP` int(10) UNSIGNED NOT NULL,
+  `startdate` date NOT NULL,
+  `finishdate` date NOT NULL,
+  `starttime` time NOT NULL,
+  `finishtime` time NOT NULL,
+  `prekinitev` int(10) UNSIGNED NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `units` int(10) UNSIGNED NOT NULL,
+  `estimatedtime` int(10) UNSIGNED NOT NULL,
+  `estimatedunits` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+
+CREATE TABLE `tasks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idProject` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasksusersprojects`
+--
+
+CREATE TABLE `tasksusersprojects` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idUser` int(10) UNSIGNED NOT NULL,
+  `idTask` int(10) UNSIGNED NOT NULL,
+  `idPSP` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userprojects`
+--
+
+CREATE TABLE `userprojects` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idUser` int(10) UNSIGNED NOT NULL,
+  `idProject` int(10) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `idOrganisation` int(10) UNSIGNED NOT NULL,
-   FOREIGN KEY (`idOrganisation`) REFERENCES `organisations`(`id`),
-  `email` varchar(244) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `username` varchar(100) DEFAULT NULL,
+  `email` varchar(244) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
   `verified` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `resettable` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
@@ -44,88 +169,13 @@ CREATE TABLE `users` (
   `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `projects` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `idOrganisation` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idOrganisation`) REFERENCES `organisations`(`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `userprojects` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `idUser` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idUser`) REFERENCES `users`(`id`),
-  `idProject` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idProject`) REFERENCES `projects`(`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `tasks` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `idProject` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idProject`) REFERENCES `projects`(`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `PSPS` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `tasksusersprojects` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `idUser` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idUser`) REFERENCES `users`(`id`),
-  `idTask` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idTask`) REFERENCES `tasks`(`id`),
-  `idPSP` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idPSP`) REFERENCES `PSPS`(`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `phases` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `PSPtasks` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `idPhase` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idPhase`) REFERENCES `phases`(`id`),
-  `idPSP` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idPSP`) REFERENCES `PSPS`(`id`),
-  `startdate` date NOT NULL,
-  `finishdate` date NOT NULL,
-  `starttime` time NOT NULL,
-  `finishtime` time NOT NULL,
-  `prekinitev` int(10) UNSIGNED NOT NULL,
-  `description` text NOT NULL,
-  `units` int(10) UNSIGNED NOT NULL,
-  `estimatedtime` int(10) UNSIGNED NOT NULL,
-  `estimatedunits` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `categories` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `errors` (
-  `id` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `idCategory` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idCategory`) REFERENCES `categories`(`id`),
-  `phaseEntry` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`phaseEntry`) REFERENCES `phases`(`id`),
-  `phaseFinish` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`phaseFinish`) REFERENCES `phases`(`id`),
-  `idPSP` int(10) UNSIGNED NOT NULL,
-  FOREIGN KEY (`idPSP`) REFERENCES `PSPS`(`id`),
-  `finishtime` time NOT NULL,
-  `description` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `idOrganisation`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(6, null, 'milos.kostadinovski97@gmail.com', '$2y$10$fnLI8ea/Wbg7Mg9BiGW2IuRjjNMz4uJH1BwyqkdkG8I3a6AI45E4C', 'milosko', 0, 1, 1, 0, 1542896581, 1542897735, 3),
-(7, null, 'mihc124@gmail.com', '$2y$10$aE64rzn4kwth8ozh19wOieCMmiM/w4CKwChNuJssD/n2r2XMFuksW', 'milton124', 0, 1, 1, 0, 1542898998, 1542899110, 1);
+(6, 0, 'milos.kostadinovski97@gmail.com', '$2y$10$fnLI8ea/Wbg7Mg9BiGW2IuRjjNMz4uJH1BwyqkdkG8I3a6AI45E4C', 'milosko', 0, 1, 1, 0, 1542896581, 1542897735, 3),
+(7, 0, 'mihc124@gmail.com', '$2y$10$aE64rzn4kwth8ozh19wOieCMmiM/w4CKwChNuJssD/n2r2XMFuksW', 'milton124', 0, 1, 1, 0, 1542898998, 1542899110, 1);
 
 -- --------------------------------------------------------
 
@@ -211,11 +261,85 @@ INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_a
 --
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `organisations`
+--
+ALTER TABLE `organisations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idOrganisation` (`idOrganisation`);
+
+--
+-- Indexes for table `PSPerrors`
+--
+ALTER TABLE `PSPerrors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCategory` (`idCategory`),
+  ADD KEY `phaseEntry` (`phaseEntry`),
+  ADD KEY `phaseFinish` (`phaseFinish`),
+  ADD KEY `idPSP` (`idPSP`);
+
+--
+-- Indexes for table `PSPphases`
+--
+ALTER TABLE `PSPphases`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `PSPs`
+--
+ALTER TABLE `PSPs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `PSPtasks`
+--
+ALTER TABLE `PSPtasks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPhase` (`idPhase`),
+  ADD KEY `idPSP` (`idPSP`);
+
+--
+-- Indexes for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProject` (`idProject`);
+
+--
+-- Indexes for table `tasksusersprojects`
+--
+ALTER TABLE `tasksusersprojects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idTask` (`idTask`),
+  ADD KEY `idPSP` (`idPSP`);
+
+--
+-- Indexes for table `userprojects`
+--
+ALTER TABLE `userprojects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idProject` (`idProject`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `idOrganisation` (`idOrganisation`);
 
 --
 -- Indexes for table `users_confirmations`
@@ -253,6 +377,56 @@ ALTER TABLE `users_throttling`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `organisations`
+--
+ALTER TABLE `organisations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `PSPerrors`
+--
+ALTER TABLE `PSPerrors`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `PSPphases`
+--
+ALTER TABLE `PSPphases`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `PSPs`
+--
+ALTER TABLE `PSPs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `PSPtasks`
+--
+ALTER TABLE `PSPtasks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tasksusersprojects`
+--
+ALTER TABLE `tasksusersprojects`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `userprojects`
+--
+ALTER TABLE `userprojects`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
