@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../controllers/HomeController.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
+require_once __DIR__ . '/../controllers/TimeNotesController.php';
+require_once __DIR__ . '/../controllers/MistakesController.php';
 
 // Auth
 Flight::route('/register', function() {
@@ -20,4 +22,12 @@ Flight::route('/', function() {
     HomeController::index();
 });
 
+// Pages
+Flight::route('/timeNotes', function() {
+    TimeNotesController::index();
+});
+// Pages
+Flight::route('/mistakes', function() {
+    MistakesController::index();
+});
 
