@@ -22,11 +22,11 @@ Flight::route('/', function() {
     HomeController::index();
 });
 
-// Pages
+// PSP
 Flight::route('/timeNotes', function() {
     TimeNotesController::index();
 });
-// Pages
+
 Flight::route('/mistakes', function() {
     MistakesController::index();
 });
