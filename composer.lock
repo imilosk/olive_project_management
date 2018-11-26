@@ -1,10 +1,9 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "bdd7c2519fbc39b45d5d40f4f870ea5e",
     "content-hash": "4cce5e55f4112965ca702c6d97838a77",
     "packages": [
         {
@@ -46,7 +45,7 @@
                 "login",
                 "security"
             ],
-            "time": "2018-08-28 21:51:30"
+            "time": "2018-08-28T21:51:30+00:00"
         },
         {
             "name": "delight-im/base64",
@@ -87,7 +86,7 @@
                 "encoding",
                 "url"
             ],
-            "time": "2017-07-24 18:59:51"
+            "time": "2017-07-24T18:59:51+00:00"
         },
         {
             "name": "delight-im/cookie",
@@ -128,7 +127,7 @@
                 "samesite",
                 "xss"
             ],
-            "time": "2018-10-11 17:27:45"
+            "time": "2018-10-11T17:27:45+00:00"
         },
         {
             "name": "delight-im/db",
@@ -169,7 +168,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2018-08-28 18:23:01"
+            "time": "2018-08-28T18:23:01+00:00"
         },
         {
             "name": "delight-im/http",
@@ -205,7 +204,7 @@
                 "http",
                 "https"
             ],
-            "time": "2016-07-21 15:05:01"
+            "time": "2016-07-21T15:05:01+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -272,7 +271,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-07-22 12:18:28"
+            "time": "2017-07-22T12:18:28+00:00"
         },
         {
             "name": "illuminate/container",
@@ -316,7 +315,7 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2018-01-19 17:58:33"
+            "time": "2018-01-19T17:58:33+00:00"
         },
         {
             "name": "illuminate/contracts",
@@ -360,7 +359,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2018-03-20 15:34:35"
+            "time": "2018-03-20T15:34:35+00:00"
         },
         {
             "name": "illuminate/events",
@@ -405,7 +404,7 @@
             ],
             "description": "The Illuminate Events package.",
             "homepage": "https://laravel.com",
-            "time": "2017-12-14 13:29:55"
+            "time": "2017-12-14T13:29:55+00:00"
         },
         {
             "name": "illuminate/filesystem",
@@ -455,7 +454,7 @@
             ],
             "description": "The Illuminate Filesystem package.",
             "homepage": "https://laravel.com",
-            "time": "2018-02-07 00:04:00"
+            "time": "2018-02-07T00:04:00+00:00"
         },
         {
             "name": "illuminate/support",
@@ -512,7 +511,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2018-08-10 19:40:01"
+            "time": "2018-08-10T19:40:01+00:00"
         },
         {
             "name": "illuminate/view",
@@ -560,7 +559,7 @@
             ],
             "description": "The Illuminate View package.",
             "homepage": "https://laravel.com",
-            "time": "2018-10-04 14:46:49"
+            "time": "2018-10-04T14:46:49+00:00"
         },
         {
             "name": "jenssegers/blade",
@@ -608,20 +607,20 @@
                 "template",
                 "view"
             ],
-            "time": "2016-08-23 11:51:53"
+            "time": "2016-08-23T11:51:53+00:00"
         },
         {
             "name": "mikecao/flight",
-            "version": "v1.3.5",
+            "version": "v1.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikecao/flight.git",
-                "reference": "e146b8c0ddbc6384c5a66f23dea71743fc282289"
+                "reference": "7d5970f7617861c868a5c728764421d8950faaf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikecao/flight/zipball/e146b8c0ddbc6384c5a66f23dea71743fc282289",
-                "reference": "e146b8c0ddbc6384c5a66f23dea71743fc282289",
+                "url": "https://api.github.com/repos/mikecao/flight/zipball/7d5970f7617861c868a5c728764421d8950faaf0",
+                "reference": "7d5970f7617861c868a5c728764421d8950faaf0",
                 "shasum": ""
             },
             "require": {
@@ -651,20 +650,20 @@
             ],
             "description": "Flight is a fast, simple, extensible framework for PHP. Flight enables you to quickly and easily build RESTful web applications.",
             "homepage": "http://flightphp.com",
-            "time": "2017-10-20 01:46:56"
+            "time": "2018-11-23T23:05:33+00:00"
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.34.4",
+            "version": "1.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b9a444d829c9a16735aceca1b173e765745bcc0c"
+                "reference": "63da8cdf89d7a5efe43aabc794365f6e7b7b8983"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b9a444d829c9a16735aceca1b173e765745bcc0c",
-                "reference": "b9a444d829c9a16735aceca1b173e765745bcc0c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/63da8cdf89d7a5efe43aabc794365f6e7b7b8983",
+                "reference": "63da8cdf89d7a5efe43aabc794365f6e7b7b8983",
                 "shasum": ""
             },
             "require": {
@@ -709,7 +708,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-11-13 08:26:10"
+            "time": "2018-11-22T18:23:02+00:00"
         },
         {
             "name": "psr/container",
@@ -758,20 +757,20 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14 16:28:37"
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/log",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +804,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2018-11-20T15:27:04+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -853,7 +852,7 @@
                 "psr-16",
                 "simple-cache"
             ],
-            "time": "2017-10-23 01:57:42"
+            "time": "2017-10-23T01:57:42+00:00"
         },
         {
             "name": "symfony/debug",
@@ -909,7 +908,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-31 09:06:03"
+            "time": "2018-10-31T09:06:03+00:00"
         },
         {
             "name": "symfony/finder",
@@ -958,7 +957,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-03 08:46:40"
+            "time": "2018-10-03T08:46:40+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1017,7 +1016,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-09-21 13:07:52"
+            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "symfony/translation",
@@ -1085,7 +1084,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-02 16:33:53"
+            "time": "2018-10-02T16:33:53+00:00"
         }
     ],
     "packages-dev": [],

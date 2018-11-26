@@ -7,7 +7,7 @@
   <h4>New mistake:</h4>
   <div class="form-group">
       <label class="control-label">Time for resolve:</label>
-      <input placeholder="Time" name="time_plan" class="form-control" />
+      <input type="time" placeholder="Time" name="time_plan" class="form-control" />
   </div>
   <select class="custom-select">
     <option selected>Faza najdbe</option>
