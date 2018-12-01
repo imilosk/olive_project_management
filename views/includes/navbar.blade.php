@@ -25,11 +25,23 @@
       			<li class="nav-item border border-left-0 px-2">
         			<a class="nav-link" href="/Mistakes">Board</a>
       			</li>
-      			<li class="nav-item">
-        			<a class="nav-link" href="/logout">Logout</a>
-      			</li>
-   			 </ul>
+			</ul>
   		</div>
+
+
+		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/logout">Logout</a>
+				</li>
+				<li class="nav-item border border-left-0 px-2">
+				{{ @$auth->getUsername() }}
+				</li>
+				<li class="nav-item border border-left-0 px-2">
+				{{ @$auth->getIdOrganisation() }}
+				</li>
+			</ul>
+		</div>
 	</nav>
 @else
 	<a href="/register">Register</a>

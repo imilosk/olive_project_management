@@ -8,7 +8,7 @@ class AuthController {
     public static function register_user() {
         global $auth;
         try {
-            $userId = $auth->register($_POST['email'], $_POST['password'], $_POST['username']);
+            $userId = $auth->register($_POST['email'], $_POST['password'], $_POST['username'], $_POST['organisation']);
 
             $msg = 'We have signed up a new user with the ID ' . $userId;
             // Flight::redirect('/');
@@ -20,7 +20,7 @@ class AuthController {
             $msg = 'Invalid password';
         }
         catch (\Delight\Auth\UserAlreadyExistsException $e) {
-            $msg = 'User already exists';
+            $msg = 'User already exists'.$e;
         }
         catch (\Delight\Auth\TooManyRequestsException $e) {
             $msg = 'Too many requests';
