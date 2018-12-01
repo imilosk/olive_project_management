@@ -3,7 +3,6 @@
 @endphp
 
 
-@if ($auth->isLoggedIn())
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   		<a class="navbar-brand" href="#"><span class="lead">Olive</span><br><span>Project Managment</span></a>
   
@@ -15,7 +14,8 @@
     		<ul class="navbar-nav mr-auto">
       			<li class="nav-item active">
         			<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      			</li>
+				  </li>
+				  @if ($auth->isLoggedIn())
       			<li class="nav-item border border-right-0 px-2">
         			<a class="nav-link" href="/timeNotes">Time</a>
       			</li>
@@ -35,11 +35,9 @@
 					<a class="nav-link" href="/logout">Logout</a>
 				</li>
 				<li class="nav-item border border-left-0 px-2">
-				{{ @$auth->getUsername() }}
+				{{ @$auth->getEmail() }}
 				</li>
-				<li class="nav-item border border-left-0 px-2">
-				{{ @$auth->getIdOrganisation() }}
-				</li>
+				
 			</ul>
 		</div>
 	</nav>

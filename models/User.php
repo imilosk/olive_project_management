@@ -9,7 +9,7 @@ class User {
     public static function get_all() {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT username FROM {$table}");
+        $statement = $db->prepare("SELECT email FROM {$table}");
         $statement->execute();
         return $statement->fetchAll();
     }

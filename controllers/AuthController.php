@@ -8,8 +8,7 @@ class AuthController {
     public static function register_user() {
         global $auth;
         try {
-            $userId = $auth->register($_POST['email'], $_POST['password'], $_POST['username'], $_POST['organisation']);
-
+            $userId = $auth->register($_POST['email'], $_POST['password']);
             $msg = 'We have signed up a new user with the ID ' . $userId;
             // Flight::redirect('/');
         }                   
