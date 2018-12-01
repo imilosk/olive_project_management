@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Gostitelj: 127.0.0.1
--- Čas nastanka: 01. dec 2018 ob 01.30
--- Različica strežnika: 10.1.32-MariaDB
--- Različica PHP: 7.2.5
+-- Host: localhost
+-- Generation Time: Dec 01, 2018 at 05:39 PM
+-- Server version: 5.7.24-0ubuntu0.16.04.1
+-- PHP Version: 7.0.32-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,15 +17,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Zbirka podatkov: `olive`
+-- Database: `olive`
 --
-CREATE DATABASE IF NOT EXISTS `olive` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE DATABASE IF NOT EXISTS `olive` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `olive`;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `categories`
+-- Table structure for table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
@@ -39,7 +37,7 @@ CREATE TABLE `categories` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `errors`
+-- Table structure for table `errors`
 --
 
 DROP TABLE IF EXISTS `errors`;
@@ -56,7 +54,7 @@ CREATE TABLE `errors` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `organisations`
+-- Table structure for table `organisations`
 --
 
 DROP TABLE IF EXISTS `organisations`;
@@ -66,7 +64,7 @@ CREATE TABLE `organisations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Odloži podatke za tabelo `organisations`
+-- Dumping data for table `organisations`
 --
 
 INSERT INTO `organisations` (`id`, `name`) VALUES
@@ -76,7 +74,7 @@ INSERT INTO `organisations` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `phases`
+-- Table structure for table `phases`
 --
 
 DROP TABLE IF EXISTS `phases`;
@@ -88,7 +86,7 @@ CREATE TABLE `phases` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `projects`
+-- Table structure for table `projects`
 --
 
 DROP TABLE IF EXISTS `projects`;
@@ -100,7 +98,7 @@ CREATE TABLE `projects` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `psps`
+-- Table structure for table `psps`
 --
 
 DROP TABLE IF EXISTS `psps`;
@@ -111,7 +109,7 @@ CREATE TABLE `psps` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `psptasks`
+-- Table structure for table `psptasks`
 --
 
 DROP TABLE IF EXISTS `psptasks`;
@@ -133,7 +131,7 @@ CREATE TABLE `psptasks` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `tasks`
+-- Table structure for table `tasks`
 --
 
 DROP TABLE IF EXISTS `tasks`;
@@ -145,7 +143,7 @@ CREATE TABLE `tasks` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `tasksusersprojects`
+-- Table structure for table `tasksusersprojects`
 --
 
 DROP TABLE IF EXISTS `tasksusersprojects`;
@@ -159,7 +157,7 @@ CREATE TABLE `tasksusersprojects` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `userprojects`
+-- Table structure for table `userprojects`
 --
 
 DROP TABLE IF EXISTS `userprojects`;
@@ -172,53 +170,45 @@ CREATE TABLE `userprojects` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `users`
+-- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `idOrganisation` int(10) UNSIGNED NOT NULL DEFAULT '1',
-  `email` varchar(244) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `username` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
   `verified` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `resettable` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
   `roles_mask` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `registered` int(10) UNSIGNED NOT NULL,
   `last_login` int(10) UNSIGNED DEFAULT NULL,
-  `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Odloži podatke za tabelo `users`
---
-
-INSERT INTO `users` (`id`, `idOrganisation`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(12, 1, 'nej@ko.si', '$2y$10$NpE75Qus6pPeMwEdwM6d0OzstLCC3vVSFEpnDu7oB/vPAxsQvUCDK', 'nejko', 0, 1, 1, 0, 1543618157, 1543624125, 2),
-(13, 2, 'test@test.si', '$2y$10$8O3vXuRu9YO5aTANqTV5JeQNpOja8KynYJNne0QWMeZRxp/4oTvP.', 'Test', 0, 1, 1, 0, 1543620322, NULL, 0);
+  `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0',
+  `idOrganisation` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `users_confirmations`
+-- Table structure for table `users_confirmations`
 --
 
 DROP TABLE IF EXISTS `users_confirmations`;
 CREATE TABLE `users_confirmations` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `email` varchar(249) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
   `selector` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `users_remembered`
+-- Table structure for table `users_remembered`
 --
 
 DROP TABLE IF EXISTS `users_remembered`;
@@ -228,12 +218,12 @@ CREATE TABLE `users_remembered` (
   `selector` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `users_resets`
+-- Table structure for table `users_resets`
 --
 
 DROP TABLE IF EXISTS `users_resets`;
@@ -243,12 +233,12 @@ CREATE TABLE `users_resets` (
   `selector` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabele `users_throttling`
+-- Table structure for table `users_throttling`
 --
 
 DROP TABLE IF EXISTS `users_throttling`;
@@ -257,28 +247,28 @@ CREATE TABLE `users_throttling` (
   `tokens` float UNSIGNED NOT NULL,
   `replenished_at` int(10) UNSIGNED NOT NULL,
   `expires_at` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Odloži podatke za tabelo `users_throttling`
+-- Dumping data for table `users_throttling`
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
-('PZ3qJtO_NLbJfRIP-8b4ME4WA3xxc6n9nbCORSffyQ0', 3.05012, 1543620322, 1544052322),
-('QduM75nGblH2CDKFyk0QeukPOwuEVDAUFE54ITnHM38', 68.8116, 1543624125, 1544164125);
+('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 68.03, 1543678588, 1544218588),
+('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 3.00241, 1543678584, 1544110584);
 
 --
--- Indeksi zavrženih tabel
+-- Indexes for dumped tables
 --
 
 --
--- Indeksi tabele `categories`
+-- Indexes for table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksi tabele `errors`
+-- Indexes for table `errors`
 --
 ALTER TABLE `errors`
   ADD PRIMARY KEY (`id`),
@@ -288,32 +278,32 @@ ALTER TABLE `errors`
   ADD KEY `idPSP` (`idPSP`);
 
 --
--- Indeksi tabele `organisations`
+-- Indexes for table `organisations`
 --
 ALTER TABLE `organisations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksi tabele `phases`
+-- Indexes for table `phases`
 --
 ALTER TABLE `phases`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksi tabele `projects`
+-- Indexes for table `projects`
 --
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idOrganisation` (`idOrganisation`);
 
 --
--- Indeksi tabele `psps`
+-- Indexes for table `psps`
 --
 ALTER TABLE `psps`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksi tabele `psptasks`
+-- Indexes for table `psptasks`
 --
 ALTER TABLE `psptasks`
   ADD PRIMARY KEY (`id`),
@@ -321,14 +311,14 @@ ALTER TABLE `psptasks`
   ADD KEY `idPSP` (`idPSP`);
 
 --
--- Indeksi tabele `tasks`
+-- Indexes for table `tasks`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idProject` (`idProject`);
 
 --
--- Indeksi tabele `tasksusersprojects`
+-- Indexes for table `tasksusersprojects`
 --
 ALTER TABLE `tasksusersprojects`
   ADD PRIMARY KEY (`id`),
@@ -337,7 +327,7 @@ ALTER TABLE `tasksusersprojects`
   ADD KEY `idPSP` (`idPSP`);
 
 --
--- Indeksi tabele `userprojects`
+-- Indexes for table `userprojects`
 --
 ALTER TABLE `userprojects`
   ADD PRIMARY KEY (`id`),
@@ -345,23 +335,23 @@ ALTER TABLE `userprojects`
   ADD KEY `idUser` (`idUser`);
 
 --
--- Indeksi tabele `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idOrganisation` (`idOrganisation`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indeksi tabele `users_confirmations`
+-- Indexes for table `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `selector` (`selector`),
-  ADD KEY `email_expires` (`email`(191),`expires`),
+  ADD KEY `email_expires` (`email`,`expires`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeksi tabele `users_remembered`
+-- Indexes for table `users_remembered`
 --
 ALTER TABLE `users_remembered`
   ADD PRIMARY KEY (`id`),
@@ -369,7 +359,7 @@ ALTER TABLE `users_remembered`
   ADD KEY `user` (`user`);
 
 --
--- Indeksi tabele `users_resets`
+-- Indexes for table `users_resets`
 --
 ALTER TABLE `users_resets`
   ADD PRIMARY KEY (`id`),
@@ -377,106 +367,92 @@ ALTER TABLE `users_resets`
   ADD KEY `user_expires` (`user`,`expires`);
 
 --
--- Indeksi tabele `users_throttling`
+-- Indexes for table `users_throttling`
 --
 ALTER TABLE `users_throttling`
   ADD PRIMARY KEY (`bucket`),
   ADD KEY `expires_at` (`expires_at`);
 
 --
--- AUTO_INCREMENT zavrženih tabel
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT tabele `categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `errors`
+-- AUTO_INCREMENT for table `errors`
 --
 ALTER TABLE `errors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `organisations`
+-- AUTO_INCREMENT for table `organisations`
 --
 ALTER TABLE `organisations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
--- AUTO_INCREMENT tabele `phases`
+-- AUTO_INCREMENT for table `phases`
 --
 ALTER TABLE `phases`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `projects`
+-- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `psps`
+-- AUTO_INCREMENT for table `psps`
 --
 ALTER TABLE `psps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `psptasks`
+-- AUTO_INCREMENT for table `psptasks`
 --
 ALTER TABLE `psptasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `tasks`
+-- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `tasksusersprojects`
+-- AUTO_INCREMENT for table `tasksusersprojects`
 --
 ALTER TABLE `tasksusersprojects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `userprojects`
+-- AUTO_INCREMENT for table `userprojects`
 --
 ALTER TABLE `userprojects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT tabele `users_confirmations`
+-- AUTO_INCREMENT for table `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `users_remembered`
+-- AUTO_INCREMENT for table `users_remembered`
 --
 ALTER TABLE `users_remembered`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT tabele `users_resets`
+-- AUTO_INCREMENT for table `users_resets`
 --
 ALTER TABLE `users_resets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
 
 --
--- Omejitve tabel za povzetek stanja
---
-
---
--- Omejitve za tabelo `errors`
+-- Constraints for table `errors`
 --
 ALTER TABLE `errors`
   ADD CONSTRAINT `errors_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `categories` (`id`),
@@ -485,45 +461,23 @@ ALTER TABLE `errors`
   ADD CONSTRAINT `errors_ibfk_4` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
 
 --
--- Omejitve za tabelo `projects`
+-- Constraints for table `projects`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
 
 --
--- Omejitve za tabelo `psptasks`
+-- Constraints for table `psptasks`
 --
 ALTER TABLE `psptasks`
   ADD CONSTRAINT `psptasks_ibfk_1` FOREIGN KEY (`idPhase`) REFERENCES `phases` (`id`),
   ADD CONSTRAINT `psptasks_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
 
 --
--- Omejitve za tabelo `tasks`
+-- Constraints for table `tasks`
 --
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`);
-
---
--- Omejitve za tabelo `tasksusersprojects`
---
-ALTER TABLE `tasksusersprojects`
-  ADD CONSTRAINT `tasksusersprojects_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `tasksusersprojects_ibfk_2` FOREIGN KEY (`idTask`) REFERENCES `tasks` (`id`),
-  ADD CONSTRAINT `tasksusersprojects_ibfk_3` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
-
---
--- Omejitve za tabelo `userprojects`
---
-ALTER TABLE `userprojects`
-  ADD CONSTRAINT `userprojects_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`),
-  ADD CONSTRAINT `userprojects_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
-
---
--- Omejitve za tabelo `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
