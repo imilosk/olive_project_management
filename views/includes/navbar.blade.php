@@ -25,6 +25,9 @@
       			<li class="nav-item border border-left-0 px-2">
         			<a class="nav-link" href="/Mistakes">Board</a>
       			</li>
+				<li class="nav-item border border-left-0 px-2">
+        			<a class="nav-link" href="/projects">All projects on OLIVE</a>
+      			</li>
 			</ul>
   		</div>
 
