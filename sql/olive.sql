@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2018 at 05:39 PM
+-- Generation Time: Dec 02, 2018 at 12:05 PM
 -- Server version: 5.7.24-0ubuntu0.16.04.1
 -- PHP Version: 7.0.32-0ubuntu0.16.04.1
 
@@ -28,7 +28,6 @@ USE `olive`;
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -40,7 +39,6 @@ CREATE TABLE `categories` (
 -- Table structure for table `errors`
 --
 
-DROP TABLE IF EXISTS `errors`;
 CREATE TABLE `errors` (
   `id` int(10) UNSIGNED NOT NULL,
   `idCategory` int(10) UNSIGNED NOT NULL,
@@ -57,7 +55,6 @@ CREATE TABLE `errors` (
 -- Table structure for table `organisations`
 --
 
-DROP TABLE IF EXISTS `organisations`;
 CREATE TABLE `organisations` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -77,7 +74,6 @@ INSERT INTO `organisations` (`id`, `name`) VALUES
 -- Table structure for table `phases`
 --
 
-DROP TABLE IF EXISTS `phases`;
 CREATE TABLE `phases` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -89,7 +85,6 @@ CREATE TABLE `phases` (
 -- Table structure for table `projects`
 --
 
-DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `idOrganisation` int(10) UNSIGNED NOT NULL
@@ -101,7 +96,6 @@ CREATE TABLE `projects` (
 -- Table structure for table `psps`
 --
 
-DROP TABLE IF EXISTS `psps`;
 CREATE TABLE `psps` (
   `id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -112,7 +106,6 @@ CREATE TABLE `psps` (
 -- Table structure for table `psptasks`
 --
 
-DROP TABLE IF EXISTS `psptasks`;
 CREATE TABLE `psptasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `idPhase` int(10) UNSIGNED NOT NULL,
@@ -134,7 +127,6 @@ CREATE TABLE `psptasks` (
 -- Table structure for table `tasks`
 --
 
-DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `idProject` int(10) UNSIGNED NOT NULL
@@ -146,7 +138,6 @@ CREATE TABLE `tasks` (
 -- Table structure for table `tasksusersprojects`
 --
 
-DROP TABLE IF EXISTS `tasksusersprojects`;
 CREATE TABLE `tasksusersprojects` (
   `id` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL,
@@ -160,7 +151,6 @@ CREATE TABLE `tasksusersprojects` (
 -- Table structure for table `userprojects`
 --
 
-DROP TABLE IF EXISTS `userprojects`;
 CREATE TABLE `userprojects` (
   `id` int(10) UNSIGNED NOT NULL,
   `idProject` int(10) UNSIGNED NOT NULL,
@@ -173,7 +163,6 @@ CREATE TABLE `userprojects` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -189,13 +178,19 @@ CREATE TABLE `users` (
   `idOrganisation` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`, `idOrganisation`) VALUES
+(3, 'milos.kostadinovski97@gmail.com', '$2y$10$oRIyHRU70d0uEwt8opVUkuDqPDNPO989oQdvZFlSZDy40xu7EAWuS', NULL, 0, 1, 1, 0, 1543679404, 1543744913, 2, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users_confirmations`
 --
 
-DROP TABLE IF EXISTS `users_confirmations`;
 CREATE TABLE `users_confirmations` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
@@ -211,7 +206,6 @@ CREATE TABLE `users_confirmations` (
 -- Table structure for table `users_remembered`
 --
 
-DROP TABLE IF EXISTS `users_remembered`;
 CREATE TABLE `users_remembered` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user` int(10) UNSIGNED NOT NULL,
@@ -226,7 +220,6 @@ CREATE TABLE `users_remembered` (
 -- Table structure for table `users_resets`
 --
 
-DROP TABLE IF EXISTS `users_resets`;
 CREATE TABLE `users_resets` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user` int(10) UNSIGNED NOT NULL,
@@ -241,7 +234,6 @@ CREATE TABLE `users_resets` (
 -- Table structure for table `users_throttling`
 --
 
-DROP TABLE IF EXISTS `users_throttling`;
 CREATE TABLE `users_throttling` (
   `bucket` varchar(44) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `tokens` float UNSIGNED NOT NULL,
@@ -254,8 +246,9 @@ CREATE TABLE `users_throttling` (
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
-('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 68.03, 1543678588, 1544218588),
-('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 3.00241, 1543678584, 1544110584);
+('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 74, 1543744913, 1544284913),
+('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 2.02139, 1543679404, 1544111404),
+('xk_0P82Dv6TydZzq0_8BpF69U3ixeWrdOfuZeR91xLE', 73.0075, 1543683909, 1544223909);
 
 --
 -- Indexes for dumped tables
@@ -431,7 +424,7 @@ ALTER TABLE `userprojects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users_confirmations`
 --
