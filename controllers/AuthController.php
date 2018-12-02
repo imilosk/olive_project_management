@@ -61,6 +61,12 @@ class AuthController {
     }
 
     public static function register() {
+        global $auth;
+        // redirect to root if user is logged in
+        if ($auth->isLoggedIn()){
+            Flight::redirect("/");
+            return;
+        }
         if(isset($_POST['submitButton'])){
             $msg = self::register_user();
             render_view("auth/register", ['msg' => $msg]);
@@ -70,6 +76,12 @@ class AuthController {
     }
 
     public static function login() {
+        global $auth;
+        // redurect to root if user is logged in
+        if ($auth->isLoggedIn()){
+            Flight::redirect("/");
+            return;
+        }
         if(isset($_POST['submitButton'])){
             $msg = self::login_user();
             render_view("auth/login", ['msg' => $msg]);
