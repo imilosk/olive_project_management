@@ -19,7 +19,7 @@ class AuthController {
             $msg = 'Invalid password';
         }
         catch (\Delight\Auth\UserAlreadyExistsException $e) {
-            $msg = 'User already exists'.$e;
+            $msg = 'User already exists';
         }
         catch (\Delight\Auth\TooManyRequestsException $e) {
             $msg = 'Too many requests';

@@ -3,7 +3,7 @@
 @section('content')
 
     @if($msg) 
-        {{ $msg }}
+        <p id="message"> {{ $msg }}<p>
     @endif
 
 

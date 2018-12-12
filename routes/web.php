@@ -40,4 +40,6 @@ Flight::route('/mistakes', function() {
     Flight::route('/create_project', function() {
     ProjectController::create();
     });
-
+    Flight::route('/projects/delete/@id', function($id) {
+    ProjectController::delete($id);
+    });

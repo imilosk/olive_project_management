@@ -9,7 +9,7 @@ class Project {
     public static function get_all() {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT name,description,idOrganisation FROM {$table}");
+        $statement = $db->prepare("SELECT id,name,description,idOrganisation FROM {$table}");
         $statement->execute();
         return $statement->fetchAll();
     }
