@@ -2,26 +2,30 @@
 
 @section('content')
 
+<header class="header-wrapper">
+    @include('includes/navbar')
+</header>
+
 <h1>Mistakes</h1>
 
-  <h4>New mistake:</h4>
-  <div class="form-group">
-      <label class="control-label">Time for resolve:</label>
-      <input type="time" placeholder="Time" name="time_plan" class="form-control" />
-  </div>
-  <select class="custom-select">
+<h4>New mistake:</h4>
+<div class="form-group">
+    <label class="control-label">Time for resolve:</label>
+    <input type="time" placeholder="Time" name="time_plan" class="form-control" />
+</div>
+<select class="custom-select">
     <option selected>Faza najdbe</option>
     <option value="1">One</option>
     <option value="2">Two</option>
     <option value="3">Three</option>
-  </select>
+</select>
 
-  <select class="custom-select">
+<select class="custom-select">
     <option selected>Faza odprave</option>
     <option value="1">One</option>
     <option value="2">Two</option>
     <option value="3">Three</option>
-  </select>
+</select>
 
 
 

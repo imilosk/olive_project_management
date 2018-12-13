@@ -21,13 +21,6 @@
 	<div id="form">
 		<div id="form-upper-text">Register</div>
 	    <form action="/register" method="post">
-	    	<div class="input-container">
-				<div class="input-container_img" >
-					<img src="img/username_input_icon_64.png" width="20" height="20">
-				</div>
-				<input type="text" name="username" placeholder="Username" required>
-			</div>
-
 			<div class="input-container">
 				<div class="input-container_img" >
 					<img src="img/email_input_icon_64.png" width="20" height="20">

@@ -1,6 +1,11 @@
 @extends('../body')
 
 @section('content')
+
+<header class="header-wrapper">
+    @include('includes/navbar')
+</header>
+
 <a href="/create_project">New project</a>
 
 

@@ -1,6 +1,11 @@
 @extends('../body')
 
 @section('content')
+
+<header class="header-wrapper">
+    @include('includes/navbar')
+</header>
+
     <h1>Time note<h1/>
 
     <select class="custom-select">
