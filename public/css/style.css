@@ -168,6 +168,9 @@ select:-webkit-autofill:focus {
     font-size: 1rem;
 }
 
+.dropdown-item{
+	padding: .25rem 1.5rem;
+}
 
 @media (max-width: 1200px) {
 	#logo {
