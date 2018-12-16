@@ -68,10 +68,10 @@ select:-webkit-autofill:focus {
 .input-container input {
 	border: none;
 	border-radius: 100px;
-    text-align: center;
     width: 300px;
     font-size: 18px;
     outline: none;
+	padding-left: 40px;
 }
 
 .input-container_img{
@@ -131,4 +131,131 @@ select:-webkit-autofill:focus {
 	content: "";
 	clear: both;
 	display: table;
+}
+
+/* popups */
+
+#message {
+	width: 300px;
+	margin: 0 auto;
+	text-align: left;
+	color: red;
+	font-size: 15px;
+}
+
+/* navbar */
+
+.navbar-nav {
+	margin: 0 auto;
+}
+
+.nav-item:hover {
+	color: black;
+	background-color: #e8e8e8;
+}
+
+.navbar-light .navbar-nav .nav-link:focus,.navbar-light .navbar-nav .nav-link:hover {
+    color: black;
+	background-color: #e8e8e8;
+}
+
+.nav-link {
+	font-size: 20px;
+	font-weight: 900;
+}
+
+.navbar-toggler {
+    font-size: 1rem;
+}
+
+
+@media (max-width: 1200px) {
+	#logo {
+		height: 60px;
+	}
+	
+	.nav-link {
+		font-size: 18px;
+	}
+	
+	.userimg {
+		height: 40px;
+		width: 40px;
+	}
+}
+
+@media (max-width: 400px) {
+	#logo {
+		height: 40px;
+	}
+	
+	.nav-link {
+		font-size: 16px;
+	}
+	
+	.userimg {
+		height: 30px;
+		width: 30px;
+	}
+}
+
+.item1 {
+	border: 1px solid rgba(0,0,0,.125);
+	border-right: none;
+}
+
+.item2 {
+	border: 1px solid rgba(0,0,0,.125);
+	border-right: none;
+}
+
+.item3 {
+	border: 1px solid rgba(0,0,0,.125);
+	border-right: none;
+}
+
+.item4 {
+	border: 1px solid rgba(0,0,0,.125);
+	border-right: none;
+}
+
+.item5 {
+	border: 1px solid rgba(0,0,0,.125);
+}
+
+@media (max-width: 992px) {
+	.item1 {
+		border: 1px solid rgba(0,0,0,.125);
+		border-bottom: none;
+		text-align: center;
+	}
+
+	.item2 {
+		border: 1px solid rgba(0,0,0,.125);
+		border-bottom: none;
+		text-align: center;
+	}
+
+	.item3 {
+		border: 1px solid rgba(0,0,0,.125);
+		border-bottom: none;
+		text-align: center;
+	}
+
+	.item4 {
+		border: 1px solid rgba(0,0,0,.125);
+		border-bottom: none;
+		text-align: center;
+	}
+
+	.item5 {
+		border: 1px solid rgba(0,0,0,.125);
+		text-align: center;
+	}
+	
+	.item6 {
+		text-align: center;
+		width: 220px;
+		margin: 0 auto;
+	}
 }

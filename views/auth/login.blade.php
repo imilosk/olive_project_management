@@ -1,10 +1,8 @@
 @extends('../body')
 
-@section('content')
+<title>Login</title>
 
-    @if($msg) 
-        <p id="message"> {{ $msg }}<p>
-    @endif
+@section('content')
 
 <header>
     <div id="header-container" class="clearfix">
@@ -27,6 +25,10 @@
                 </div>
                 <input type="text" name="email" placeholder="Email" required>
             </div>
+			
+			@if($msg && (explode(" ", $msg)[1] == 'email' || explode(" ", $msg)[1] == 'not')) 
+				<div id="message"> {{ $msg }} </div>
+			@endif
 
             <div class="input-container">
                 <div class="input-container_img" >
@@ -34,6 +36,10 @@
                 </div>
                 <input type="password" name="password" placeholder="Password" required>
             </div>
+			
+			@if($msg && explode(" ", $msg)[1] == 'password') 
+				<div id="message"> {{ $msg }} </div>	
+			@endif
     
             <input type="submit" name="submitButton" value="Login">
             <div id="already-accout">Don't have an account? <a href="/register">Sign up</a></div>

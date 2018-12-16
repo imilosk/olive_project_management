@@ -9,3 +9,5 @@ function render_view($view, $args = []) {
     global $views, $cache, $blade;
     echo $blade->make($view, $args);
 }
+
+?>

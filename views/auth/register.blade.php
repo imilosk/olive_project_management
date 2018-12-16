@@ -1,10 +1,8 @@
 @extends('../body')
 
-@section('content')
+<title>Register</title>
 
-@if($msg) 
-    <p id="message"> {{ $msg }}<p>
-@endif
+@section('content')
 
 <header>
 	<div id="header-container" class="clearfix">
@@ -27,13 +25,21 @@
 				</div>
 				<input type="text" name="email" placeholder="Email" required>
 			</div>
+			
+			@if($msg && (explode(" ", $msg)[1] == 'email' ||explode(" ", $msg)[1] == 'already')) 
+				<div id="message"> {{ $msg }} </div>
+			@endif
 
 			<div class="input-container">
 				<div class="input-container_img" >
 					<img src="img/password_input_icon_64.png" width="20" height="20">
 				</div>
-				<input type="password" name="password" placeholder="Password" required>
+				<input type="password" name="password" placeholder="Password" required>			
 			</div>
+			
+			@if($msg && explode(" ", $msg)[1] == 'password') 
+				<div id="message"> {{ $msg }} </div>	
+			@endif	
 	        
 	        <div class="input-container">
 				<div class="input-container_img">

@@ -4,45 +4,43 @@
 
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  		<a class="navbar-brand" href="/"><span class="lead">Olive</span><br><span>Project Managment</span></a>
-  
+  		<a class="navbar-brand px-3" href="/">
+		<img src="/img/logo.png" height="90" class="d-inline-block align-top" alt="logo" id="logo">
+		</a>
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
     	</button>
 
     	<div class="collapse navbar-collapse" id="navbarSupportedContent">
     		<ul class="navbar-nav mr-auto">
-      			<li class="nav-item active">
+      			<li class="nav-item px-2 item1">
         			<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-				  </li>
-				  @if ($auth->isLoggedIn())
-      			<li class="nav-item border border-right-0 px-2">
+				</li>
+				@if ($auth->isLoggedIn())
+      			<li class="nav-item px-2 item2">
         			<a class="nav-link" href="/timeNotes">Time</a>
       			</li>
-     			<li class="nav-item border px-2">
+     			<li class="nav-item px-2 item3">
         			<a class="nav-link" href="/Mistakes">List</a>
       			</li>
-      			<li class="nav-item border border-left-0 px-2">
+      			<li class="nav-item px-2 item4">
         			<a class="nav-link" href="/Mistakes">Board</a>
       			</li>
-				<li class="nav-item border border-left-0 px-2">
-        			<a class="nav-link" href="/projects">All projects on OLIVE</a>
+				<li class="nav-item px-2 item5">
+        			<a class="nav-link" href="/projects">Projects</a>
       			</li>
 			</ul>
+			<div class="my-2 my-lg-0 px-5 item6">
+			<div class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle mr-sm-2" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<img src="/img/user.png" width="60" height="60" class="d-inline-block userimg">
+			</a>
+		    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<a class="dropdown-item" href="/logout">Logout</a>
+			</div>
+			</div>
+			</div>
   		</div>
-
-
-		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="/logout">Logout</a>
-				</li>
-				<li class="nav-item border border-left-0 px-2">
-				{{ @$auth->getEmail() }}
-				</li>
-				
-			</ul>
-		</div>
 	</nav>
 @else
 	<a href="/register">Register</a>
