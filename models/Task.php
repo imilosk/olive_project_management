@@ -4,12 +4,13 @@ require_once __DIR__ . '/../settings/DBInit.php';
 
 class Organisation {
 
-    const TABLE_NAME = 'organisations';
+    const TABLE_NAME = 'tasks';
 
-    public static function get_all() {
+    public static function get_all($idProject) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM {$table}");
+        $statement = $db->prepare("SELECT * FROM {$table} WHERE idProject = :idProject");
+        $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }
@@ -23,24 +24,14 @@ class Organisation {
         return $statement->fetch();
     }
 
-    public static function getProjects($idOrganisation) {
+    public static function insert($name, $description, $idProject) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT id,name,description FROM {$table} 
-                                    INNER JOIN projects as p ON p.idOrganisations={$table}.id
-                                    WHERE id = :idOrganisation");
-        $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
-        $statement->execute();
-        return $statement->fetch();
-    }
-
-    public static function insert($name, $description) {
-        $table = self::TABLE_NAME;
-        $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO {$table} (name,description)
-            VALUES (:name,:description)");
+        $statement = $db->prepare("INSERT INTO {$table} (name,description,idProject)
+            VALUES (:name,:description,:idProject)");
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
+        $statement->bindParam(":idProject", $idProject);
         $statement->execute();
     }
 

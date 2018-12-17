@@ -38,8 +38,8 @@ class Project {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare("UPDATE {$table} SET 
-            username = :name, 
-            rating = :description
+            name = :name, 
+            description = :description
             WHERE id = :id");
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
