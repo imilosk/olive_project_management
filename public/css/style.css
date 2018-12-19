@@ -71,7 +71,7 @@ select:-webkit-autofill:focus {
     width: 300px;
     font-size: 18px;
     outline: none;
-	padding-left: 40px;
+	text-align: center;
 }
 
 .input-container_img{
@@ -104,17 +104,6 @@ select:-webkit-autofill:focus {
 	width: 80px;
 	margin-top: 20px;
 }
-/*
-#registration-form input[type=submit] {
-    border-radius: 100px;
-    color: #4ab19d;
-    font-weight: 600;
-    background-color: #ffffff;
-    border: 2px solid #4AB19D;
-    cursor: pointer;
-    width: 80px;
-    margin-top: 20px;
-}*/
 
 #form input[type=submit]:hover {
 	color: #4AB19D;
@@ -136,11 +125,10 @@ select:-webkit-autofill:focus {
 /* popups */
 
 #message {
-	width: 300px;
-	margin: 0 auto;
-	text-align: left;
-	color: red;
-	font-size: 15px;
+	text-align: center;
+	color: #ef3d59;
+	font-weight: 600;
+	font-size: 14px;
 }
 
 /* navbar */
