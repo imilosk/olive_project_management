@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2018 at 05:19 PM
+-- Generation Time: Dec 22, 2018 at 06:22 PM
 -- Server version: 5.7.24-0ubuntu0.16.04.1
 -- PHP Version: 7.0.32-0ubuntu0.16.04.1
 
@@ -21,33 +21,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `olive` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `olive`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `errors`
---
-
-CREATE TABLE `errors` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `idCategory` int(10) UNSIGNED NOT NULL,
-  `phaseEntry` int(10) UNSIGNED NOT NULL,
-  `phaseFinish` int(10) UNSIGNED NOT NULL,
-  `idPSP` int(10) UNSIGNED NOT NULL,
-  `finishtime` time NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -89,17 +62,6 @@ INSERT INTO `organisationsusers` (`idOrganisation`, `idUser`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phases`
---
-
-CREATE TABLE `phases` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `projects`
 --
 
@@ -133,17 +95,83 @@ CREATE TABLE `psps` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `psptasks`
+-- Table structure for table `psp_errors`
 --
 
-CREATE TABLE `psptasks` (
+CREATE TABLE `psp_errors` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idCategory` int(10) UNSIGNED NOT NULL,
+  `phaseEntry` int(10) UNSIGNED NOT NULL,
+  `phaseFinish` int(10) UNSIGNED NOT NULL,
+  `idPSP` int(10) UNSIGNED NOT NULL,
+  `resolve_time` int(11) NOT NULL,
+  `num_fixed_errors` int(11) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `psp_errors_categories`
+--
+
+CREATE TABLE `psp_errors_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `psp_errors_categories`
+--
+
+INSERT INTO `psp_errors_categories` (`id`, `name`) VALUES
+(2, 'Documentation'),
+(3, 'Syntax'),
+(4, 'Construction'),
+(5, 'Arranging'),
+(6, 'Interface'),
+(7, 'Checking'),
+(8, 'Data'),
+(9, 'Functions'),
+(10, 'System'),
+(11, 'Environment');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `psp_phases`
+--
+
+CREATE TABLE `psp_phases` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `psp_phases`
+--
+
+INSERT INTO `psp_phases` (`id`, `name`) VALUES
+(1, 'Planing'),
+(2, 'Infrastructuring'),
+(3, 'Coding'),
+(4, 'Code review'),
+(5, 'Compiling'),
+(6, 'Testing'),
+(7, 'Analysis');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `psp_tasks`
+--
+
+CREATE TABLE `psp_tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `idPhase` int(10) UNSIGNED NOT NULL,
   `idPSP` int(10) UNSIGNED NOT NULL,
-  `startdate` date NOT NULL,
-  `finishdate` date NOT NULL,
-  `starttime` time NOT NULL,
-  `finishtime` time NOT NULL,
+  `start` timestamp NULL DEFAULT NULL,
+  `end` timestamp NULL DEFAULT NULL,
   `pause` int(10) UNSIGNED NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `units` int(10) UNSIGNED NOT NULL,
@@ -159,6 +187,7 @@ CREATE TABLE `psptasks` (
 
 CREATE TABLE `tasks` (
   `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `idProject` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -169,7 +198,6 @@ CREATE TABLE `tasks` (
 --
 
 CREATE TABLE `tasksusersprojects` (
-  `id` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL,
   `idTask` int(10) UNSIGNED NOT NULL,
   `idPSP` int(10) UNSIGNED NOT NULL
@@ -182,7 +210,6 @@ CREATE TABLE `tasksusersprojects` (
 --
 
 CREATE TABLE `userprojects` (
-  `id` int(10) UNSIGNED NOT NULL,
   `idProject` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -322,22 +349,6 @@ INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_a
 --
 
 --
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `errors`
---
-ALTER TABLE `errors`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategory` (`idCategory`),
-  ADD KEY `phaseEntry` (`phaseEntry`),
-  ADD KEY `phaseFinish` (`phaseFinish`),
-  ADD KEY `idPSP` (`idPSP`);
-
---
 -- Indexes for table `organisations`
 --
 ALTER TABLE `organisations`
@@ -350,12 +361,6 @@ ALTER TABLE `organisationsusers`
   ADD PRIMARY KEY (`idOrganisation`,`idUser`),
   ADD KEY `idOrganisation` (`idOrganisation`),
   ADD KEY `idUser` (`idUser`);
-
---
--- Indexes for table `phases`
---
-ALTER TABLE `phases`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `projects`
@@ -371,9 +376,31 @@ ALTER TABLE `psps`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `psptasks`
+-- Indexes for table `psp_errors`
 --
-ALTER TABLE `psptasks`
+ALTER TABLE `psp_errors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCategory` (`idCategory`),
+  ADD KEY `phaseEntry` (`phaseEntry`),
+  ADD KEY `phaseFinish` (`phaseFinish`),
+  ADD KEY `idPSP` (`idPSP`);
+
+--
+-- Indexes for table `psp_errors_categories`
+--
+ALTER TABLE `psp_errors_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `psp_phases`
+--
+ALTER TABLE `psp_phases`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `psp_tasks`
+--
+ALTER TABLE `psp_tasks`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idPhase` (`idPhase`),
   ADD KEY `idPSP` (`idPSP`);
@@ -389,7 +416,7 @@ ALTER TABLE `tasks`
 -- Indexes for table `tasksusersprojects`
 --
 ALTER TABLE `tasksusersprojects`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idUser`,`idTask`),
   ADD KEY `idUser` (`idUser`),
   ADD KEY `idTask` (`idTask`),
   ADD KEY `idPSP` (`idPSP`);
@@ -398,7 +425,7 @@ ALTER TABLE `tasksusersprojects`
 -- Indexes for table `userprojects`
 --
 ALTER TABLE `userprojects`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idProject`,`idUser`),
   ADD KEY `idProject` (`idProject`),
   ADD KEY `idUser` (`idUser`);
 
@@ -446,25 +473,10 @@ ALTER TABLE `users_throttling`
 --
 
 --
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `errors`
---
-ALTER TABLE `errors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `organisations`
 --
 ALTER TABLE `organisations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `phases`
---
-ALTER TABLE `phases`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `projects`
 --
@@ -476,24 +488,29 @@ ALTER TABLE `projects`
 ALTER TABLE `psps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `psptasks`
+-- AUTO_INCREMENT for table `psp_errors`
 --
-ALTER TABLE `psptasks`
+ALTER TABLE `psp_errors`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `psp_errors_categories`
+--
+ALTER TABLE `psp_errors_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `psp_phases`
+--
+ALTER TABLE `psp_phases`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `psp_tasks`
+--
+ALTER TABLE `psp_tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tasksusersprojects`
---
-ALTER TABLE `tasksusersprojects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `userprojects`
---
-ALTER TABLE `userprojects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
@@ -520,26 +537,26 @@ ALTER TABLE `users_resets`
 --
 
 --
--- Constraints for table `errors`
---
-ALTER TABLE `errors`
-  ADD CONSTRAINT `errors_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `errors_ibfk_2` FOREIGN KEY (`phaseEntry`) REFERENCES `phases` (`id`),
-  ADD CONSTRAINT `errors_ibfk_3` FOREIGN KEY (`phaseFinish`) REFERENCES `phases` (`id`),
-  ADD CONSTRAINT `errors_ibfk_4` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
-
---
 -- Constraints for table `projects`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
 
 --
--- Constraints for table `psptasks`
+-- Constraints for table `psp_errors`
 --
-ALTER TABLE `psptasks`
-  ADD CONSTRAINT `psptasks_ibfk_1` FOREIGN KEY (`idPhase`) REFERENCES `phases` (`id`),
-  ADD CONSTRAINT `psptasks_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
+ALTER TABLE `psp_errors`
+  ADD CONSTRAINT `psp_errors_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `psp_errors_categories` (`id`),
+  ADD CONSTRAINT `psp_errors_ibfk_2` FOREIGN KEY (`phaseEntry`) REFERENCES `psp_phases` (`id`),
+  ADD CONSTRAINT `psp_errors_ibfk_3` FOREIGN KEY (`phaseFinish`) REFERENCES `psp_phases` (`id`),
+  ADD CONSTRAINT `psp_errors_ibfk_4` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
+
+--
+-- Constraints for table `psp_tasks`
+--
+ALTER TABLE `psp_tasks`
+  ADD CONSTRAINT `psp_tasks_ibfk_1` FOREIGN KEY (`idPhase`) REFERENCES `psp_phases` (`id`),
+  ADD CONSTRAINT `psp_tasks_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
 
 --
 -- Constraints for table `tasks`
