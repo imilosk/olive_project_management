@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 02, 2018 at 12:05 PM
+-- Generation Time: Dec 22, 2018 at 05:19 PM
 -- Server version: 5.7.24-0ubuntu0.16.04.1
 -- PHP Version: 7.0.32-0ubuntu0.16.04.1
 
@@ -71,6 +71,24 @@ INSERT INTO `organisations` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `organisationsusers`
+--
+
+CREATE TABLE `organisationsusers` (
+  `idOrganisation` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `organisationsusers`
+--
+
+INSERT INTO `organisationsusers` (`idOrganisation`, `idUser`) VALUES
+(1, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `phases`
 --
 
@@ -87,8 +105,20 @@ CREATE TABLE `phases` (
 
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
-  `idOrganisation` int(10) UNSIGNED NOT NULL
+  `idOrganisation` int(10) UNSIGNED NOT NULL,
+  `name` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `idOrganisation`, `name`, `description`) VALUES
+(2, 2, 'Test ', 'Testi projekt za katalon'),
+(3, 2, 'Test proje', 'Testi projekt za katalon'),
+(11, 2, 'Katalon', 'Katalon test project'),
+(12, 1, 'Faks', '#naredimoFaks');
 
 -- --------------------------------------------------------
 
@@ -114,7 +144,7 @@ CREATE TABLE `psptasks` (
   `finishdate` date NOT NULL,
   `starttime` time NOT NULL,
   `finishtime` time NOT NULL,
-  `prekinitev` int(10) UNSIGNED NOT NULL,
+  `pause` int(10) UNSIGNED NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `units` int(10) UNSIGNED NOT NULL,
   `estimatedtime` int(10) UNSIGNED NOT NULL,
@@ -174,16 +204,20 @@ CREATE TABLE `users` (
   `roles_mask` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `registered` int(10) UNSIGNED NOT NULL,
   `last_login` int(10) UNSIGNED DEFAULT NULL,
-  `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0',
-  `idOrganisation` int(11) UNSIGNED DEFAULT NULL
+  `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`, `idOrganisation`) VALUES
-(3, 'milos.kostadinovski97@gmail.com', '$2y$10$oRIyHRU70d0uEwt8opVUkuDqPDNPO989oQdvZFlSZDy40xu7EAWuS', NULL, 0, 1, 1, 0, 1543679404, 1543744913, 2, NULL);
+INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
+(3, 'milos.kostadinovski97@gmail.com', '$2y$10$oRIyHRU70d0uEwt8opVUkuDqPDNPO989oQdvZFlSZDy40xu7EAWuS', NULL, 0, 1, 1, 0, 1543679404, 1545488407, 35),
+(4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1545488484, 2),
+(5, 'test123@test.si', '$2y$10$ZBCUaBGTWBHgWgdQ7TliKuKIHDaPoBFlKyinlbet4jySwAZhh60p.', NULL, 0, 1, 1, 0, 1544635196, 1544737639, 13),
+(6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1545240414, 3),
+(7, 'test1@gmail.com', '$2y$10$ntUMiByO3v5DfPjoi4Mp/.waIUr6Y.TENZJsBo6FZYZ2cflNn5rZa', NULL, 0, 1, 1, 0, 1544988424, 1545489068, 0),
+(8, 'mihad@hotmail.com', '$2y$10$EIIvIJJ3/9diBRO4Gy2lWOiHFwbEvktIRHJnR2i6TKlpjZHuAHJT.', NULL, 0, 1, 1, 0, 1545062843, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -246,9 +280,42 @@ CREATE TABLE `users_throttling` (
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
-('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 74, 1543744913, 1544284913),
+('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 74, 1545488407, 1546028407),
 ('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 2.02139, 1543679404, 1544111404),
-('xk_0P82Dv6TydZzq0_8BpF69U3ixeWrdOfuZeR91xLE', 73.0075, 1543683909, 1544223909);
+('xk_0P82Dv6TydZzq0_8BpF69U3ixeWrdOfuZeR91xLE', 73.0075, 1543683909, 1544223909),
+('5jq3AH19WlBEFyhOTeZP3LbPx95GoJ8-QpAxJJAnewc', 47.7874, 1544461287, 1545001287),
+('8qFHGFuZ3H-aldgtg_mtXLJh2TTLVhlhEqc9szv_DFk', 74, 1543856106, 1544396106),
+('PCzUm55pdDAqjYYPz3AWLJQy262Q_Zl3_9OzjJhKV-k', 73.0325, 1545062843, 1545602843),
+('H-PH7FwamVmjbxFIcmyz63Zrujg5w5IZJp7pRhu7BCU', 4, 1545062843, 1545494843),
+('U4ys0_piHGd3En-OGMiOHkshHfXdTXgRbUNa9SmOcpo', 19, 1544460553, 1544496553),
+('c-8J-zRTdUcdxOAHX8kD0KM0OyMiY0MsM4AZ1aWV0Fc', 499, 1544460553, 1544633353),
+('E4nXgfd4s6uCMiY9fxcTLwx3PkHNZHH4oItpeIeam8E', 49.6426, 1544659108, 1545199108),
+('fDGrEUHZRKBb7Xv3j43hJzwTzegVp4R50yUYFpJgdAc', 4, 1544635196, 1545067196),
+('LTkql0BA6xIuv434gtEVdWYWFsHTnbW_bFN4b9cLTmI', 19, 1544639024, 1544675024),
+('Cf9XPA77LXVS-DfQ8TYjEoWWwxG219B7rL7ul0WMmZQ', 499, 1544639024, 1544811824),
+('x_J_qARWB7QH7q644fxvjAAVTIBYMnZ6L9Yco7kXNXg', 73.0011, 1544658727, 1545198727),
+('ja8JzGOqkv1n-3_kUthi6hRecvNLqk7sICMsqawZH5Q', 72.0159, 1544721919, 1545261919),
+('_wceZPqA5nuvuxNFUegEfQ-USS36nJ-g6BGHIZDhx2o', 19, 1544721863, 1544757863),
+('9FxMHNh5YM-utgy9ra4k7t1rGaCpNEq2jkiWb5ckgX4', 499, 1544721863, 1544894663),
+('msgb-JKS0Kn_cbX_c7fmikSPUmNfI79WaR8XzoP913A', 4, 1544721905, 1545153905),
+('yPBSh_s7OQ2IzQcBrlnNbFkQy_6b0vQ76z6oLZHzAQo', 74, 1544727686, 1545267686),
+('FpCk6bEgI6YAfTXmVlgQM0ftgGFjoRLg-buFNzE2QtE', 19, 1544727686, 1544763686),
+('2Cdy6f0wyijhl6dkDptQ9gP0B4dii7K9cvUnn-geZmE', 499, 1545251523, 1545424323),
+('3n7tZpNvVRLOeU6wTrPEnfsZ4WJQd11PqhDToPSeJDw', 74, 1545488484, 1546028484),
+('PDwrMpioKyjD84TwbMWjnhWqrRSKeaWQcubdWZHNcSk', 74, 1544978594, 1545518594),
+('c1ZvIgBSw4l9zOmg_Rl2ONcnIA7eR6lpoegHLZ2ffIQ', 73.0017, 1544981272, 1545521272),
+('LUK3m6pAIqX5wHErCd5Innv6RufQ2PpZcYSdZWt7XdA', 19, 1544981266, 1545017266),
+('TQ6sUjnchAJ74LYpPfEJUbZPVF22hB4yqOfZIEnYuBk', 73.7733, 1544988522, 1545528522),
+('_tAWvxsp3y2qlWL3tl-OND8XHXbARBCOv4U1BxU-zQM', 73.0039, 1544985819, 1545525819),
+('vS_jRi8hTqkIhlTVUB-2z4mIkuZZNxUF2q1HdRmIrtU', 73.0017, 1544988430, 1545528430),
+('G6V0SDiefWJICYARrqPdcUzyNX_ubnCAxIEHCbleISc', 4, 1544988424, 1545420424),
+('qGclkiH2l4Xi5_UsN_fXKykAH7-WwR3OYPCoRZL9V8M', 74, 1545044306, 1545584306),
+('FX3R0l0ctxw5eeiSOqUZw9WckzxgeMA3IrzMwcSKOiE', 74, 1545059655, 1545599655),
+('yrabbxw-AdRgf1J-CvUt6X1EAHPAC5NIUorW0Bhfd1w', 74, 1545063920, 1545603920),
+('0DR9r5_hDItG4xBwVj-OfzL7hGzbxs3xlybeM5bOC6M', 74, 1545145436, 1545685436),
+('krIuNjuUXivvIFOhbuGSdeYcFBkRz67fgGeNRsWiSWU', 73.0053, 1545251523, 1545791523),
+('WBBLpWL2b4dV6wwGbSURhKBQdaec6oh_KX-RLmKveMo', 19, 1545251523, 1545287523),
+('G5iEhyvdf1jvRVzbHB6w7DoPKi63Jd7Q-PuTfgKW5LM', 73.0047, 1545489067, 1546029067);
 
 --
 -- Indexes for dumped tables
@@ -275,6 +342,14 @@ ALTER TABLE `errors`
 --
 ALTER TABLE `organisations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `organisationsusers`
+--
+ALTER TABLE `organisationsusers`
+  ADD PRIMARY KEY (`idOrganisation`,`idUser`),
+  ADD KEY `idOrganisation` (`idOrganisation`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indexes for table `phases`
@@ -394,7 +469,7 @@ ALTER TABLE `phases`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `psps`
 --
@@ -424,7 +499,7 @@ ALTER TABLE `userprojects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `users_confirmations`
 --
