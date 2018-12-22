@@ -58,3 +58,4 @@ composer.phar
 
 settings/DBInit.php
 cache/*
+!cache/.empty_file
