@@ -4,6 +4,7 @@ require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/TimeNotesController.php';
 require_once __DIR__ . '/../controllers/MistakesController.php';
 require_once __DIR__ . '/../controllers/ProjectController.php';
+require_once __DIR__ . '/../controllers/OrganisationController.php';
 
 // Auth
 Flight::route('/register', function() {
@@ -42,4 +43,9 @@ Flight::route('/mistakes', function() {
     });
     Flight::route('/projects/delete/@id', function($id) {
     ProjectController::delete($id);
+    });
+
+    // Organisation
+    Flight::route('/organisations', function() {
+    OrganisationController::index();
     });
