@@ -33,11 +33,11 @@ Flight::route('GET /api/users', function() {
 });
 
 // add a user to an organisation
-Flight::route('POST /api/userorganisation', function() {
-	UserController::index();
+Flight::route('POST /api/organisationsusers', function() {
+	OrganisationUserController::store();
 });
 
 // remove a user to an organisation
-Flight::route('DELETE /api/userorganisation', function() {
-	UserController::index();
+Flight::route('DELETE /api/organisationsusers/@idOrganisation/@idUser', function($idOrganisation, $idUser) {
+	OrganisationUserController::delete($idOrganisation, $idUser);
 });
