@@ -13,16 +13,16 @@
     			<a class="nav-link" id="item1" onclick="item1()" href="/">Home <span class="sr-only">(current)</span></a>
 			</li>
   			<li class="nav-item px-2 item2">
-    			<a class="nav-link" id="item2" onclick="item2()" href="/timeNotes">Time</a>
+    			<a class="nav-link" id="item2" onclick="item2()" href="">Time</a>
   			</li>
  			<li class="nav-item px-2 item3">
-    			<a class="nav-link" id="item3" onclick="item3()" href="/Mistakes">List</a>
+    			<a class="nav-link" id="item3" onclick="item3()" href="">List</a>
   			</li>
   			<li class="nav-item px-2 item4">
-    			<a class="nav-link" id="item4" onclick="item4()" href="/Mistakes">Board</a>
+    			<a class="nav-link" id="item4" onclick="item4()" href="">Board</a>
   			</li>
 			<li class="nav-item px-2 item5">
-    			<a class="nav-link" id="item5" onclick="item5()" href="/projects">Projects</a>
+    			<a class="nav-link" id="item5" onclick="item5()" href="/">Projects</a>
   			</li>
 		</ul>
 		<div class="my-2 my-lg-0 px-5 item6">

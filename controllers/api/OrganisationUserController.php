@@ -5,12 +5,7 @@ require_once __DIR__ . '/../../models/OrganisationUser.php';
 
 class OrganisationUserController {
 
-    public static function show($id) {
-        $user = User::get($id);
-        Flight::json($user);
-    }
-
-    public static function getUserOrganisations($id) {
+    public static function get_user_organisations($id) {
         $org = OrganisationUser::getUserOrganisations($id);
         Flight::json($org);
     }

@@ -15,7 +15,6 @@ class OrganisationController {
         if(isset($_POST['submitButton'])){
             Project::insert($_POST['name'], $_POST['description'], $_POST['organisation']);
             Flight::redirect("/projects");
-            //render_view("pages/projects");
         } else {
             render_view("pages/create_project", ['organisations' => $organisation]);
         }
@@ -24,6 +23,5 @@ class OrganisationController {
     public static function delete($id) {
         Project::delete($id);
         Flight::redirect("/projects");
-        //render_view("pages/projects");
     }
 }

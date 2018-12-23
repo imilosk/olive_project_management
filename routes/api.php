@@ -29,7 +29,8 @@ Flight::route('DELETE /api/user/@id', function($id) {
     UserController::delete($id);
 });
 
-//Users Organisations
-Flight::route('GET /api/userOrganisations/@id', function($id){
-	OrganisationUserController::getUserOrganisations($id);
+// get all organisations of a user
+Flight::route('GET /api/organisations', function(){
+	#$id = Flight::request()->query['userId'];
+	OrganisationUserController::getUserOrganisations(3);
 });

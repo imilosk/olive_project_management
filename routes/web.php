@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../controllers/HomeController.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
-require_once __DIR__ . '/../controllers/TimeNotesController.php';
-require_once __DIR__ . '/../controllers/MistakesController.php';
-require_once __DIR__ . '/../controllers/ProjectController.php';
 require_once __DIR__ . '/../controllers/OrganisationController.php';
 
 // Auth
