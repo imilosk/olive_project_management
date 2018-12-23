@@ -2,6 +2,7 @@
 
 @php
     global $auth;
+
 @endphp
 
 @if (!$auth->isLoggedIn())
@@ -16,9 +17,13 @@
 	<header class="header-wrapper">
         @include('includes/navbar')
     </header>
-    
-    @foreach ($users as $user)
-        <p>{{ $user['email'] }}</p>
-    @endforeach
-
+    @php
+    	$id = $auth->getUserId();
+    	echo $id;
+	@endphp
+    <div class="container">
+	    @foreach ($users as $user)
+	        <p>{{ $user['email'] }}</p>
+	    @endforeach
+	</div>
 @endsection

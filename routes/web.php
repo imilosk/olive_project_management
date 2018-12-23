@@ -33,19 +33,21 @@ Flight::route('/mistakes', function() {
     MistakesController::index();
 });
 
-    // Project
-    Flight::route('/projects', function() {
+// Project
+Flight::route('/projects', function() {
     ProjectController::index();
-    });
-    // Create_project
-    Flight::route('/create_project', function() {
-    ProjectController::create();
-    });
-    Flight::route('/projects/delete/@id', function($id) {
-    ProjectController::delete($id);
-    });
+});
 
-    // Organisation
-    Flight::route('/organisations', function() {
+// Create_project
+Flight::route('/create_project', function() {
+    ProjectController::create();
+});
+
+Flight::route('/projects/delete/@id', function($id) {
+    ProjectController::delete($id);
+});
+
+// Organisation
+Flight::route('/organisations', function() {
     OrganisationController::index();
-    });
+});

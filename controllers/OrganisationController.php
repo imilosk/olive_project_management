@@ -20,12 +20,10 @@ class OrganisationController {
             render_view("pages/create_project", ['organisations' => $organisation]);
         }
     }
+
     public static function delete($id) {
-            Project::delete($id);
-            Flight::redirect("/projects");
-            //render_view("pages/projects");
+        Project::delete($id);
+        Flight::redirect("/projects");
+        //render_view("pages/projects");
     }
-
-    
-
 }
