@@ -73,4 +73,17 @@ class Project {
         $statement->execute();
         return "true";
     } 
+
+    public static function get_user_projects($idUser, $idOrganisation) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare(" SELECT p.id,p.name,p.description 
+                                    FROM {$table} AS p
+                                    INNER JOIN userprojects AS up ON p.id=up.idProject
+                                    WHERE up.idUser = :idUser AND p.idOrganisation = :idOrganisation");
+        $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }
