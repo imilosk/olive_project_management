@@ -2,35 +2,42 @@
 
 // include all files in controllers/api
 require_once __DIR__ . '/../controllers/api/UserController.php';
+require_once __DIR__ . '/../controllers/api/OrganisationController.php';
 require_once __DIR__ . '/../controllers/api/OrganisationUserController.php';
 
-// return all users
-Flight::route('GET /api/users', function() {            
-    UserController::index();
+
+// add organisation
+Flight::route('POST /api/organisation', function() {
+    OrganisationController::store();
 });
 
-// return one user identified by $id
-Flight::route('GET /api/user/@id', function($id) {
-    UserController::show($id);
+// update organisation info
+Flight::route('POST /api/organisation/@id', function($id) {
+    OrganisationController::update($id);
 });
 
-// add user
-Flight::route('POST /api/user', function() {
-    UserController::store();
-});
-
-// update user info
-Flight::route('POST /api/user/@id', function($id) {
-    UserController::update($id);
-});
-
-// delete user
-Flight::route('DELETE /api/user/@id', function($id) {
-    UserController::delete($id);
+// delete organisation
+Flight::route('DELETE /api/organisation/@id', function($id) {
+    OrganisationController::delete($id);
 });
 
 // get all organisations of a user
-Flight::route('GET /api/organisations', function(){
-	#$id = Flight::request()->query['userId'];
-	OrganisationUserController::getUserOrganisations(3);
+Flight::route('GET /api/organisations', function() {
+	$idUser = Flight::request()->query['idUser'];
+	OrganisationUserController::get_user_organisations($idUser);
+});
+
+// get all users or get all users in an organisation
+Flight::route('GET /api/users', function() {
+	UserController::index();
+});
+
+// add a user to an organisation
+Flight::route('POST /api/userorganisation', function() {
+	UserController::index();
+});
+
+// remove a user to an organisation
+Flight::route('DELETE /api/userorganisation', function() {
+	UserController::index();
 });

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../settings/DBInit.php';
 class Organisation {
 
     const TABLE_NAME = 'organisations';
-
+    /*
     public static function get_all() {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -13,7 +13,8 @@ class Organisation {
         $statement->execute();
         return $statement->fetchAll();
     }
-
+    */
+    /*
     public static function get($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -22,17 +23,7 @@ class Organisation {
         $statement->execute();
         return $statement->fetch();
     }
-
-    public static function getProjects($idOrganisation) {
-        $table = self::TABLE_NAME;
-        $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT id,name,description FROM {$table} 
-                                    INNER JOIN projects as p ON p.idOrganisations={$table}.id
-                                    WHERE id = :idOrganisation");
-        $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
-        $statement->execute();
-        return $statement->fetch();
-    }
+    */
 
     public static function insert($name, $description) {
         $table = self::TABLE_NAME;
@@ -47,21 +38,22 @@ class Organisation {
     public static function update($id, $name, $description) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("UPDATE {$table} SET 
-            name = :name, 
-            description = :description,
-            WHERE id = :id");
+        $statement = $db->prepare(" UPDATE {$table} SET 
+                                    name = :name, 
+                                    description = :description
+                                    WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
-        $statement->bindParam(":id", $id);
         $statement->execute();
     }
 
     public static function delete($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("DELETE FROM {$table} WHERE id = :id");
-        $statement->bindParam(":id", $id);
+        $statement = $db->prepare("DELETE FROM {$table}
+                                   WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
     } 
 }

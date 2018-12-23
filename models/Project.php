@@ -23,7 +23,18 @@ class Project {
         return $statement->fetch();
     }
 
-    public static function insert($name,$description, $idOrganisation) {
+    public static function get_organisation_projects($idOrganisation) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT id,name,description FROM {$table} 
+                                    INNER JOIN projects as p ON p.idOrganisations={$table}.id
+                                    WHERE id = :idOrganisation");
+        $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
+    public static function insert($name, $description, $idOrganisation) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare("INSERT INTO {$table} (name,description,idOrganisation)

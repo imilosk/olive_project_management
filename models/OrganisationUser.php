@@ -1,11 +1,9 @@
 <?php
-
 require_once __DIR__ . '/../settings/DBInit.php';
 
 class OrganisationUser {
-
     const TABLE_NAME = 'organisationsusers';
-
+    
     public static function getUserOrganisations($idUser) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -17,7 +15,6 @@ class OrganisationUser {
         $statement->execute();
         return $statement->fetch();
     }
-
     public static function insert($idUser, $idProject) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -27,8 +24,7 @@ class OrganisationUser {
         $statement->bindParam(":idProject", $idProject);
         $statement->execute();
     }
-
-    public static function deleteUser($idUser) {
+    public static function delete($idUser) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare("DELETE FROM {$table} WHERE idUser = :idUser");

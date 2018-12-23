@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../controllers/HomeController.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
-require_once __DIR__ . '/../controllers/OrganisationController.php';
 
 // Auth
 Flight::route('/register', function() {
@@ -21,6 +20,7 @@ Flight::route('/', function() {
     HomeController::index();
 });
 
+
 // PSP
 Flight::route('/timeNotes', function() {
     TimeNotesController::index();
@@ -28,23 +28,4 @@ Flight::route('/timeNotes', function() {
 
 Flight::route('/mistakes', function() {
     MistakesController::index();
-});
-
-// Project
-Flight::route('/projects', function() {
-    ProjectController::index();
-});
-
-// Create_project
-Flight::route('/create_project', function() {
-    ProjectController::create();
-});
-
-Flight::route('/projects/delete/@id', function($id) {
-    ProjectController::delete($id);
-});
-
-// Organisation
-Flight::route('/organisations', function() {
-    OrganisationController::index();
 });
