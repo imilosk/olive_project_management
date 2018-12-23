@@ -19,7 +19,9 @@ class Project {
     public static function get($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT name,description FROM {$table} WHERE id = :id");
+        $statement = $db->prepare(" SELECT name,description 
+                                    FROM {$table} 
+                                    WHERE id = :id");
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetch();
@@ -28,9 +30,10 @@ class Project {
     public static function get_organisation_projects($idOrganisation) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT id,name,description FROM {$table} 
-                                    INNER JOIN projects as p ON p.idOrganisations={$table}.id
-                                    WHERE id = :idOrganisation");
+        $statement = $db->prepare(" SELECT p.id,p.name,p.description 
+                                    FROM {$table} AS p
+                                    INNER JOIN organisations AS o ON p.idOrganisation=o.id
+                                    WHERE o.id = :idOrganisation");
         $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
@@ -45,6 +48,7 @@ class Project {
         $statement->bindParam(":description", $description);
         $statement->bindParam(":idOrganisation", $idOrganisation);
         $statement->execute();
+        return "true";
     }
 
     public static function update($id, $name, $description) {
@@ -58,6 +62,7 @@ class Project {
         $statement->bindParam(":description", $description);
         $statement->bindParam(":id", $id);
         $statement->execute();
+        return "true";
     }
 
     public static function delete($id) {
@@ -66,5 +71,6 @@ class Project {
         $statement = $db->prepare("DELETE FROM {$table} WHERE id = :id");
         $statement->bindParam(":id", $id);
         $statement->execute();
+        return "true";
     } 
 }

@@ -20,15 +20,29 @@ class ProjectController {
         $idOrganisation = $_POST["idOrganisation"];
         $name = $_POST["name"];
         $description = $_POST["description"];
-        $response = Project::insert($idOrganisation, $name, $description);
+        $response = Project::insert($name, $description, $idOrganisation);
         Flight::json($response);
     }
 
-    public static function delete($idOrganisation, $idUser) {
-        $response = OrganisationUser::delete($idOrganisation, $idUser);
+    public static function delete($id) {
+        $response = Project::delete($id);
         Flight::json($response);
     }
 
+    public static function update($id) {
+        $id = (int) $id;
+        $name = $_POST["name"];
+        $description = $_POST["description"];
+        $response = Project::update($id, $name, $description);
+        echo "true";
+    }
+
+
+    public static function index() {
+        $idOrganisation = (int) Flight::request()->query['idOrganisation'];
+        $projects = Project::get_organisation_projects($idOrganisation);
+        Flight::json($projects);
+    }
 
 
 }

@@ -38,6 +38,18 @@ class User {
         return $statement->fetchAll();
     }
 
+    public static function get_all_users_in_project($idProject) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT u.id, u.email
+                                   FROM {$table} AS u
+                                   INNER JOIN userprojects AS up ON u.id=up.idUser
+                                   WHERE up.idProject = :idProject");
+        $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);  
+        $statement->execute();                         
+        return $statement->fetchAll();
+    }
+
     /*
     public static function insert($username) {
 

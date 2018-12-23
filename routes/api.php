@@ -28,7 +28,7 @@ Flight::route('GET /api/organisations', function() {
 	OrganisationUserController::get_user_organisations($idUser);
 });
 
-// get all users or get all users in an organisation
+// get all users or get all users in an organisation or get all users in a project
 Flight::route('GET /api/users', function() {
 	UserController::index();
 });
@@ -38,7 +38,7 @@ Flight::route('POST /api/organisationsusers', function() {
 	OrganisationUserController::store();
 });
 
-// remove a user to an organisation
+// remove a user from an organisation
 Flight::route('DELETE /api/organisationsusers/@idOrganisation/@idUser', function($idOrganisation, $idUser) {
 	OrganisationUserController::delete($idOrganisation, $idUser);
 });
@@ -51,4 +51,19 @@ Flight::route('GET /api/project/@id', function($id) {
 // add project
 Flight::route('POST /api/project', function() {
     ProjectController::store();
+});
+
+// update project
+Flight::route('POST /api/project/@id', function($id) {
+    ProjectController::update($id);
+});
+
+// remove project
+Flight::route('DELETE /api/project/@id', function($id) {
+	ProjectController::delete($id);
+});
+
+// get all projects of an organisation
+Flight::route('GET /api/projects', function() {
+	ProjectController::index();
 });

@@ -33,6 +33,7 @@ class Organisation {
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
         $statement->execute();
+        return "true";
     }
 
     public static function update($id, $name, $description) {
@@ -46,6 +47,7 @@ class Organisation {
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
         $statement->execute();
+        return "true";
     }
 
     public static function delete($id) {
@@ -55,5 +57,6 @@ class Organisation {
                                    WHERE id = :id");
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
+        return "true";
     } 
 }
