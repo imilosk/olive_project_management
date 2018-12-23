@@ -6,6 +6,7 @@ class Project {
 
     const TABLE_NAME = 'projects';
 
+/*
     public static function get_all() {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -13,6 +14,7 @@ class Project {
         $statement->execute();
         return $statement->fetchAll();
     }
+*/
 
     public static function get($id) {
         $table = self::TABLE_NAME;
@@ -31,7 +33,7 @@ class Project {
                                     WHERE id = :idOrganisation");
         $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetch();
+        return $statement->fetchAll();
     }
 
     public static function insert($name, $description, $idOrganisation) {
