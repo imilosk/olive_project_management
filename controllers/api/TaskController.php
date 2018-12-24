@@ -14,11 +14,13 @@ class TaskController {
         $idProject = $_POST["idProject"];
         $response = Task::insert($name, $idProject);
         Flight::json($response);
+        echo "true";
     }
 
     public static function delete($id) {
         $response = Task::delete($id);
         Flight::json($response);
+        echo "true";
     }
 
     public static function update($id) {
@@ -34,7 +36,7 @@ class TaskController {
         if ($idUser == "") 
             $projects = Task::get_project_tasks($idProject);
         else
-            $projects = Task::get_user_tasks($idUser, $idOrganisation);
+            $projects = Task::get_user_tasks($idUser, $idProject);
         Flight::json($projects);
     }
 

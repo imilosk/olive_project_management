@@ -50,6 +50,18 @@ class User {
         return $statement->fetchAll();
     }
 
+    public static function get_all_users_in_task($idTask) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT u.id, u.email
+                                   FROM {$table} AS u
+                                   INNER JOIN tasksusersprojects AS tup ON u.id=tup.idUser
+                                   WHERE tup.idTask = :idTask");
+        $statement->bindParam(":idTask", $idTask, PDO::PARAM_INT);  
+        $statement->execute();                         
+        return $statement->fetchAll();
+    }
+
     /*
     public static function insert($username) {
 

@@ -69,19 +69,17 @@ class Task {
         return $statement->fetchAll();
     }
 
-/*
-    public static function get_user_tasks($idUser, $idOrganisation) {
+    public static function get_user_tasks($idUser, $idProject) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare(" SELECT t.id,t.name
                                     FROM {$table} AS t
-                                    INNER JOIN userprojects AS up ON p.id=up.idProject
-                                    WHERE up.idUser = :idUser AND p.idOrganisation = :idOrganisation");
-        $statement->bindParam(":idOrganisation", $idOrganisation, PDO::PARAM_INT);
+                                    INNER JOIN tasksusersprojects AS tup ON t.id=tup.idTask
+                                    WHERE tup.idUser = :idUser AND t.idProject = :idProject");
+        $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
         $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }
-*/
     
 }

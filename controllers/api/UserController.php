@@ -7,12 +7,15 @@ class UserController {
     public static function index() {
         $idOrganisation = (int) Flight::request()->query['idOrganisation'];
         $idProject = (int) Flight::request()->query['idProject'];
-        if ($idOrganisation == "" && $idProject == "")
+        $idTask = (int) Flight::request()->query['idTask'];
+        if ($idOrganisation == "" && $idProject == "" && $idTask == "")
             $users = User::get_all();
-        elseif ($idOrganisation == "")
+        elseif ($idProject != "")
             $users = User::get_all_users_in_project($idProject);
-        else
+        elseif ($idOrganisation != "") 
             $users = User::get_all_users_in_organisation($idOrganisation);
+        else
+            $users = User::get_all_users_in_task($idTask);
         Flight::json($users);
         
     }

@@ -7,6 +7,7 @@ require_once __DIR__ . '/../controllers/api/OrganisationUserController.php';
 require_once __DIR__ . '/../controllers/api/ProjectController.php';
 require_once __DIR__ . '/../controllers/api/UserProjectController.php';
 require_once __DIR__ . '/../controllers/api/TaskController.php';
+require_once __DIR__ . '/../controllers/api/TaskUserProjectController.php';
 
 
 // add organisation
@@ -30,7 +31,7 @@ Flight::route('GET /api/organisations', function() {
 	OrganisationUserController::get_user_organisations($idUser);
 });
 
-// get all users or get all users in an organisation or get all users in a project
+// get all users or get all users in an organisation or get all users in a project or get all users in a task 
 Flight::route('GET /api/users', function() {
 	UserController::index();
 });
@@ -100,7 +101,17 @@ Flight::route('DELETE /api/task/@id', function($id) {
 	TaskController::delete($id);
 });
 
-// get all tasks of a project
+// add a user to a task
+Flight::route('POST /api/tasksusers', function() {
+	TaskUserProjectController::store();
+});
+
+// remove a user from a task
+Flight::route('DELETE /api/tasksusers/@idUser/@idTask', function($idUser, $idTask) {
+	TaskUserProjectController::delete($idUser, $idTask);
+});
+
+// get all tasks of a project or get all tasks of an user
 Flight::route('GET /api/tasks', function() {
 	TaskController::index();
 });

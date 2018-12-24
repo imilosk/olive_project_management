@@ -2,10 +2,11 @@
 
 require_once __DIR__ . '/../settings/DBInit.php';
 
-class Organisation {
+class TaskUserProject {
 
     const TABLE_NAME = 'tasksusersprojects';
 
+/*
     public static function get_all($idUser) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -14,17 +15,20 @@ class Organisation {
         $statement->execute();
         return $statement->fetchAll();
     }
+*/
 
-    public static function insert($idUser, $idTask) {
+    public static function insert($idUser, $idTask, $idPSP) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO {$table} (idUser,idTask)
-            VALUES (:idUser,:description)");
+        $statement = $db->prepare(" INSERT INTO {$table} (idUser,idTask,idPSP)
+            						VALUES (:idUser,:idTask,:idPSP)");
         $statement->bindParam(":idUser", $idUser);
         $statement->bindParam(":idTask", $idTask);
+        $statement->bindParam(":idPSP", $idPSP);
         $statement->execute();
     }
 
+/*
     public static function update($idUser, $idTask, $idPSP) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -36,11 +40,14 @@ class Organisation {
         $statement->bindParam(":idPSP", $idPSP);
         $statement->execute();
     }
+*/
 
     public static function delete($idUser, $idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("DELETE FROM {$table} WHERE idUser = :idUser AND idTask = :idTask");
+        $statement = $db->prepare(" DELETE FROM {$table} 
+        							WHERE idUser = :idUser 
+        							AND idTask = :idTask");
         $statement->bindParam(":idUser", $idUser);
         $statement->bindParam(":idTask", $idTask);
         $statement->execute();
