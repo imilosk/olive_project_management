@@ -21,8 +21,8 @@ class OrganisationController {
     public static function store() {
         $name = $_POST["name"];
         $description = $_POST["description"];
-        Organisation::insert($name, $description);
-        echo "true";
+        echo Organisation::insert($name, $description);
+        //echo "true";
     }
 
     public static function update($id) {

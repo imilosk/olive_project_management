@@ -53,4 +53,6 @@
     <div>
 </div>
 
+<script type="text/javascript" src="js/auth.js"></script>
+
 @endsection

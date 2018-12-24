@@ -12,22 +12,7 @@
     </head>
 
     <body class="preload">
-        @yield('content')  
-        <!--
-        <header class="header-wrapper">
-            @include('includes/navbar')
-        </header>
-        
-
-        <div class="container">
-            @yield('content')  
-        </div>
-        -->
-        <!-- JS Scripts -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/calendar.js"></script>
-        <script type="text/javascript" src="js/script.js"></script>
+        @yield('content')
     </body>
 
 </html>
