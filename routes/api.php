@@ -6,6 +6,7 @@ require_once __DIR__ . '/../controllers/api/OrganisationController.php';
 require_once __DIR__ . '/../controllers/api/OrganisationUserController.php';
 require_once __DIR__ . '/../controllers/api/ProjectController.php';
 require_once __DIR__ . '/../controllers/api/UserProjectController.php';
+require_once __DIR__ . '/../controllers/api/TaskController.php';
 
 
 // add organisation
@@ -77,4 +78,29 @@ Flight::route('POST /api/projectsusers', function() {
 // remove a user from a project
 Flight::route('DELETE /api/projectsusers/@idProject/@idUser', function($idProject, $idUser) {
 	UserProjectController::delete($idProject, $idUser);
+});
+
+// get task
+Flight::route('GET /api/task/@id', function($id) {
+	TaskController::show($id);
+});
+
+// add task
+Flight::route('POST /api/task', function() {
+    TaskController::store();
+});
+
+// update task
+Flight::route('POST /api/task/@id', function($id) {
+    TaskController::update($id);
+});
+
+// remove task
+Flight::route('DELETE /api/task/@id', function($id) {
+	TaskController::delete($id);
+});
+
+// get all tasks of a project
+Flight::route('GET /api/tasks', function() {
+	TaskController::index();
 });

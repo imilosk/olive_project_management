@@ -54,10 +54,10 @@ class Project {
     public static function update($id, $name, $description) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("UPDATE {$table} SET 
-            name = :name, 
-            description = :description
-            WHERE id = :id");
+        $statement = $db->prepare(" UPDATE {$table} SET 
+                                    name = :name, 
+                                    description = :description
+                                    WHERE id = :id");
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
         $statement->bindParam(":id", $id);
