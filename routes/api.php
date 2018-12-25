@@ -115,3 +115,9 @@ Flight::route('DELETE /api/tasksusers/@idUser/@idTask', function($idUser, $idTas
 Flight::route('GET /api/tasks', function() {
 	TaskController::index();
 });
+
+// get all tasks of a project or get all tasks of an user
+Flight::route('GET /api/userorganisationsprojects', function() {
+	$idUser = Flight::request()->query['idUser'];
+	OrganisationController::get_user_organisations_and_projects($idUser);
+});

@@ -38,4 +38,12 @@ class OrganisationController {
         echo "true";
     }
 
+    public static function get_user_organisations_and_projects($idUser) {
+        $organisations = Organisation::get_user_organisations_and_projects($idUser);
+        //$temp = array_keys($organisations);
+        //return;
+        Flight::json($organisations);
+        //Flight::json($temp);
+    }
+
 }
