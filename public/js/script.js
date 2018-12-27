@@ -1,77 +1,119 @@
 let testData;
 let loggedUserId = document.getElementById("test").innerHTML;
+
 window.onload = function(){
     init();
 
     function init() {
         getUserOrganisations();
     }
-	
-	function getUserOrganisations(){
-		$.get("/api/organisations?idUser="+loggedUserId, function(data){
-			
-            for (let i = 0; i < data.length; i++){
-                data[i]["projects"] = [];
-                $.get("/api/projects?idUser="+loggedUserId+"&idOrganisation="+data[i]["idOrganisation"]+"", function(projectData){
-                    console.log("Project data : ");
-                    console.log(projectData);
-                    data[i]["projects"].push(projectData);
-                });
-            }
+}
 
-            window.setTimeout(function(){
-                console.log(data); 
-                testData = data;
-                let rawTemplate = 
-                "{{#each this}}" +
-                    "<div class='org-list'>" +
-                        "<div class='org'> {{idOrganisation}} : {{name}}" +
-                            "<div class='projects-list'>" +
-                                "<div>Projects</div>" +
-                                "{{#each projects}}" +
-                                    "{{#each this}}" +
-                                        "<div class='pro'> {{id}} : {{name}} </div>" +
-                                    "{{/each}}" +
-                                "{{/each}}" +
+function getUserOrganisations(){
+    $.get("/api/userorganisationsprojects?idUser="+loggedUserId, function(data){
+        console.log(data);
+
+        let rawTemplate = 
+            "{{#each this}}" +
+                "<div class='org-list'>" +
+                    "<div class='org-container'>" +
+                        "<div class='org-div'>" +
+                            "<div class='org-name' onclick='orgOnClick({{idOrganisation}})'>{{orgName}}</div>" +
+                            "<div class='org-options'>" +
+                                "<div class='org-option-add-project'>+</div>" +
+                                "<div class='add-project-div'>" +
+                                    "<input type='text' placeholder='Name'>" +
+                                    "<input type='text' placeholder='Description'>" +
+                                    "<div class='small-btn' onclick='addProjectToOrganisation({{idOrganisation}}, event)'> Add </div>" +
+                                "</div>" + 
                             "</div>" +
                         "</div>" +
+                        "<div class='projects-list'>" +
+                            "{{#each this}}" +
+                                "{{#if idProject}}" +
+                                    "<div onclick='proOnClick({{idProject}})' class='pro'>{{pName}}</div>" +
+                                "{{/if}}" +
+                            "{{/each}}" +
+                        "</div>" +
                     "</div>" +
-                "{{/each}}";
-                console.log(rawTemplate);
-                let compiledTemplate = Handlebars.compile(rawTemplate);
-                let generatedHTML = compiledTemplate(data);
+                "</div>" +
+            "{{/each}}";
+        let compiledTemplate = Handlebars.compile(rawTemplate);
+        let generatedHTML = compiledTemplate(data);
 
-                document.getElementById("modal-body_organistaions").innerHTML = generatedHTML;
-            }, 500);
-		});
-	}
+        document.getElementById("modal-body_organistaions").innerHTML = generatedHTML;
 
-    function openAddOrganisationModal(){
-        $("#addOrganisationModal").css("display", "block");
-    }
+        initClickEvents();
+    });
+}
 
-    function hideAddOrganisationModal(){
-        $("#addOrganisationModal").css("display", "none");
-    }
+function initClickEvents(){
+    let addProjectForms = $(".org-option-add-project");
+    console.log(addProjectForms);
+    $.each(addProjectForms, (index) => {
+        addProjectForms[index].addEventListener("click", displayAddProjectForm);
+    });
+}
 
-    function addOrganisation(){
-        console.log("here i am");
-        let name = $("#addOrganisation-name").val();
-        let desc = $("#addOrganisation-description").val();
-        console.log(name+ "  " + desc);
-        $.post("/api/organisation", {name: name, description: desc}, function(result){
-            let lastOrgId = result;
-            $.post("/api/organisationsusers", {idOrganisation: lastOrgId, idUser: loggedUserId}, function(result){
-                //refresh user's organisation list
-                getUserOrganisations();
-            });
+function openAddOrganisationModal(){
+    $("#addOrganisationModal").css("display", "block");
+}
+
+function hideAddOrganisationModal(){
+    $("#addOrganisationModal").css("display", "none");
+}
+
+function addOrganisation(){
+    console.log("here i am");
+    let name = $("#addOrganisation-name").val();
+    let desc = $("#addOrganisation-description").val();
+    console.log(name+ "  " + desc);
+    $.post("/api/organisation", {name: name, description: desc}, function(result){
+        let lastOrgId = result;
+        $.post("/api/organisationsusers", {idOrganisation: lastOrgId, idUser: loggedUserId}, function(result){
+            //refresh user's organisation list
+            getUserOrganisations();
         });
+    });
 
-        hideAddOrganisationModal();
+    hideAddOrganisationModal();
+}
+
+$("#btn-openOrganisationModal").click(openAddOrganisationModal);
+$("#btn-addNewOrganisation").click(addOrganisation);
+
+function proOnClick(id){
+    console.log(id);
+}
+
+function orgOnClick(orgId) {
+    console.log(orgId);
+}
+
+function displayAddProjectForm(event) {
+    let addProjectForm = event.target.nextElementSibling;
+    if (addProjectForm.classList.contains("collapsed")) {
+        addProjectForm.classList.remove("collapsed");
+    } else {
+        addProjectForm.classList.add("collapsed");
     }
+}
 
-    $("#btn-openOrganisationModal").click(openAddOrganisationModal);
-    $("#btn-addNewOrganisation").click(addOrganisation);
+function addProjectToOrganisation(orgId, event){
+    console.log("ahooj");
+    let parent = event.target.parentElement;
+    let projectName = parent.children[0].value;
+    let projectDesc = parent.children[1].value;
+
+    $.post("/api/project", {idOrganisation: orgId, name: projectName, description: projectDesc}, function(result, status){
+        let proId = result;
+        console.log("project created, id : "+result);
+        
+        $.post("/api/projectsusers", {idProject: proId, idUser: loggedUserId}, function(result){
+            console.log("project assigned");
+            getUserOrganisations();
+        });
+    });
 }
 
 // Get the modal
@@ -95,8 +137,7 @@ span.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
-

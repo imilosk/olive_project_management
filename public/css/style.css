@@ -237,6 +237,37 @@ select:-webkit-autofill:focus {
     cursor: pointer;
 }
 
+.org-name {
+	cursor: pointer;
+	background-color: #344E5C;
+	color: white;
+}
+
+.pro {
+	cursor: pointer;
+	background-color: #d4d4e4;
+}
+
+.org-option {
+	cursor: pointer;
+}
+
+.add-project-div {
+	display: none;
+	transition: 1s;
+}
+
+.collapsed{
+	display: block;
+}
+
+.small-btn{
+	background-color: #4ab19d;
+	padding: 3px;
+	color: white;
+	cursor: pointer;
+}
+
 /* Add Animation */
 @-webkit-keyframes slideIn {
 	from {left: -300px; opacity: 0} 

@@ -12,7 +12,7 @@ class UserProject {
         $statement->bindParam(":idUser", $idUser);
         $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
         $statement->execute();
-        return "true";
+        //return "true";
     }
     public static function delete($idProject, $idUser) {
         $table = self::TABLE_NAME;

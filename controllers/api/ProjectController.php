@@ -15,7 +15,6 @@ class ProjectController {
         $description = $_POST["description"];
         $response = Project::insert($name, $description, $idOrganisation);
         Flight::json($response);
-        echo "true";
     }
 
     public static function delete($id) {

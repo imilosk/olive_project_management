@@ -34,7 +34,6 @@ class Organisation {
         $statement->bindParam(":description", $description);
         $statement->execute();
         return $db->lastInsertId();
-        //return "true";
     }
 
     public static function update($id, $name, $description) {

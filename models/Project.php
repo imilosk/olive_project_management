@@ -48,7 +48,7 @@ class Project {
         $statement->bindParam(":description", $description);
         $statement->bindParam(":idOrganisation", $idOrganisation);
         $statement->execute();
-        return "true";
+        return $db->lastInsertId();
     }
 
     public static function update($id, $name, $description) {
