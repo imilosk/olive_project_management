@@ -3,7 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Gostitelj: localhost
+<<<<<<< HEAD
+-- Čas nastanka: 28. dec 2018 ob 19.36
+=======
 -- Čas nastanka: 28. dec 2018 ob 17.58
+>>>>>>> f05ec60dcaee68fdf6f4561966826a8634deb363
 -- Različica strežnika: 5.7.24-0ubuntu0.16.04.1
 -- Različica PHP: 7.0.32-0ubuntu0.16.04.1
 
@@ -35,10 +39,6 @@ CREATE TABLE `organisations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELACIJE ZA TABELO `organisations`:
---
-
---
 -- Odloži podatke za tabelo `organisations`
 --
 
@@ -56,17 +56,9 @@ INSERT INTO `organisations` (`id`, `name`, `description`) VALUES
 --
 
 CREATE TABLE `organisationsusers` (
-  `idOrganisation` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL
+  `idOrganisation` int(10) UNSIGNED NOT NULL,
+  `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELACIJE ZA TABELO `organisationsusers`:
---   `idOrganisation`
---       `organisations` -> `id`
---   `idUser`
---       `users` -> `id`
---
 
 --
 -- Odloži podatke za tabelo `organisationsusers`
@@ -95,14 +87,6 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- RELACIJE ZA TABELO `projects`:
---   `idLeader`
---       `users` -> `id`
---   `idOrganisation`
---       `organisations` -> `id`
---
-
---
 -- Odloži podatke za tabelo `projects`
 --
 
@@ -123,10 +107,13 @@ CREATE TABLE `psps` (
   `programing_language` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+<<<<<<< HEAD
+=======
 --
 -- RELACIJE ZA TABELO `psps`:
 --
 
+>>>>>>> f05ec60dcaee68fdf6f4561966826a8634deb363
 -- --------------------------------------------------------
 
 --
@@ -144,18 +131,6 @@ CREATE TABLE `psp_errors` (
   `description` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELACIJE ZA TABELO `psp_errors`:
---   `idCategory`
---       `psp_errors_categories` -> `id`
---   `phaseEntry`
---       `psp_phases` -> `id`
---   `phaseFinish`
---       `psp_phases` -> `id`
---   `idPSP`
---       `psps` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -166,10 +141,6 @@ CREATE TABLE `psp_errors_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELACIJE ZA TABELO `psp_errors_categories`:
---
 
 --
 -- Odloži podatke za tabelo `psp_errors_categories`
@@ -197,10 +168,6 @@ CREATE TABLE `psp_phases` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELACIJE ZA TABELO `psp_phases`:
---
 
 --
 -- Odloži podatke za tabelo `psp_phases`
@@ -234,14 +201,6 @@ CREATE TABLE `psp_tasks` (
   `estimatedunits` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELACIJE ZA TABELO `psp_tasks`:
---   `idPhase`
---       `psp_phases` -> `id`
---   `idPSP`
---       `psps` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -253,12 +212,6 @@ CREATE TABLE `tasks` (
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `idProject` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELACIJE ZA TABELO `tasks`:
---   `idProject`
---       `projects` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -272,16 +225,6 @@ CREATE TABLE `tasksusersprojects` (
   `idPSP` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELACIJE ZA TABELO `tasksusersprojects`:
---   `idPSP`
---       `psps` -> `id`
---   `idTask`
---       `tasks` -> `id`
---   `idUser`
---       `users` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -292,14 +235,6 @@ CREATE TABLE `userprojects` (
   `idProject` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELACIJE ZA TABELO `userprojects`:
---   `idProject`
---       `projects` -> `id`
---   `idUser`
---       `users` -> `id`
---
 
 --
 -- Odloži podatke za tabelo `userprojects`
@@ -332,10 +267,6 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- RELACIJE ZA TABELO `users`:
---
-
---
 -- Odloži podatke za tabelo `users`
 --
 
@@ -362,10 +293,6 @@ CREATE TABLE `users_confirmations` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RELACIJE ZA TABELO `users_confirmations`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -379,10 +306,6 @@ CREATE TABLE `users_remembered` (
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RELACIJE ZA TABELO `users_remembered`:
---
 
 -- --------------------------------------------------------
 
@@ -398,10 +321,6 @@ CREATE TABLE `users_resets` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RELACIJE ZA TABELO `users_resets`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -414,10 +333,6 @@ CREATE TABLE `users_throttling` (
   `replenished_at` int(10) UNSIGNED NOT NULL,
   `expires_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RELACIJE ZA TABELO `users_throttling`:
---
 
 --
 -- Odloži podatke za tabelo `users_throttling`
@@ -497,12 +412,6 @@ CREATE TABLE `user_psp_data` (
   `analysis_res_err` int(11) NOT NULL,
   `psp_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- RELACIJE ZA TABELO `user_psp_data`:
---   `idUser`
---       `users` -> `id`
---
 
 --
 -- Indeksi zavrženih tabel
@@ -704,12 +613,21 @@ ALTER TABLE `users_resets`
 --
 
 --
+-- Omejitve za tabelo `organisationsusers`
+--
+ALTER TABLE `organisationsusers`
+  ADD CONSTRAINT `organisationsusers_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
+
+--
+<<<<<<< HEAD
 -- Omejitve za tabelo `projects`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
 
 --
+=======
+>>>>>>> f05ec60dcaee68fdf6f4561966826a8634deb363
 -- Omejitve za tabelo `psp_errors`
 --
 ALTER TABLE `psp_errors`
@@ -730,6 +648,19 @@ ALTER TABLE `psp_tasks`
 --
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`);
+
+--
+-- Omejitve za tabelo `tasksusersprojects`
+--
+ALTER TABLE `tasksusersprojects`
+  ADD CONSTRAINT `tasksusersprojects_ibfk_1` FOREIGN KEY (`idTask`) REFERENCES `tasks` (`id`),
+  ADD CONSTRAINT `tasksusersprojects_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Omejitve za tabelo `userprojects`
+--
+ALTER TABLE `userprojects`
+  ADD CONSTRAINT `userprojects_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
