@@ -9,6 +9,7 @@ require_once __DIR__ . '/../controllers/api/UserProjectController.php';
 require_once __DIR__ . '/../controllers/api/TaskController.php';
 require_once __DIR__ . '/../controllers/api/TaskUserProjectController.php';
 require_once __DIR__ . '/../controllers/api/PSPController.php';
+require_once __DIR__ . '/../controllers/api/PSPTaskController.php';
 
 
 // add organisation
