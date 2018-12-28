@@ -31,7 +31,12 @@ function getUserOrganisations(){
                         "<div class='projects-list'>" +
                             "{{#each this}}" +
                                 "{{#if idProject}}" +
-                                    "<div onclick='proOnClick({{idProject}})' class='pro'>{{pName}}</div>" +
+                                    "<div class='pro-div'>" +
+                                        "<div class='project-name'>{{pName}}</div>" +
+                                        "<div class='pro-options'>" +
+                                            "<div class='del-project' onclick='deleteProject({{idProject}})'>-</div>" +
+                                        "</div>" +
+                                    "</div>" +
                                 "{{/if}}" +
                             "{{/each}}" +
                         "</div>" +
@@ -113,6 +118,22 @@ function addProjectToOrganisation(orgId, event){
             console.log("project assigned");
             getUserOrganisations();
         });
+    });
+}
+
+function deleteProject(projectId){
+    console.log("am gonna delete project with id : "+projectId);
+    $.ajax({
+        url: "/api/project/"+projectId,
+        type: 'DELETE',
+        success: function(result) {
+            console.log("Project deleted!");
+            //refresh menu
+            getUserOrganisations();
+        },
+        error: function(error){
+            console.log(error);
+        }
     });
 }
 

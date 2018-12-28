@@ -243,11 +243,6 @@ select:-webkit-autofill:focus {
 	color: white;
 }
 
-.pro {
-	cursor: pointer;
-	background-color: #d4d4e4;
-}
-
 .org-option {
 	cursor: pointer;
 }
@@ -266,6 +261,24 @@ select:-webkit-autofill:focus {
 	padding: 3px;
 	color: white;
 	cursor: pointer;
+}
+
+.project-name {
+	flex: 2;
+	background-color: #d4d4e4;
+}
+
+.pro-div{
+	display: flex;
+	flex-flow: row;
+}
+
+.del-project{
+	padding: 2px;
+	cursor: pointer;
+	color: white;
+	text-align: center;
+	background-color: #EF3D59;
 }
 
 /* Add Animation */
