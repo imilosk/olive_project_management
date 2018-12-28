@@ -3,11 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Gostitelj: localhost
-<<<<<<< HEAD
--- Čas nastanka: 28. dec 2018 ob 19.36
-=======
--- Čas nastanka: 28. dec 2018 ob 17.58
->>>>>>> f05ec60dcaee68fdf6f4561966826a8634deb363
+-- Čas nastanka: 28. dec 2018 ob 19.48
 -- Različica strežnika: 5.7.24-0ubuntu0.16.04.1
 -- Različica PHP: 7.0.32-0ubuntu0.16.04.1
 
@@ -107,13 +103,6 @@ CREATE TABLE `psps` (
   `programing_language` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-<<<<<<< HEAD
-=======
---
--- RELACIJE ZA TABELO `psps`:
---
-
->>>>>>> f05ec60dcaee68fdf6f4561966826a8634deb363
 -- --------------------------------------------------------
 
 --
@@ -272,7 +261,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
 (3, 'milos.kostadinovski97@gmail.com', '$2y$10$oRIyHRU70d0uEwt8opVUkuDqPDNPO989oQdvZFlSZDy40xu7EAWuS', NULL, 0, 1, 1, 0, 1543679404, 1545823279, 38),
-(4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1546005740, 2),
+(4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1546018593, 2),
 (5, 'test123@test.si', '$2y$10$ZBCUaBGTWBHgWgdQ7TliKuKIHDaPoBFlKyinlbet4jySwAZhh60p.', NULL, 0, 1, 1, 0, 1544635196, 1545823288, 13),
 (6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1545832181, 4),
 (7, 'test1@gmail.com', '$2y$10$ntUMiByO3v5DfPjoi4Mp/.waIUr6Y.TENZJsBo6FZYZ2cflNn5rZa', NULL, 0, 1, 1, 0, 1544988424, 1545489068, 0),
@@ -376,7 +365,7 @@ INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_a
 ('WBBLpWL2b4dV6wwGbSURhKBQdaec6oh_KX-RLmKveMo', 19, 1545251523, 1545287523),
 ('G5iEhyvdf1jvRVzbHB6w7DoPKi63Jd7Q-PuTfgKW5LM', 73.0047, 1545489067, 1546029067),
 ('P2qFuo9HJFjomRETkhtUE5DKNN2ugI2Kh_7SckHsJiY', 73.0019, 1545727230, 1546267230),
-('NCxLwg4AoceqU06aCQhzPKR2BQCWfrSG1Akcp3Bm1gM', 74, 1546005740, 1546545740),
+('NCxLwg4AoceqU06aCQhzPKR2BQCWfrSG1Akcp3Bm1gM', 74, 1546018593, 1546558593),
 ('2s0syKNqgFhejbL3wBX3vBc5ZXT_TTdUXG4RWSoXLMw', 19, 1545652183, 1545688183),
 ('hgWOql1VRs-Hv0wDa3WNRzyPukSMNGHc4AMVipW4t7A', 19, 1545727224, 1545763224);
 
@@ -619,15 +608,12 @@ ALTER TABLE `organisationsusers`
   ADD CONSTRAINT `organisationsusers_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
 
 --
-<<<<<<< HEAD
 -- Omejitve za tabelo `projects`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
 
 --
-=======
->>>>>>> f05ec60dcaee68fdf6f4561966826a8634deb363
 -- Omejitve za tabelo `psp_errors`
 --
 ALTER TABLE `psp_errors`
