@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Gostitelj: localhost
--- Čas nastanka: 28. dec 2018 ob 17.11
+-- Čas nastanka: 28. dec 2018 ob 17.58
 -- Različica strežnika: 5.7.24-0ubuntu0.16.04.1
 -- Različica PHP: 7.0.32-0ubuntu0.16.04.1
 
@@ -125,10 +125,6 @@ CREATE TABLE `psps` (
 
 --
 -- RELACIJE ZA TABELO `psps`:
---   `id`
---       `psp_tasks` -> `idPSP`
---   `id`
---       `psp_errors` -> `idPSP`
 --
 
 -- --------------------------------------------------------
@@ -712,13 +708,6 @@ ALTER TABLE `users_resets`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
-
---
--- Omejitve za tabelo `psps`
---
-ALTER TABLE `psps`
-  ADD CONSTRAINT `psps_ibfk_1` FOREIGN KEY (`id`) REFERENCES `psp_tasks` (`idPSP`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `psps_ibfk_2` FOREIGN KEY (`id`) REFERENCES `psp_errors` (`idPSP`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Omejitve za tabelo `psp_errors`
