@@ -8,6 +8,7 @@ require_once __DIR__ . '/../controllers/api/ProjectController.php';
 require_once __DIR__ . '/../controllers/api/UserProjectController.php';
 require_once __DIR__ . '/../controllers/api/TaskController.php';
 require_once __DIR__ . '/../controllers/api/TaskUserProjectController.php';
+require_once __DIR__ . '/../controllers/api/PSPController.php';
 
 
 // add organisation
@@ -120,4 +121,19 @@ Flight::route('GET /api/tasks', function() {
 Flight::route('GET /api/userorganisationsprojects', function() {
 	$idUser = Flight::request()->query['idUser'];
 	OrganisationController::get_user_organisations_and_projects($idUser);
+});
+
+// get PSP
+Flight::route('GET /api/psp/@id', function($id) {
+	PSPController::show($id);
+});
+
+// add PSP
+Flight::route('POST /api/psp', function() {
+    PSPController::store();
+});
+
+// remove task
+Flight::route('DELETE /api/psp/@id', function($id) {
+	PSPController::delete($id);
 });
