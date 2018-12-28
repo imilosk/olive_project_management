@@ -10,6 +10,7 @@ require_once __DIR__ . '/../controllers/api/TaskController.php';
 require_once __DIR__ . '/../controllers/api/TaskUserProjectController.php';
 require_once __DIR__ . '/../controllers/api/PSPController.php';
 require_once __DIR__ . '/../controllers/api/PSPTaskController.php';
+require_once __DIR__ . '/../controllers/api/PSPErrorController.php';
 
 
 // add organisation
@@ -137,4 +138,54 @@ Flight::route('POST /api/psp', function() {
 // remove task
 Flight::route('DELETE /api/psp/@id', function($id) {
 	PSPController::delete($id);
+});
+
+// get psp task
+Flight::route('GET /api/psptask/@id', function($id) {
+	PSPTaskController::show($id);
+});
+
+// add psp task
+Flight::route('POST /api/psptask', function() {
+    PSPTaskController::store();
+});
+
+// update psp task
+Flight::route('POST /api/psptask/@id', function($id) {
+    PSPTaskController::update($id);
+});
+
+// remove psp task
+Flight::route('DELETE /api/psptask/@id', function($id) {
+	PSPTaskController::delete($id);
+});
+
+// get all tasks of a psp
+Flight::route('GET /api/psptasks/@idPSP', function($idPSP) {
+	PSPTaskController::get_psp_tasks($idPSP);
+});
+
+// get psp error
+Flight::route('GET /api/psperror/@id', function($id) {
+	PspErrorController::show($id);
+});
+
+// add psp error
+Flight::route('POST /api/psperror', function() {
+    PspErrorController::store();
+});
+
+// update psp error
+Flight::route('POST /api/psperror/@id', function($id) {
+    PspErrorController::update($id);
+});
+
+// remove psp error
+Flight::route('DELETE /api/psperror/@id', function($id) {
+	PspErrorController::delete($id);
+});
+
+// get all errors of a psp
+Flight::route('GET /api/psperrors/@idPSP', function($idPSP) {
+	PspErrorController::get_psp_errors($idPSP);
 });
