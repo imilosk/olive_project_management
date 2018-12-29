@@ -1,3 +1,4 @@
+//trenutna resitev
 /* function item1() {
 	localStorage.setItem("item", "item1");
 }

@@ -7,6 +7,7 @@ class AuthController {
     public static function register_user() {
         global $auth;
         try {
+			//trim()? upostevamo tudi presledke v geslu??
 			if($_POST['password'] === $_POST['password_repeat']) {
 				$userId = $auth->register($_POST['email'], $_POST['password']);
 				$msg = 'We have signed up a new user with the ID ' . $userId;
