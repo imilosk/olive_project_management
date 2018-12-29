@@ -122,15 +122,28 @@ function addProjectToOrganisation(orgId, event){
 }
 
 function deleteProject(projectId){
-    console.log("am gonna delete project with id : "+projectId);
+    sendRequest("/api/project/"+projectId, 'DELETE', '',function(result){
+        console.log("Project deleted! v novi metodi");
+        //refresh menu
+        getUserOrganisations();
+    });
+}
+
+function deleteOrganisation(orgId){
+    sendRequest('/api/organisation/'+orgId, 'DELETE', '', function(result){
+        console("organisation deleted!");
+        //refresh menu
+        getUserOrganisations();
+    });
+}
+
+function sendRequest(url, type, data, callback) {
+    console.log("pica");
     $.ajax({
-        url: "/api/project/"+projectId,
-        type: 'DELETE',
-        success: function(result) {
-            console.log("Project deleted!");
-            //refresh menu
-            getUserOrganisations();
-        },
+        url: url,
+        type: type,
+        data: data,
+        success: callback,
         error: function(error){
             console.log(error);
         }
