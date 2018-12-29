@@ -243,9 +243,9 @@ INSERT INTO `userprojects` (`idProject`, `idUser`) VALUES
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(249) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
   `verified` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `resettable` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
@@ -253,7 +253,7 @@ CREATE TABLE `users` (
   `registered` int(10) UNSIGNED NOT NULL,
   `last_login` int(10) UNSIGNED DEFAULT NULL,
   `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Odloži podatke za tabelo `users`
@@ -276,11 +276,11 @@ INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`
 CREATE TABLE `users_confirmations` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `email` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(249) COLLATE utf8_unicode_ci NOT NULL,
   `selector` varchar(16) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -294,7 +294,7 @@ CREATE TABLE `users_remembered` (
   `selector` varchar(24) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -308,7 +308,7 @@ CREATE TABLE `users_resets` (
   `selector` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -321,7 +321,7 @@ CREATE TABLE `users_throttling` (
   `tokens` float UNSIGNED NOT NULL,
   `replenished_at` int(10) UNSIGNED NOT NULL,
   `expires_at` int(10) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Odloži podatke za tabelo `users_throttling`

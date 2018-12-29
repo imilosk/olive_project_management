@@ -26,7 +26,7 @@
 				<input type="text" name="email" placeholder="Email" required>
 			</div>
 			
-			@if($msg && (explode(" ", $msg)[1] == 'email' ||explode(" ", $msg)[1] == 'already')) 
+			@if($msg && (explode(" ", $msg)[1] == 'email' || explode(" ", $msg)[1] == 'already')) 
 				<div id="message"> {{ $msg }} </div>
 			@endif
 
@@ -34,7 +34,7 @@
 				<div class="input-container_img" >
 					<img src="img/password_input_icon_64.png" width="20" height="20">
 				</div>
-				<input type="password" name="password" placeholder="Password" required>			
+				<input type="password" id="password1" name="password" placeholder="Password" required>			
 			</div>
 			
 			@if($msg && explode(" ", $msg)[1] == 'password') 
@@ -45,9 +45,14 @@
 				<div class="input-container_img">
 					<img src="img/password_input_icon_64.png" width="20" height="20">
 				</div>
-				<input type="password" name="password_repeat" placeholder="Repeat Password" required>
+				<input type="password" id="password2" name="password_repeat" placeholder="Repeat Password" required>
 			</div>
-	        <input type="submit" name="submitButton" value="Register">
+			
+			@if($msg && explode(" ", $msg)[0] == 'Passwords') 
+				<div id="message"> {{ $msg }} </div>	
+			@endif	
+			
+	        <input type="submit" name="submitButton" id="registerbutton" value="Register">
 	        <div id="already-accout">Have an account? <a href="/login">Log in</a></div>
 	    </form>
     <div>

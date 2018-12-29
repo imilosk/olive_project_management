@@ -1,4 +1,4 @@
-function item1() {
+/* function item1() {
 	localStorage.setItem("item", "item1");
 }
 
@@ -23,4 +23,16 @@ window.onload = function(){
 		localStorage.setItem("item", "item1");
 	
 	document.getElementById(localStorage.getItem("item")).classList.add("active");
-}
+} */
+
+document.getElementById("form").addEventListener("submit", function() {
+	var password1 = document.getElementById("password1").value;
+	var password2 = document.getElementById("password2").value;
+	
+	if(password1 != password2) {
+		return false;
+	}
+	else {
+		return true;
+	}
+})
