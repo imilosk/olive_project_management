@@ -22,7 +22,6 @@ class OrganisationController {
         $name = $_POST["name"];
         $description = $_POST["description"];
         echo Organisation::insert($name, $description);
-        //echo "true";
     }
 
     public static function update($id) {
@@ -30,12 +29,10 @@ class OrganisationController {
         $name = $_POST["name"];
         $description = $_POST["description"];
         Organisation::update($id, $name, $description);
-        echo "true";
     }
     
     public static function delete($id) {
         Organisation::delete($id);
-        echo "true";
     }
 
     public static function get_user_organisations_and_projects($idUser) {

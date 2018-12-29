@@ -20,7 +20,6 @@ class ProjectController {
     public static function delete($id) {
         $response = Project::delete($id);
         Flight::json($response);
-        echo "true";
     }
 
     public static function update($id) {
