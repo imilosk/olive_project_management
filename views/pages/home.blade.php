@@ -57,5 +57,4 @@
 <script type="text/javascript" src="js/handlebars-v4.0.12.js"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/auth.js"></script>
 @endsection

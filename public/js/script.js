@@ -11,7 +11,6 @@ window.onload = function(){
 
 function getUserOrganisations(){
     $.get("/api/userorganisationsprojects?idUser="+loggedUserId, function(data){
-        console.log(data);
 
         let rawTemplate = 
             "{{#each this}}" +
@@ -21,6 +20,7 @@ function getUserOrganisations(){
                             "<div class='org-name' onclick='orgOnClick({{idOrganisation}})'>{{orgName}}</div>" +
                             "<div class='org-options'>" +
                                 "<div class='org-option-add-project'>+</div>" +
+                                "<div class='org-option-remove'>-</div>" +
                                 "<div class='add-project-div'>" +
                                     "<input type='text' placeholder='Name'>" +
                                     "<input type='text' placeholder='Description'>" +
@@ -96,7 +96,8 @@ function orgOnClick(orgId) {
 }
 
 function displayAddProjectForm(event) {
-    let addProjectForm = event.target.nextElementSibling;
+    console.log("i am here");
+    let addProjectForm = event.target.parentElement.lastChild;
     if (addProjectForm.classList.contains("collapsed")) {
         addProjectForm.classList.remove("collapsed");
     } else {
@@ -110,11 +111,11 @@ function addProjectToOrganisation(orgId, event){
     let projectName = parent.children[0].value;
     let projectDesc = parent.children[1].value;
 
-    $.post("/api/project", {idOrganisation: orgId, name: projectName, description: projectDesc}, function(result, status){
+    sendRequest("/api/project", "POST", {idOrganisation: orgId, name: projectName, description: projectDesc}, function(result){
         let proId = result;
         console.log("project created, id : "+result);
         
-        $.post("/api/projectsusers", {idProject: proId, idUser: loggedUserId}, function(result){
+        sendRequest("/api/projectsusers", "POST", {idProject: proId, idUser: loggedUserId}, function(result){
             console.log("project assigned");
             getUserOrganisations();
         });
