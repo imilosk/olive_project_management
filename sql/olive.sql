@@ -78,7 +78,7 @@ CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `idOrganisation` int(10) UNSIGNED NOT NULL,
   `idLeader` int(11) NOT NULL,
-  `name` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

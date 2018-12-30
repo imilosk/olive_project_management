@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../settings/DBInit.php';
+require_once __DIR__ . '/Project.php';
 
 class Organisation {
 
@@ -63,29 +64,35 @@ class Organisation {
     public static function get_user_organisations_and_projects($idUser) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT o.id AS idOrganisation,
-                                          p.id AS idProject,
-                                          p.name AS pName,
-                                          p.description AS pDesc
-                                   FROM {$table} AS o
-                                   INNER JOIN projects AS p ON p.idOrganisation = o.id
-                                   INNER JOIN userprojects AS up ON up.idProject = p.id
-                                   WHERE up.idUser = :idUser
+        // get organisations info of the user
+        $statement = $db->prepare("SELECT o.id AS idOrganisation, o.name AS orgName, o.description AS orgDesc
+                                    FROM {$table} AS o 
+                                    INNER JOIN organisationsusers AS ou ON ou.idOrganisation = o.id 
+                                    WHERE ou.idUser =  :idUser 
                                 ");
+
+    
         $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
         $statement->execute(); 
-        $result = $statement->fetchAll(PDO::FETCH_GROUP);
+        $result = $statement->fetchAll();
         
-        // add organisation name and description
-        $ids = array_keys($result);
-        foreach ($ids as $value) {
-            $org = self::get($value);
-            $result[$value]["idOrganisation"] = (int) $org["id"];
-            $result[$value]["orgName"] = $org["name"];
-            $result[$value]["orgDesc"] = $org["description"];
+        // get project info of the organisations
+        $i = 0;
+        foreach ($result as $org) {
+            $idOrg = $org["idOrganisation"];
+            $projects = Project::get_user_projects($idUser,$idOrg);
+            $j = 0;
+            foreach ($projects as $pro){
+                $result[$i][$j]["idProject"] = (int) $pro["id"];
+                $result[$i][$j]["pName"] = $pro["name"];
+                $result[$i][$j]["pDesc"] = $pro["description"];
+                $j++;
+            }
+            $i++;
         }
-        $result = array_values($result);
         return $result;
+
     }
-    
 }
+
+
