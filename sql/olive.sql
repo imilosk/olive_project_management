@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
--- Gostitelj: localhost
--- Čas nastanka: 28. dec 2018 ob 19.48
--- Različica strežnika: 5.7.24-0ubuntu0.16.04.1
--- Različica PHP: 7.0.32-0ubuntu0.16.04.1
+-- Gostitelj: 127.0.0.1
+-- Čas nastanka: 31. dec 2018 ob 01.18
+-- Različica strežnika: 10.1.31-MariaDB
+-- Različica PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,6 +30,7 @@ USE `olive`;
 -- Struktura tabele `organisations`
 --
 
+DROP TABLE IF EXISTS `organisations`;
 CREATE TABLE `organisations` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -51,6 +54,7 @@ INSERT INTO `organisations` (`id`, `name`, `description`) VALUES
 -- Struktura tabele `organisationsusers`
 --
 
+DROP TABLE IF EXISTS `organisationsusers`;
 CREATE TABLE `organisationsusers` (
   `idOrganisation` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
@@ -74,6 +78,7 @@ INSERT INTO `organisationsusers` (`idOrganisation`, `idUser`) VALUES
 -- Struktura tabele `projects`
 --
 
+DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `idOrganisation` int(10) UNSIGNED NOT NULL,
@@ -92,12 +97,24 @@ INSERT INTO `projects` (`id`, `idOrganisation`, `idLeader`, `name`, `description
 (11, 2, 0, 'Katalon', 'Katalon test project'),
 (12, 1, 0, 'Faks', '#naredimoFaks');
 
+--
+-- Sprožilci `projects`
+--
+DROP TRIGGER IF EXISTS `deleteUsersFromProject`;
+DELIMITER $$
+CREATE TRIGGER `deleteUsersFromProject` BEFORE DELETE ON `projects` FOR EACH ROW BEGIN
+DELETE FROM userprojects WHERE idProject = OLD.id;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Struktura tabele `psps`
 --
 
+DROP TABLE IF EXISTS `psps`;
 CREATE TABLE `psps` (
   `id` int(10) UNSIGNED NOT NULL,
   `programing_language` varchar(20) COLLATE utf8_unicode_ci NOT NULL
@@ -109,6 +126,7 @@ CREATE TABLE `psps` (
 -- Struktura tabele `psp_errors`
 --
 
+DROP TABLE IF EXISTS `psp_errors`;
 CREATE TABLE `psp_errors` (
   `id` int(10) UNSIGNED NOT NULL,
   `idCategory` int(10) UNSIGNED NOT NULL,
@@ -126,6 +144,7 @@ CREATE TABLE `psp_errors` (
 -- Struktura tabele `psp_errors_categories`
 --
 
+DROP TABLE IF EXISTS `psp_errors_categories`;
 CREATE TABLE `psp_errors_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -153,6 +172,7 @@ INSERT INTO `psp_errors_categories` (`id`, `name`) VALUES
 -- Struktura tabele `psp_phases`
 --
 
+DROP TABLE IF EXISTS `psp_phases`;
 CREATE TABLE `psp_phases` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
@@ -177,6 +197,7 @@ INSERT INTO `psp_phases` (`id`, `name`) VALUES
 -- Struktura tabele `psp_tasks`
 --
 
+DROP TABLE IF EXISTS `psp_tasks`;
 CREATE TABLE `psp_tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `idPhase` int(10) UNSIGNED NOT NULL,
@@ -196,6 +217,7 @@ CREATE TABLE `psp_tasks` (
 -- Struktura tabele `tasks`
 --
 
+DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -208,6 +230,7 @@ CREATE TABLE `tasks` (
 -- Struktura tabele `tasksusersprojects`
 --
 
+DROP TABLE IF EXISTS `tasksusersprojects`;
 CREATE TABLE `tasksusersprojects` (
   `idUser` int(10) UNSIGNED NOT NULL,
   `idTask` int(10) UNSIGNED NOT NULL,
@@ -220,6 +243,7 @@ CREATE TABLE `tasksusersprojects` (
 -- Struktura tabele `userprojects`
 --
 
+DROP TABLE IF EXISTS `userprojects`;
 CREATE TABLE `userprojects` (
   `idProject` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
@@ -241,6 +265,7 @@ INSERT INTO `userprojects` (`idProject`, `idUser`) VALUES
 -- Struktura tabele `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(249) COLLATE utf8_unicode_ci NOT NULL,
@@ -263,7 +288,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`
 (3, 'milos.kostadinovski97@gmail.com', '$2y$10$oRIyHRU70d0uEwt8opVUkuDqPDNPO989oQdvZFlSZDy40xu7EAWuS', NULL, 0, 1, 1, 0, 1543679404, 1545823279, 38),
 (4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1546018593, 2),
 (5, 'test123@test.si', '$2y$10$ZBCUaBGTWBHgWgdQ7TliKuKIHDaPoBFlKyinlbet4jySwAZhh60p.', NULL, 0, 1, 1, 0, 1544635196, 1545823288, 13),
-(6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1545832181, 4),
+(6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1546211433, 4),
 (7, 'test1@gmail.com', '$2y$10$ntUMiByO3v5DfPjoi4Mp/.waIUr6Y.TENZJsBo6FZYZ2cflNn5rZa', NULL, 0, 1, 1, 0, 1544988424, 1545489068, 0),
 (8, 'mihad@hotmail.com', '$2y$10$EIIvIJJ3/9diBRO4Gy2lWOiHFwbEvktIRHJnR2i6TKlpjZHuAHJT.', NULL, 0, 1, 1, 0, 1545062843, NULL, 0);
 
@@ -273,6 +298,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`
 -- Struktura tabele `users_confirmations`
 --
 
+DROP TABLE IF EXISTS `users_confirmations`;
 CREATE TABLE `users_confirmations` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
@@ -288,6 +314,7 @@ CREATE TABLE `users_confirmations` (
 -- Struktura tabele `users_remembered`
 --
 
+DROP TABLE IF EXISTS `users_remembered`;
 CREATE TABLE `users_remembered` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user` int(10) UNSIGNED NOT NULL,
@@ -302,6 +329,7 @@ CREATE TABLE `users_remembered` (
 -- Struktura tabele `users_resets`
 --
 
+DROP TABLE IF EXISTS `users_resets`;
 CREATE TABLE `users_resets` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user` int(10) UNSIGNED NOT NULL,
@@ -316,6 +344,7 @@ CREATE TABLE `users_resets` (
 -- Struktura tabele `users_throttling`
 --
 
+DROP TABLE IF EXISTS `users_throttling`;
 CREATE TABLE `users_throttling` (
   `bucket` varchar(44) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `tokens` float UNSIGNED NOT NULL,
@@ -328,46 +357,47 @@ CREATE TABLE `users_throttling` (
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
-('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 73.0108, 1545823278, 1546363278),
-('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 2.02139, 1543679404, 1544111404),
-('xk_0P82Dv6TydZzq0_8BpF69U3ixeWrdOfuZeR91xLE', 73.0075, 1543683909, 1544223909),
+('0DR9r5_hDItG4xBwVj-OfzL7hGzbxs3xlybeM5bOC6M', 74, 1545145436, 1545685436),
+('2Cdy6f0wyijhl6dkDptQ9gP0B4dii7K9cvUnn-geZmE', 499, 1545727224, 1545900024),
+('2s0syKNqgFhejbL3wBX3vBc5ZXT_TTdUXG4RWSoXLMw', 19, 1545652183, 1545688183),
+('3n7tZpNvVRLOeU6wTrPEnfsZ4WJQd11PqhDToPSeJDw', 74, 1545823288, 1546363288),
 ('5jq3AH19WlBEFyhOTeZP3LbPx95GoJ8-QpAxJJAnewc', 47.7874, 1544461287, 1545001287),
 ('8qFHGFuZ3H-aldgtg_mtXLJh2TTLVhlhEqc9szv_DFk', 74, 1543856106, 1544396106),
-('PCzUm55pdDAqjYYPz3AWLJQy262Q_Zl3_9OzjJhKV-k', 73.0325, 1545062843, 1545602843),
-('H-PH7FwamVmjbxFIcmyz63Zrujg5w5IZJp7pRhu7BCU', 4, 1545062843, 1545494843),
-('U4ys0_piHGd3En-OGMiOHkshHfXdTXgRbUNa9SmOcpo', 19, 1544460553, 1544496553),
-('c-8J-zRTdUcdxOAHX8kD0KM0OyMiY0MsM4AZ1aWV0Fc', 499, 1544460553, 1544633353),
-('E4nXgfd4s6uCMiY9fxcTLwx3PkHNZHH4oItpeIeam8E', 49.6426, 1544659108, 1545199108),
-('fDGrEUHZRKBb7Xv3j43hJzwTzegVp4R50yUYFpJgdAc', 4, 1544635196, 1545067196),
-('LTkql0BA6xIuv434gtEVdWYWFsHTnbW_bFN4b9cLTmI', 19, 1544639024, 1544675024),
-('Cf9XPA77LXVS-DfQ8TYjEoWWwxG219B7rL7ul0WMmZQ', 499, 1545652183, 1545824983),
-('x_J_qARWB7QH7q644fxvjAAVTIBYMnZ6L9Yco7kXNXg', 73.0011, 1544658727, 1545198727),
-('ja8JzGOqkv1n-3_kUthi6hRecvNLqk7sICMsqawZH5Q', 72.0159, 1544721919, 1545261919),
-('_wceZPqA5nuvuxNFUegEfQ-USS36nJ-g6BGHIZDhx2o', 19, 1544721863, 1544757863),
 ('9FxMHNh5YM-utgy9ra4k7t1rGaCpNEq2jkiWb5ckgX4', 499, 1544721863, 1544894663),
-('msgb-JKS0Kn_cbX_c7fmikSPUmNfI79WaR8XzoP913A', 4, 1544721905, 1545153905),
-('yPBSh_s7OQ2IzQcBrlnNbFkQy_6b0vQ76z6oLZHzAQo', 74, 1544727686, 1545267686),
-('FpCk6bEgI6YAfTXmVlgQM0ftgGFjoRLg-buFNzE2QtE', 19, 1544727686, 1544763686),
-('2Cdy6f0wyijhl6dkDptQ9gP0B4dii7K9cvUnn-geZmE', 499, 1545727224, 1545900024),
-('3n7tZpNvVRLOeU6wTrPEnfsZ4WJQd11PqhDToPSeJDw', 74, 1545823288, 1546363288),
-('PDwrMpioKyjD84TwbMWjnhWqrRSKeaWQcubdWZHNcSk', 74, 1544978594, 1545518594),
+('Cf9XPA77LXVS-DfQ8TYjEoWWwxG219B7rL7ul0WMmZQ', 499, 1545652183, 1545824983),
+('c-8J-zRTdUcdxOAHX8kD0KM0OyMiY0MsM4AZ1aWV0Fc', 499, 1544460553, 1544633353),
 ('c1ZvIgBSw4l9zOmg_Rl2ONcnIA7eR6lpoegHLZ2ffIQ', 73.0119, 1545832181, 1546372181),
-('LUK3m6pAIqX5wHErCd5Innv6RufQ2PpZcYSdZWt7XdA', 19, 1544981266, 1545017266),
-('TQ6sUjnchAJ74LYpPfEJUbZPVF22hB4yqOfZIEnYuBk', 74, 1545673468, 1546213468),
-('_tAWvxsp3y2qlWL3tl-OND8XHXbARBCOv4U1BxU-zQM', 73.0039, 1544985819, 1545525819),
-('vS_jRi8hTqkIhlTVUB-2z4mIkuZZNxUF2q1HdRmIrtU', 73.0017, 1544988430, 1545528430),
-('G6V0SDiefWJICYARrqPdcUzyNX_ubnCAxIEHCbleISc', 4, 1544988424, 1545420424),
-('qGclkiH2l4Xi5_UsN_fXKykAH7-WwR3OYPCoRZL9V8M', 74, 1545044306, 1545584306),
+('E4nXgfd4s6uCMiY9fxcTLwx3PkHNZHH4oItpeIeam8E', 49.6426, 1544659108, 1545199108),
+('ejWtPDKvxt-q7LZ3mFjzUoIWKJYzu47igC8Jd9mffFk', 74, 1546211432, 1546751432),
+('FpCk6bEgI6YAfTXmVlgQM0ftgGFjoRLg-buFNzE2QtE', 19, 1544727686, 1544763686),
 ('FX3R0l0ctxw5eeiSOqUZw9WckzxgeMA3IrzMwcSKOiE', 74, 1545059655, 1545599655),
-('yrabbxw-AdRgf1J-CvUt6X1EAHPAC5NIUorW0Bhfd1w', 74, 1545063920, 1545603920),
-('0DR9r5_hDItG4xBwVj-OfzL7hGzbxs3xlybeM5bOC6M', 74, 1545145436, 1545685436),
-('krIuNjuUXivvIFOhbuGSdeYcFBkRz67fgGeNRsWiSWU', 73.0053, 1545251523, 1545791523),
-('WBBLpWL2b4dV6wwGbSURhKBQdaec6oh_KX-RLmKveMo', 19, 1545251523, 1545287523),
+('fDGrEUHZRKBb7Xv3j43hJzwTzegVp4R50yUYFpJgdAc', 4, 1544635196, 1545067196),
 ('G5iEhyvdf1jvRVzbHB6w7DoPKi63Jd7Q-PuTfgKW5LM', 73.0047, 1545489067, 1546029067),
-('P2qFuo9HJFjomRETkhtUE5DKNN2ugI2Kh_7SckHsJiY', 73.0019, 1545727230, 1546267230),
+('G6V0SDiefWJICYARrqPdcUzyNX_ubnCAxIEHCbleISc', 4, 1544988424, 1545420424),
+('H-PH7FwamVmjbxFIcmyz63Zrujg5w5IZJp7pRhu7BCU', 4, 1545062843, 1545494843),
+('hgWOql1VRs-Hv0wDa3WNRzyPukSMNGHc4AMVipW4t7A', 19, 1545727224, 1545763224),
+('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 73.0108, 1545823278, 1546363278),
+('ja8JzGOqkv1n-3_kUthi6hRecvNLqk7sICMsqawZH5Q', 72.0159, 1544721919, 1545261919),
+('krIuNjuUXivvIFOhbuGSdeYcFBkRz67fgGeNRsWiSWU', 73.0053, 1545251523, 1545791523),
+('LTkql0BA6xIuv434gtEVdWYWFsHTnbW_bFN4b9cLTmI', 19, 1544639024, 1544675024),
+('LUK3m6pAIqX5wHErCd5Innv6RufQ2PpZcYSdZWt7XdA', 19, 1544981266, 1545017266),
+('msgb-JKS0Kn_cbX_c7fmikSPUmNfI79WaR8XzoP913A', 4, 1544721905, 1545153905),
 ('NCxLwg4AoceqU06aCQhzPKR2BQCWfrSG1Akcp3Bm1gM', 74, 1546018593, 1546558593),
-('2s0syKNqgFhejbL3wBX3vBc5ZXT_TTdUXG4RWSoXLMw', 19, 1545652183, 1545688183),
-('hgWOql1VRs-Hv0wDa3WNRzyPukSMNGHc4AMVipW4t7A', 19, 1545727224, 1545763224);
+('P2qFuo9HJFjomRETkhtUE5DKNN2ugI2Kh_7SckHsJiY', 73.0019, 1545727230, 1546267230),
+('PCzUm55pdDAqjYYPz3AWLJQy262Q_Zl3_9OzjJhKV-k', 73.0325, 1545062843, 1545602843),
+('PDwrMpioKyjD84TwbMWjnhWqrRSKeaWQcubdWZHNcSk', 74, 1544978594, 1545518594),
+('qGclkiH2l4Xi5_UsN_fXKykAH7-WwR3OYPCoRZL9V8M', 74, 1545044306, 1545584306),
+('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 2.02139, 1543679404, 1544111404),
+('TQ6sUjnchAJ74LYpPfEJUbZPVF22hB4yqOfZIEnYuBk', 74, 1545673468, 1546213468),
+('U4ys0_piHGd3En-OGMiOHkshHfXdTXgRbUNa9SmOcpo', 19, 1544460553, 1544496553),
+('vS_jRi8hTqkIhlTVUB-2z4mIkuZZNxUF2q1HdRmIrtU', 73.0017, 1544988430, 1545528430),
+('WBBLpWL2b4dV6wwGbSURhKBQdaec6oh_KX-RLmKveMo', 19, 1545251523, 1545287523),
+('xk_0P82Dv6TydZzq0_8BpF69U3ixeWrdOfuZeR91xLE', 73.0075, 1543683909, 1544223909),
+('x_J_qARWB7QH7q644fxvjAAVTIBYMnZ6L9Yco7kXNXg', 73.0011, 1544658727, 1545198727),
+('yPBSh_s7OQ2IzQcBrlnNbFkQy_6b0vQ76z6oLZHzAQo', 74, 1544727686, 1545267686),
+('yrabbxw-AdRgf1J-CvUt6X1EAHPAC5NIUorW0Bhfd1w', 74, 1545063920, 1545603920),
+('_tAWvxsp3y2qlWL3tl-OND8XHXbARBCOv4U1BxU-zQM', 73.0039, 1544985819, 1545525819),
+('_wceZPqA5nuvuxNFUegEfQ-USS36nJ-g6BGHIZDhx2o', 19, 1544721863, 1544757863);
 
 -- --------------------------------------------------------
 
@@ -375,6 +405,7 @@ INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_a
 -- Struktura tabele `user_psp_data`
 --
 
+DROP TABLE IF EXISTS `user_psp_data`;
 CREATE TABLE `user_psp_data` (
   `idUser` int(11) NOT NULL,
   `size` int(11) NOT NULL,
@@ -542,61 +573,73 @@ ALTER TABLE `user_psp_data`
 --
 ALTER TABLE `organisations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT tabele `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT tabele `psps`
 --
 ALTER TABLE `psps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT tabele `psp_errors`
 --
 ALTER TABLE `psp_errors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT tabele `psp_errors_categories`
 --
 ALTER TABLE `psp_errors_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT tabele `psp_phases`
 --
 ALTER TABLE `psp_phases`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT tabele `psp_tasks`
 --
 ALTER TABLE `psp_tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT tabele `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT tabele `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT tabele `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT tabele `users_remembered`
 --
 ALTER TABLE `users_remembered`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT tabele `users_resets`
 --
 ALTER TABLE `users_resets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- Omejitve tabel za povzetek stanja
 --
@@ -647,6 +690,7 @@ ALTER TABLE `tasksusersprojects`
 --
 ALTER TABLE `userprojects`
   ADD CONSTRAINT `userprojects_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
