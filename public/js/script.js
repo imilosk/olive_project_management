@@ -111,7 +111,7 @@ function addProjectToOrganisation(orgId, event){
     let projectName = parent.children[0].value;
     let projectDesc = parent.children[1].value;
 
-    sendRequest("/api/project", "POST", {idOrganisation: orgId, name: projectName, description: projectDesc}, function(result){
+    sendRequest("/api/project", "POST", { idOrganisation: orgId, name: projectName, description: projectDesc, idLeader: loggedUserId}, function(result){
         let proId = result;
         console.log("project created, id : "+result);
         

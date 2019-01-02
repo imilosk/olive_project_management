@@ -39,14 +39,15 @@ class Project {
         return $statement->fetchAll();
     }
 
-    public static function insert($name, $description, $idOrganisation) {
+    public static function insert($name, $description, $idOrganisation, $idLeader) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO {$table} (name,description,idOrganisation)
-            VALUES (:name,:description,:idOrganisation)");
+        $statement = $db->prepare("INSERT INTO {$table} (name,description,idOrganisation, idLeader)
+            VALUES (:name,:description,:idOrganisation, :idLeader)");
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
         $statement->bindParam(":idOrganisation", $idOrganisation);
+        $statement->bindParam(":idLeader", $idLeader);
         $statement->execute();
         return $db->lastInsertId();
     }

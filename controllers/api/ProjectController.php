@@ -13,7 +13,8 @@ class ProjectController {
         $idOrganisation = $_POST["idOrganisation"];
         $name = $_POST["name"];
         $description = $_POST["description"];
-        $response = Project::insert($name, $description, $idOrganisation);
+        $idLeader = (int) $_POST["idLeader"];
+        $response = Project::insert($name, $description, $idOrganisation, $idLeader);
         Flight::json($response);
     }
 
