@@ -11,7 +11,8 @@ require_once __DIR__ . '/../controllers/api/TaskUserProjectController.php';
 require_once __DIR__ . '/../controllers/api/PSPController.php';
 require_once __DIR__ . '/../controllers/api/PSPTaskController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorController.php';
-
+require_once __DIR__ . '/../controllers/api/PSPErrorCategorieController.php';
+require_once __DIR__ . '/../controllers/api/PspPhaseController.php';
 
 // add organisation
 Flight::route('POST /api/organisation', function() {
@@ -188,4 +189,24 @@ Flight::route('DELETE /api/psperror/@id', function($id) {
 // get all errors of a psp
 Flight::route('GET /api/psperrors/@idPSP', function($idPSP) {
 	PspErrorController::get_psp_errors($idPSP);
+});
+
+// get all error categories
+Flight::route('GET /api/psperrorcategories', function() {
+	PspErrorCategorieController::index();
+});
+
+// get specific error categorie
+Flight::route('GET /api/psperrorcategories/@idPSP', function($idPSP) {
+	PspErrorCategorieController::show($idPSP);
+});
+
+// get all error categories
+Flight::route('GET /api/pspphases', function() {
+	PspPhaseController::index();
+});
+
+// get specific error categorie
+Flight::route('GET /api/pspphases/@idPSP', function($idPSP) {
+	PspPhaseController::show($idPSP);
 });
