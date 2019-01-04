@@ -1,6 +1,6 @@
 <?php 
 
-require_once __DIR__ . '/../../models/PspPhase.php';
+require_once __DIR__ . '/../../models/PSPPhase.php';
 
 class PspPhaseController {
 
