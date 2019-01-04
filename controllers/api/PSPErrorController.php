@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../models/PSPError.php';
 
-class PspErrorController {
+class PSPErrorController {
 
     public static function show($id) {
         $psptask = PspError::get($id);

@@ -1,8 +1,8 @@
 <?php 
 
-require_once __DIR__ . '/../../models/PSPErrorCategories.php';
+require_once __DIR__ . '/../../models/PSPErrorCategory.php';
 
-class PspErrorCategorieController {
+class PSPErrorCategoryController {
 
     public static function index() {
         $psperrorcategories = PspErrorCategorie::get_all();

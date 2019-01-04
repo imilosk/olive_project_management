@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../models/PSPTask.php';
 
-class PspTaskController {
+class PSPTaskController {
 
     public static function show($id) {
         $psptask = PSPTask::get($id);

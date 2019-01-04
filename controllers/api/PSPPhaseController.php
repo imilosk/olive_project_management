@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../models/PSPPhase.php';
 
-class PspPhaseController {
+class PSPPhaseController {
 
     public static function index() {
         $pspphases = PspPhase::get_all();
