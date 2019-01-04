@@ -86,6 +86,7 @@ class Organisation {
                 $result[$i][$j]["idProject"] = (int) $pro["id"];
                 $result[$i][$j]["pName"] = $pro["name"];
                 $result[$i][$j]["pDesc"] = $pro["description"];
+                $result[$i][$j]["idLeader"] = $pro["idLeader"];
                 $j++;
             }
             $i++;

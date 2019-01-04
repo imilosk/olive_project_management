@@ -12,7 +12,7 @@ require_once __DIR__ . '/../controllers/api/PSPController.php';
 require_once __DIR__ . '/../controllers/api/PSPTaskController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorCategorieController.php';
-require_once __DIR__ . '/../controllers/api/PspPhaseController.php';
+require_once __DIR__ . '/../controllers/api/PSPPhaseController.php';
 
 // add organisation
 Flight::route('POST /api/organisation', function() {
@@ -168,45 +168,45 @@ Flight::route('GET /api/psptasks/@idPSP', function($idPSP) {
 
 // get psp error
 Flight::route('GET /api/psperror/@id', function($id) {
-	PspErrorController::show($id);
+	PSPErrorController::show($id);
 });
 
 // add psp error
 Flight::route('POST /api/psperror', function() {
-    PspErrorController::store();
+    PSPErrorController::store();
 });
 
 // update psp error
 Flight::route('POST /api/psperror/@id', function($id) {
-    PspErrorController::update($id);
+    PSPErrorController::update($id);
 });
 
 // remove psp error
 Flight::route('DELETE /api/psperror/@id', function($id) {
-	PspErrorController::delete($id);
+	PSPErrorController::delete($id);
 });
 
 // get all errors of a psp
 Flight::route('GET /api/psperrors/@idPSP', function($idPSP) {
-	PspErrorController::get_psp_errors($idPSP);
+	PSPErrorController::get_psp_errors($idPSP);
 });
 
 // get all error categories
 Flight::route('GET /api/psperrorcategories', function() {
-	PspErrorCategorieController::index();
+	PSPErrorCategorieController::index();
 });
 
 // get specific error categorie
 Flight::route('GET /api/psperrorcategories/@idPSP', function($idPSP) {
-	PspErrorCategorieController::show($idPSP);
+	PSPErrorCategorieController::show($idPSP);
 });
 
 // get all error categories
 Flight::route('GET /api/pspphases', function() {
-	PspPhaseController::index();
+	PSPPhaseController::index();
 });
 
 // get specific error categorie
 Flight::route('GET /api/pspphases/@idPSP', function($idPSP) {
-	PspPhaseController::show($idPSP);
+	PSPPhaseController::show($idPSP);
 });

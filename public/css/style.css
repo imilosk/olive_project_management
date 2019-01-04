@@ -245,10 +245,6 @@ select:-webkit-autofill:focus {
 	padding: 3px;
 }
 
-.org-option {
-	cursor: pointer;
-}
-
 .add-project-div {
 	display: none;
 	transition: 1s;
@@ -282,20 +278,67 @@ select:-webkit-autofill:focus {
     padding: 3px;
 }
 
-.pro-div, 
+/*.pro-div, */
 .org-div,
 .org-options{
 	display: flex;
 	flex-flow: row;
 }
 
-.del-project{
-	padding: 3px;
-	cursor: pointer;
+.org-option,
+.pro-option {
 	color: white;
-	text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.del-project{
 	background-color: #EF3D59;
 }
+
+.org-options-users,
+.users-project {
+    background-color: #EFC958;
+}
+
+.pro-options{
+	display: flex;
+	flex-flow: row;
+} 
+
+.ului-email {font-size: 15px;}
+.ului-id {font-size: 11px;}
+
+.ului-settings {
+    background-color: #ef3d59;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 3px;
+}
+
+.ul-user {padding: 5px;}
+
+.row {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.project-users-list {
+	display: hidden;
+} 
+
+.add-stuff-icon {
+	background-color: #4ab19d;
+	color: white;
+	padding: 3px;
+} 
 
 /* Add Animation */
 @-webkit-keyframes slideIn {

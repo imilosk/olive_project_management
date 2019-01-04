@@ -1,5 +1,5 @@
 let testData;
-let loggedUserId = document.getElementById("test").innerHTML;
+const loggedUserId = document.getElementById("test").innerHTML;
 
 window.onload = function(){
     init();
@@ -11,16 +11,17 @@ window.onload = function(){
 
 function getUserOrganisations(){
     $.get("/api/userorganisationsprojects?idUser="+loggedUserId, function(data){
-
+        console.log(data);
         let rawTemplate = 
             "{{#each this}}" +
                 "<div class='org-list'>" +
                     "<div class='org-container'>" +
                         "<div class='org-div'>" +
-                            "<div class='org-name' onclick='orgOnClick({{idOrganisation}})'>{{orgName}}</div>" +
+                            "<div class='org-name'>{{orgName}}</div>" +
                             "<div class='org-options'>" +
-                                "<div class='org-option-add-project'>+</div>" +
-                                "<div class='org-option-remove'>-</div>" +
+                                "<div class='org-options-users org-option' onclick='showOrgUsers({{idOrganisation}})'>U</div>" +
+                                "<div class='org-option-add-project org-option'>+</div>" +
+                                "<div class='org-option-remove org-option' onclick='deleteOrganisation({{idOrganisation}})'>-</div>" +
                                 "<div class='add-project-div'>" +
                                     "<input type='text' placeholder='Name'>" +
                                     "<input type='text' placeholder='Description'>" +
@@ -32,9 +33,17 @@ function getUserOrganisations(){
                             "{{#each this}}" +
                                 "{{#if idProject}}" +
                                     "<div class='pro-div'>" +
-                                        "<div class='project-name'>{{pName}}</div>" +
-                                        "<div class='pro-options'>" +
-                                            "<div class='del-project' onclick='deleteProject({{idProject}})'>-</div>" +
+                                        "<div class='project-properties'>" +
+                                            "<div class='row'>" +
+                                                "<div class='project-name'>{{pName}}</div>" +
+                                                "<div class='pro-options row'>" +
+                                                    "<div class='users-project pro-option' onclick='showProjectUsers({{idProject}})'>u</div>" +
+                                                    "<div class='del-project pro-option' onclick='deleteProject({{idProject}})'>-</div>" +
+                                                "</div>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class='project-users'>" +
+                                            "<div id='pro{{idProject}}' class='project-users-list'></div>" +
                                         "</div>" +
                                     "</div>" +
                                 "{{/if}}" +
@@ -43,13 +52,15 @@ function getUserOrganisations(){
                     "</div>" +
                 "</div>" +
             "{{/each}}";
-        let compiledTemplate = Handlebars.compile(rawTemplate);
-        let generatedHTML = compiledTemplate(data);
 
-        document.getElementById("modal-body_organistaions").innerHTML = generatedHTML;
+        document.getElementById("modal-body_organistaions").innerHTML = makeTemplate(rawTemplate, data);
 
         initClickEvents();
     });
+}
+
+function testF(event){
+    console.log(event.target);
 }
 
 function initClickEvents(){
@@ -86,6 +97,7 @@ function addOrganisation(){
 
 $("#btn-openOrganisationModal").click(openAddOrganisationModal);
 $("#btn-addNewOrganisation").click(addOrganisation);
+$(".project-users-list").click(testF);
 
 function proOnClick(id){
     console.log(id);
@@ -123,8 +135,15 @@ function addProjectToOrganisation(orgId, event){
 }
 
 function deleteProject(projectId){
+    /*
     sendRequest("/api/project/"+projectId, 'DELETE', '',function(result){
         console.log("Project deleted! v novi metodi");
+        //refresh menu
+        getUserOrganisations();
+    });*/
+    
+    sendRequest("/api/projectsusers/"+ projectId +"/"+loggedUserId, 'DELETE', '', function(){
+        console.log("You have been removed from this project.");
         //refresh menu
         getUserOrganisations();
     });
@@ -138,8 +157,59 @@ function deleteOrganisation(orgId){
     });
 }
 
+function showOrgUsers(orgId){
+    sendRequest('/api/users', 'GET', {idOrganisation: orgId}, function(result){
+        console.log(result);
+    });
+}
+
+function showProjectUsers(projectId) {
+    let element = $("#pro"+projectId);
+    if ($(element).is(":hidden") || $("#pro"+projectId).html() == ""){
+        getProjectUsers(projectId);
+    } else {
+        element.hide(500);
+    }
+}
+
+function getProjectUsers(projectId){
+    sendRequest('/api/users', 'GET', {idProject: projectId}, function(result){
+        $("#pro"+projectId).show(500);
+        let template = 
+            "{{../projectId}}" +
+            "{{#each this}}" +
+                "<div class='ul-user row'>" +
+                    "<div class='ulu-info'>" +
+                        "{{#isMe id}}" +
+                            "<div class='ului-email'>{{email}} (Me)</div>" +
+                        "{{else}}" +
+                            "<div class='ului-email'>{{email}}</div>" +
+                        "{{/isMe}}" +
+                        "<div class='ului-id'>User id : {{id}}</div>" +
+                    "</div>" +
+                    "<div class='ului-settings'>-</div>" +
+                "</div>" +
+            "{{/each}}" +
+            "<div class='project-users-settings'>" +
+                "<div class='pus-add-user'>" +
+                "<span class='add-stuff-icon'>+</span> add user" +
+                "</div>" +
+            "</div>";
+
+        let users = $("#pro"+projectId).html(makeTemplate(template, result));
+    });
+}
+
+//Handlebar helper to check if the user in project is the user that is logged in
+Handlebars.registerHelper("isMe", function(userId, options){
+    var fnTrue = options.fn, 
+        fnFalse = options.inverse;
+
+    return userId == loggedUserId ? fnTrue(this) : fnFalse(this);
+});
+
 function sendRequest(url, type, data, callback) {
-    console.log("pica");
+    console.log("send request method");
     $.ajax({
         url: url,
         type: type,
@@ -149,6 +219,11 @@ function sendRequest(url, type, data, callback) {
             console.log(error);
         }
     });
+}
+
+function makeTemplate(template, data){
+    let compiledTemplate = Handlebars.compile(template);
+    return compiledTemplate(data);
 }
 
 // Get the modal
