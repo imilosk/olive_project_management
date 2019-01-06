@@ -11,7 +11,7 @@ require_once __DIR__ . '/../controllers/api/TaskUserProjectController.php';
 require_once __DIR__ . '/../controllers/api/PSPController.php';
 require_once __DIR__ . '/../controllers/api/PSPTaskController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorController.php';
-require_once __DIR__ . '/../controllers/api/PSPErrorCategorieController.php';
+require_once __DIR__ . '/../controllers/api/PSPErrorCategoryController.php';
 require_once __DIR__ . '/../controllers/api/PSPPhaseController.php';
 
 // add organisation

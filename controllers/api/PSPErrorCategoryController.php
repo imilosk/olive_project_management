@@ -1,6 +1,6 @@
 <?php 
 
-require_once __DIR__ . '/../../models/PSPErrorCategory.php';
+require_once __DIR__ . '/../../models/PSPErrorCategories.php';
 
 class PSPErrorCategoryController {
 
