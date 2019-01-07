@@ -26,6 +26,17 @@ class User {
         return $statement->fetch();
     }
 
+    public static function getByEmail($email) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT email
+                                   FROM {$table}
+                                   WHERE email = :email");
+        $statement->bindParam(":email", $email, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
     public static function get_all_users_in_organisation($idOrganisation) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();

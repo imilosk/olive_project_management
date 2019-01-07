@@ -49,7 +49,7 @@
 
 		<div id="test">@php echo $auth->getUserId(); @endphp</div>
 
-		Danes je vreme deževno
+		<div id="joke">STOPAR!</div>
 
 	</div>
 

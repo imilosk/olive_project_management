@@ -7,6 +7,31 @@ body {
 	font-family: mainFont;
 }
 
+#joke {
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+	background-color: #EF3D59;
+	color: white;
+	transition: 0.7s;
+	margin: 20px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+#joke:hover {
+	width: 500px;
+	height: 500px;
+	margin-top: 50px;
+	border-radius: 50%;
+	font-size: 100px;
+	background-color: #fff;
+	color: #EF3D59;
+	border: 5px solid #EF3D59;
+}
+
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

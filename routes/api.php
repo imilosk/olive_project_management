@@ -14,6 +14,11 @@ require_once __DIR__ . '/../controllers/api/PSPErrorController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorCategoryController.php';
 require_once __DIR__ . '/../controllers/api/PSPPhaseController.php';
 
+// get user email using id or get user id using email
+Flight::route('GET /api/user', function() {
+	UserController::getUserInfo();
+});
+
 // add organisation
 Flight::route('POST /api/organisation', function() {
     OrganisationController::store();

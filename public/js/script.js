@@ -34,8 +34,8 @@ function getUserOrganisations(){
                         "{{#isMeLeader orgLeaderId}}" +
                             "<div class='project-users-settings'>" +
                                 "<div class='pus-add-user row'>" +
-                                    "<input type='text' class='new-user-id' placeholder='new users email'>" + 
-                                    "<span class='add-stuff-icon'>+</span>" +
+                                    "<input type='text' id='org{{idOrganisation}}_newUser'class='new-user-id' placeholder='new users email'>" + 
+                                    "<span class='add-stuff-icon' onclick='addUserToOrganisation({{idOrganisation}})'>+</span>" +
                                 "</div>" +   
                             "</div>" +
                         "{{/isMeLeader}}" +
@@ -60,8 +60,8 @@ function getUserOrganisations(){
                                         "{{#isMeLeader idLeader}}" +
                                             "<div class='project-users-settings'>" +
                                                 "<div class='pus-add-user row'>" +
-                                                    "<span class='add-stuff-icon'>+</span>" +
-                                                    "<input type='text' class='new-user-id' placeholder='new users id'>" + 
+                                                    "<span class='add-stuff-icon' onclick='addUserToProject({{idProject}})'>+</span>" +
+                                                    "<input type='text' id='pro{{idProject}}_newUser' class='new-user-id' placeholder='new users id'>" + 
                                             "</div>" +
                                         "{{/isMeLeader}}" +
                                     "</div>" +
@@ -136,6 +136,17 @@ function drawUserList(element, data){
 
     let users = element.html(makeTemplate(template, data));
     element.parent().show(500);
+}
+
+// vrednost(email) dobi iz input fielda
+function addUserToOrganisation(orgId) {
+    let inputElement = $("#org"+orgId+"_newUser");
+    console.log(inputElement.val());
+}
+
+// vrednost(email) dobi iz input fielda
+function addUserToProject(proId) {
+
 }
 
 function getProjectUsers(projectId){
@@ -338,3 +349,14 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+
+$("#joke").hover(function(){
+    $("#joke").html("Klikni me!");
+}, function(){
+    $("#joke").html("STOPAR!");
+});
+
+$("#joke").click(function(){
+    window.open("https://www.youtube.com/watch?v=DVx8L7a3MuE");
+});
