@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: 127.0.0.1
--- Čas nastanka: 31. dec 2018 ob 01.18
--- Različica strežnika: 10.1.31-MariaDB
--- Različica PHP: 7.2.3
+-- Čas nastanka: 08. jan 2019 ob 20.49
+-- Različica strežnika: 10.1.32-MariaDB
+-- Različica PHP: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,6 +33,7 @@ USE `olive`;
 DROP TABLE IF EXISTS `organisations`;
 CREATE TABLE `organisations` (
   `id` int(10) UNSIGNED NOT NULL,
+  `idLeader` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -41,12 +42,12 @@ CREATE TABLE `organisations` (
 -- Odloži podatke za tabelo `organisations`
 --
 
-INSERT INTO `organisations` (`id`, `name`, `description`) VALUES
-(1, 'Olive developers', 'This is the olive developers organisation description'),
-(2, 'Test org', 'This is a test description'),
-(5, 'Mobilen test', 'Danes je 25'),
-(6, 'Albania', 'adasdsad'),
-(7, 'PicaB', 'Pica bureeek');
+INSERT INTO `organisations` (`id`, `idLeader`, `name`, `description`) VALUES
+(1, 0, 'Olive developers', 'This is the olive developers organisation description'),
+(2, 0, 'Test org', 'This is a test description'),
+(5, 0, 'Mobilen test', 'Danes je 25'),
+(6, 0, 'Albania', 'adasdsad'),
+(7, 0, 'PicaB', 'Pica bureeek');
 
 -- --------------------------------------------------------
 
@@ -441,7 +442,8 @@ CREATE TABLE `user_psp_data` (
 -- Indeksi tabele `organisations`
 --
 ALTER TABLE `organisations`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idLeader` (`idLeader`);
 
 --
 -- Indeksi tabele `organisationsusers`
@@ -683,13 +685,15 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `tasksusersprojects`
   ADD CONSTRAINT `tasksusersprojects_ibfk_1` FOREIGN KEY (`idTask`) REFERENCES `tasks` (`id`),
-  ADD CONSTRAINT `tasksusersprojects_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `tasksusersprojects_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `tasksusersprojects_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 
 --
 -- Omejitve za tabelo `userprojects`
 --
 ALTER TABLE `userprojects`
-  ADD CONSTRAINT `userprojects_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`);
+  ADD CONSTRAINT `userprojects_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`),
+  ADD CONSTRAINT `userprojects_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
