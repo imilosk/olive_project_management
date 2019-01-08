@@ -139,14 +139,23 @@ function drawUserList(element, data){
 }
 
 // vrednost(email) dobi iz input fielda
+// POPRAVI !!!
 function addUserToOrganisation(orgId) {
-    let inputElement = $("#org"+orgId+"_newUser");
-    console.log(inputElement.val());
+    let email = $("#org" + orgId + "_newUser");
+    console.log(email.val());
+    sendRequest("/api/user", "GET", { userEmail: email }, function (result) {
+        console.log(result);
+    });
+    
 }
 
-// vrednost(email) dobi iz input fielda
+// vrednost(id) dobi iz input fielda
 function addUserToProject(proId) {
-
+    let newUser = $("#pro" + proId + "_newUser").val();
+    sendRequest("/api/projectsusers", "POST", { idProject: proId, idUser: newUser }, function (result) {
+        console.log("project assigned");
+        getUserOrganisations();
+    });
 }
 
 function getProjectUsers(projectId){
@@ -201,7 +210,7 @@ function addOrganisation(){
     let name = $("#addOrganisation-name").val();
     let desc = $("#addOrganisation-description").val();
     console.log(name+ "  " + desc);
-    $.post("/api/organisation", {name: name, description: desc}, function(result){
+    $.post("/api/organisation", {name: name, description: desc, idLeader: loggedUserId}, function(result){
         let lastOrgId = result;
         $.post("/api/organisationsusers", {idOrganisation: lastOrgId, idUser: loggedUserId}, function(result){
             //refresh user's organisation list
@@ -307,7 +316,7 @@ Handlebars.registerHelper("isMeLeader", function(idLeader, options){
 });
 
 function sendRequest(url, type, data, callback) {
-    console.log("send request method");
+    console.log(url);
     $.ajax({
         url: url,
         type: type,

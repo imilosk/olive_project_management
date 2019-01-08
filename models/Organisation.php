@@ -26,13 +26,14 @@ class Organisation {
     }
     
 
-    public static function insert($name, $description) {
+    public static function insert($name, $description, $idLeader) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO {$table} (name,description)
-            VALUES (:name,:description)");
+        $statement = $db->prepare("INSERT INTO {$table} (name,description, idLeader)
+            VALUES (:name,:description, :idLeader)");
         $statement->bindParam(":name", $name);
         $statement->bindParam(":description", $description);
+        $statement->bindParam(":idLeader", $idLeader);
         $statement->execute();
         return $db->lastInsertId();
     }
