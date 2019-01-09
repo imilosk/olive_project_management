@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.8.0.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 10, 2019 at 12:41 AM
--- Server version: 5.7.24-0ubuntu0.16.04.1
--- PHP Version: 7.0.32-0ubuntu0.16.04.1
+-- Gostitelj: 127.0.0.1
+-- Čas nastanka: 09. jan 2019 ob 23.41
+-- Različica strežnika: 10.1.32-MariaDB
+-- Različica PHP: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,15 +19,18 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `olive`
+-- Zbirka podatkov: `olive`
 --
+CREATE DATABASE IF NOT EXISTS `olive` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `olive`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `organisations`
+-- Struktura tabele `organisations`
 --
 
+DROP TABLE IF EXISTS `organisations`;
 CREATE TABLE `organisations` (
   `id` int(10) UNSIGNED NOT NULL,
   `idLeader` int(10) UNSIGNED NOT NULL,
@@ -34,7 +39,13 @@ CREATE TABLE `organisations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `organisations`
+-- RAZMERJA ZA TABELO `organisations`:
+--   `idLeader`
+--       `users` -> `id`
+--
+
+--
+-- Odloži podatke za tabelo `organisations`
 --
 
 INSERT INTO `organisations` (`id`, `idLeader`, `name`, `description`) VALUES
@@ -47,16 +58,27 @@ INSERT INTO `organisations` (`id`, `idLeader`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `organisationsusers`
+-- Struktura tabele `organisationsusers`
 --
 
+DROP TABLE IF EXISTS `organisationsusers`;
 CREATE TABLE `organisationsusers` (
   `idOrganisation` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `organisationsusers`
+-- RAZMERJA ZA TABELO `organisationsusers`:
+--   `idUser`
+--       `users` -> `id`
+--   `idOrganisation`
+--       `organisations` -> `id`
+--   `idUser`
+--       `users` -> `id`
+--
+
+--
+-- Odloži podatke za tabelo `organisationsusers`
 --
 
 INSERT INTO `organisationsusers` (`idOrganisation`, `idUser`) VALUES
@@ -70,19 +92,26 @@ INSERT INTO `organisationsusers` (`idOrganisation`, `idUser`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `projects`
+-- Struktura tabele `projects`
 --
 
+DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int(10) UNSIGNED NOT NULL,
   `idOrganisation` int(10) UNSIGNED NOT NULL,
-  `idLeader` int(11) NOT NULL,
+  `idLeader` int(10) UNSIGNED NOT NULL,
   `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `projects`
+-- RAZMERJA ZA TABELO `projects`:
+--   `idOrganisation`
+--       `organisations` -> `id`
+--
+
+--
+-- Odloži podatke za tabelo `projects`
 --
 
 INSERT INTO `projects` (`id`, `idOrganisation`, `idLeader`, `name`, `description`) VALUES
@@ -93,8 +122,9 @@ INSERT INTO `projects` (`id`, `idOrganisation`, `idLeader`, `name`, `description
 (18, 6, 1, 'siptarian', 'siptarian darkness');
 
 --
--- Triggers `projects`
+-- Sprožilci `projects`
 --
+DROP TRIGGER IF EXISTS `deleteUsersFromProject`;
 DELIMITER $$
 CREATE TRIGGER `deleteUsersFromProject` BEFORE DELETE ON `projects` FOR EACH ROW BEGIN
 DELETE FROM userprojects WHERE idProject = OLD.id;
@@ -105,20 +135,26 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `psps`
+-- Struktura tabele `psps`
 --
 
+DROP TABLE IF EXISTS `psps`;
 CREATE TABLE `psps` (
   `id` int(10) UNSIGNED NOT NULL,
   `programing_language` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `psps`:
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `psp_errors`
+-- Struktura tabele `psp_errors`
 --
 
+DROP TABLE IF EXISTS `psp_errors`;
 CREATE TABLE `psp_errors` (
   `id` int(10) UNSIGNED NOT NULL,
   `idCategory` int(10) UNSIGNED NOT NULL,
@@ -130,19 +166,36 @@ CREATE TABLE `psp_errors` (
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `psp_errors`:
+--   `idCategory`
+--       `psp_errors_categories` -> `id`
+--   `phaseEntry`
+--       `psp_phases` -> `id`
+--   `phaseFinish`
+--       `psp_phases` -> `id`
+--   `idPSP`
+--       `psps` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `psp_errors_categories`
+-- Struktura tabele `psp_errors_categories`
 --
 
+DROP TABLE IF EXISTS `psp_errors_categories`;
 CREATE TABLE `psp_errors_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `psp_errors_categories`
+-- RAZMERJA ZA TABELO `psp_errors_categories`:
+--
+
+--
+-- Odloži podatke za tabelo `psp_errors_categories`
 --
 
 INSERT INTO `psp_errors_categories` (`id`, `name`) VALUES
@@ -160,16 +213,21 @@ INSERT INTO `psp_errors_categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `psp_phases`
+-- Struktura tabele `psp_phases`
 --
 
+DROP TABLE IF EXISTS `psp_phases`;
 CREATE TABLE `psp_phases` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `psp_phases`
+-- RAZMERJA ZA TABELO `psp_phases`:
+--
+
+--
+-- Odloži podatke za tabelo `psp_phases`
 --
 
 INSERT INTO `psp_phases` (`id`, `name`) VALUES
@@ -184,9 +242,10 @@ INSERT INTO `psp_phases` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `psp_tasks`
+-- Struktura tabele `psp_tasks`
 --
 
+DROP TABLE IF EXISTS `psp_tasks`;
 CREATE TABLE `psp_tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `idPhase` int(10) UNSIGNED NOT NULL,
@@ -200,12 +259,21 @@ CREATE TABLE `psp_tasks` (
   `estimatedunits` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `psp_tasks`:
+--   `idPhase`
+--       `psp_phases` -> `id`
+--   `idPSP`
+--       `psps` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tasks`
+-- Struktura tabele `tasks`
 --
 
+DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -213,31 +281,55 @@ CREATE TABLE `tasks` (
   `idTask_status` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `tasks`:
+--   `idProject`
+--       `projects` -> `id`
+--   `idTask_status`
+--       `task_status` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tasksusersprojects`
+-- Struktura tabele `tasksusersprojects`
 --
 
+DROP TABLE IF EXISTS `tasksusersprojects`;
 CREATE TABLE `tasksusersprojects` (
   `idUser` int(10) UNSIGNED NOT NULL,
   `idTask` int(10) UNSIGNED NOT NULL,
   `idPSP` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `tasksusersprojects`:
+--   `idTask`
+--       `tasks` -> `id`
+--   `idPSP`
+--       `psps` -> `id`
+--   `idUser`
+--       `users` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `task_status`
+-- Struktura tabele `task_status`
 --
 
+DROP TABLE IF EXISTS `task_status`;
 CREATE TABLE `task_status` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `task_status`
+-- RAZMERJA ZA TABELO `task_status`:
+--
+
+--
+-- Odloži podatke za tabelo `task_status`
 --
 
 INSERT INTO `task_status` (`id`, `name`) VALUES
@@ -250,16 +342,25 @@ INSERT INTO `task_status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userprojects`
+-- Struktura tabele `userprojects`
 --
 
+DROP TABLE IF EXISTS `userprojects`;
 CREATE TABLE `userprojects` (
   `idProject` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `userprojects`
+-- RAZMERJA ZA TABELO `userprojects`:
+--   `idProject`
+--       `projects` -> `id`
+--   `idUser`
+--       `users` -> `id`
+--
+
+--
+-- Odloži podatke za tabelo `userprojects`
 --
 
 INSERT INTO `userprojects` (`idProject`, `idUser`) VALUES
@@ -272,9 +373,10 @@ INSERT INTO `userprojects` (`idProject`, `idUser`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktura tabele `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -290,12 +392,16 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- RAZMERJA ZA TABELO `users`:
+--
+
+--
+-- Odloži podatke za tabelo `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(1, 'milos.kostadinovski97@gmail.com', '$2y$10$L.hhOGPeBj9SlNe4uiy8QOwxxWLgWEdsAj/oEBxhpdm1OEZUUtpPO', NULL, 0, 1, 1, 0, 1547067371, 1547073349, 0),
-(4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1547073432, 2),
+(1, 'milos.kostadinovski97@gmail.com', '$2y$10$L.hhOGPeBj9SlNe4uiy8QOwxxWLgWEdsAj/oEBxhpdm1OEZUUtpPO', NULL, 0, 1, 1, 0, 1547067371, 1547067372, 0),
+(4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1546018593, 2),
 (5, 'test123@test.si', '$2y$10$ZBCUaBGTWBHgWgdQ7TliKuKIHDaPoBFlKyinlbet4jySwAZhh60p.', NULL, 0, 1, 1, 0, 1544635196, 1547069476, 13),
 (6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1546211433, 4),
 (7, 'test1@gmail.com', '$2y$10$ntUMiByO3v5DfPjoi4Mp/.waIUr6Y.TENZJsBo6FZYZ2cflNn5rZa', NULL, 0, 1, 1, 0, 1544988424, 1545489068, 0),
@@ -304,9 +410,10 @@ INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_confirmations`
+-- Struktura tabele `users_confirmations`
 --
 
+DROP TABLE IF EXISTS `users_confirmations`;
 CREATE TABLE `users_confirmations` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
@@ -316,12 +423,17 @@ CREATE TABLE `users_confirmations` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `users_confirmations`:
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_remembered`
+-- Struktura tabele `users_remembered`
 --
 
+DROP TABLE IF EXISTS `users_remembered`;
 CREATE TABLE `users_remembered` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user` int(10) UNSIGNED NOT NULL,
@@ -330,12 +442,17 @@ CREATE TABLE `users_remembered` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `users_remembered`:
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_resets`
+-- Struktura tabele `users_resets`
 --
 
+DROP TABLE IF EXISTS `users_resets`;
 CREATE TABLE `users_resets` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user` int(10) UNSIGNED NOT NULL,
@@ -344,12 +461,17 @@ CREATE TABLE `users_resets` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- RAZMERJA ZA TABELO `users_resets`:
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_throttling`
+-- Struktura tabele `users_throttling`
 --
 
+DROP TABLE IF EXISTS `users_throttling`;
 CREATE TABLE `users_throttling` (
   `bucket` varchar(44) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `tokens` float UNSIGNED NOT NULL,
@@ -358,23 +480,27 @@ CREATE TABLE `users_throttling` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users_throttling`
+-- RAZMERJA ZA TABELO `users_throttling`:
+--
+
+--
+-- Odloži podatke za tabelo `users_throttling`
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
 ('0GcsEQwqckFC0DERzaIQdd54qKYKv2gkBDsqINuJtNI', 74, 1547069476, 1547609476),
-('5krWri33BPqmxlmZAVgn8l0c-cq4J8Mk_N4RQrqJbDQ', 74, 1547073431, 1547613431),
-('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 68.6623, 1547073349, 1547613349),
+('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 71.002, 1547067372, 1547607372),
 ('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 4, 1547067371, 1547499371);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_psp_data`
+-- Struktura tabele `user_psp_data`
 --
 
+DROP TABLE IF EXISTS `user_psp_data`;
 CREATE TABLE `user_psp_data` (
-  `idUser` int(11) NOT NULL,
+  `idUser` int(11) UNSIGNED NOT NULL,
   `size` int(11) NOT NULL,
   `planning_time` int(11) NOT NULL,
   `infrastructuring_time` int(11) NOT NULL,
@@ -401,18 +527,24 @@ CREATE TABLE `user_psp_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Indexes for dumped tables
+-- RAZMERJA ZA TABELO `user_psp_data`:
+--   `idUser`
+--       `users` -> `id`
 --
 
 --
--- Indexes for table `organisations`
+-- Indeksi zavrženih tabel
+--
+
+--
+-- Indeksi tabele `organisations`
 --
 ALTER TABLE `organisations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idLeader` (`idLeader`);
 
 --
--- Indexes for table `organisationsusers`
+-- Indeksi tabele `organisationsusers`
 --
 ALTER TABLE `organisationsusers`
   ADD PRIMARY KEY (`idOrganisation`,`idUser`),
@@ -420,7 +552,7 @@ ALTER TABLE `organisationsusers`
   ADD KEY `idUser` (`idUser`);
 
 --
--- Indexes for table `projects`
+-- Indeksi tabele `projects`
 --
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`),
@@ -428,13 +560,13 @@ ALTER TABLE `projects`
   ADD KEY `idLeader` (`idLeader`);
 
 --
--- Indexes for table `psps`
+-- Indeksi tabele `psps`
 --
 ALTER TABLE `psps`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `psp_errors`
+-- Indeksi tabele `psp_errors`
 --
 ALTER TABLE `psp_errors`
   ADD PRIMARY KEY (`id`),
@@ -444,19 +576,19 @@ ALTER TABLE `psp_errors`
   ADD KEY `idPSP` (`idPSP`);
 
 --
--- Indexes for table `psp_errors_categories`
+-- Indeksi tabele `psp_errors_categories`
 --
 ALTER TABLE `psp_errors_categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `psp_phases`
+-- Indeksi tabele `psp_phases`
 --
 ALTER TABLE `psp_phases`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `psp_tasks`
+-- Indeksi tabele `psp_tasks`
 --
 ALTER TABLE `psp_tasks`
   ADD PRIMARY KEY (`id`),
@@ -464,7 +596,7 @@ ALTER TABLE `psp_tasks`
   ADD KEY `idPSP` (`idPSP`);
 
 --
--- Indexes for table `tasks`
+-- Indeksi tabele `tasks`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id`),
@@ -472,7 +604,7 @@ ALTER TABLE `tasks`
   ADD KEY `idTask_status` (`idTask_status`);
 
 --
--- Indexes for table `tasksusersprojects`
+-- Indeksi tabele `tasksusersprojects`
 --
 ALTER TABLE `tasksusersprojects`
   ADD PRIMARY KEY (`idUser`,`idTask`),
@@ -481,13 +613,13 @@ ALTER TABLE `tasksusersprojects`
   ADD KEY `idPSP` (`idPSP`);
 
 --
--- Indexes for table `task_status`
+-- Indeksi tabele `task_status`
 --
 ALTER TABLE `task_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `userprojects`
+-- Indeksi tabele `userprojects`
 --
 ALTER TABLE `userprojects`
   ADD PRIMARY KEY (`idProject`,`idUser`),
@@ -495,23 +627,23 @@ ALTER TABLE `userprojects`
   ADD KEY `idUser` (`idUser`);
 
 --
--- Indexes for table `users`
+-- Indeksi tabele `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `users_confirmations`
+-- Indeksi tabele `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `selector` (`selector`),
-  ADD KEY `email_expires` (`email`,`expires`),
+  ADD KEY `email_expires` (`email`(191),`expires`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `users_remembered`
+-- Indeksi tabele `users_remembered`
 --
 ALTER TABLE `users_remembered`
   ADD PRIMARY KEY (`id`),
@@ -519,7 +651,7 @@ ALTER TABLE `users_remembered`
   ADD KEY `user` (`user`);
 
 --
--- Indexes for table `users_resets`
+-- Indeksi tabele `users_resets`
 --
 ALTER TABLE `users_resets`
   ADD PRIMARY KEY (`id`),
@@ -527,112 +659,125 @@ ALTER TABLE `users_resets`
   ADD KEY `user_expires` (`user`,`expires`);
 
 --
--- Indexes for table `users_throttling`
+-- Indeksi tabele `users_throttling`
 --
 ALTER TABLE `users_throttling`
   ADD PRIMARY KEY (`bucket`),
   ADD KEY `expires_at` (`expires_at`);
 
 --
--- Indexes for table `user_psp_data`
+-- Indeksi tabele `user_psp_data`
 --
 ALTER TABLE `user_psp_data`
   ADD KEY `idUser` (`idUser`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT zavrženih tabel
 --
 
 --
--- AUTO_INCREMENT for table `organisations`
+-- AUTO_INCREMENT tabele `organisations`
 --
 ALTER TABLE `organisations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
--- AUTO_INCREMENT for table `projects`
+-- AUTO_INCREMENT tabele `projects`
 --
 ALTER TABLE `projects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
--- AUTO_INCREMENT for table `psps`
+-- AUTO_INCREMENT tabele `psps`
 --
 ALTER TABLE `psps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `psp_errors`
+-- AUTO_INCREMENT tabele `psp_errors`
 --
 ALTER TABLE `psp_errors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `psp_errors_categories`
+-- AUTO_INCREMENT tabele `psp_errors_categories`
 --
 ALTER TABLE `psp_errors_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
--- AUTO_INCREMENT for table `psp_phases`
+-- AUTO_INCREMENT tabele `psp_phases`
 --
 ALTER TABLE `psp_phases`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
--- AUTO_INCREMENT for table `psp_tasks`
+-- AUTO_INCREMENT tabele `psp_tasks`
 --
 ALTER TABLE `psp_tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `tasks`
+-- AUTO_INCREMENT tabele `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `task_status`
+-- AUTO_INCREMENT tabele `task_status`
 --
 ALTER TABLE `task_status`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT tabele `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
--- AUTO_INCREMENT for table `users_confirmations`
+-- AUTO_INCREMENT tabele `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `users_remembered`
+-- AUTO_INCREMENT tabele `users_remembered`
 --
 ALTER TABLE `users_remembered`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `users_resets`
+-- AUTO_INCREMENT tabele `users_resets`
 --
 ALTER TABLE `users_resets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
--- Constraints for dumped tables
+-- Omejitve tabel za povzetek stanja
 --
 
 --
--- Constraints for table `organisations`
+-- Omejitve za tabelo `organisations`
 --
 ALTER TABLE `organisations`
   ADD CONSTRAINT `fk_organisations_fk1` FOREIGN KEY (`idLeader`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `organisationsusers`
+-- Omejitve za tabelo `organisationsusers`
 --
 ALTER TABLE `organisationsusers`
   ADD CONSTRAINT `organisationsusers_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`),
   ADD CONSTRAINT `organisationsusers_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `projects`
+-- Omejitve za tabelo `projects`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`idOrganisation`) REFERENCES `organisations` (`id`);
 
 --
--- Constraints for table `psp_errors`
+-- Omejitve za tabelo `psp_errors`
 --
 ALTER TABLE `psp_errors`
   ADD CONSTRAINT `psp_errors_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `psp_errors_categories` (`id`),
@@ -641,21 +786,21 @@ ALTER TABLE `psp_errors`
   ADD CONSTRAINT `psp_errors_ibfk_4` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
 
 --
--- Constraints for table `psp_tasks`
+-- Omejitve za tabelo `psp_tasks`
 --
 ALTER TABLE `psp_tasks`
   ADD CONSTRAINT `psp_tasks_ibfk_1` FOREIGN KEY (`idPhase`) REFERENCES `psp_phases` (`id`),
   ADD CONSTRAINT `psp_tasks_ibfk_2` FOREIGN KEY (`idPSP`) REFERENCES `psps` (`id`);
 
 --
--- Constraints for table `tasks`
+-- Omejitve za tabelo `tasks`
 --
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`),
   ADD CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`idTask_status`) REFERENCES `task_status` (`id`);
 
 --
--- Constraints for table `tasksusersprojects`
+-- Omejitve za tabelo `tasksusersprojects`
 --
 ALTER TABLE `tasksusersprojects`
   ADD CONSTRAINT `tasksusersprojects_ibfk_1` FOREIGN KEY (`idTask`) REFERENCES `tasks` (`id`),
@@ -663,11 +808,18 @@ ALTER TABLE `tasksusersprojects`
   ADD CONSTRAINT `tasksusersprojects_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `userprojects`
+-- Omejitve za tabelo `userprojects`
 --
 ALTER TABLE `userprojects`
   ADD CONSTRAINT `userprojects_ibfk_1` FOREIGN KEY (`idProject`) REFERENCES `projects` (`id`),
   ADD CONSTRAINT `userprojects_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+
+--
+-- Omejitve za tabelo `user_psp_data`
+--
+ALTER TABLE `user_psp_data`
+  ADD CONSTRAINT `user_psp_data_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
