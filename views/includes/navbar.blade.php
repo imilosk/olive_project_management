@@ -9,20 +9,15 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-  			<li class="nav-item px-2 item1">
-    			<a class="nav-link" id="item1" onclick="item1()" href="/">Home <span class="sr-only">(current)</span></a>
-			</li>
-  			<li class="nav-item px-2 item2">
-    			<a class="nav-link" id="item2" onclick="item2()" href="">Time</a>
-  			</li>
- 			<li class="nav-item px-2 item3">
-    			<a class="nav-link" id="item3" onclick="item3()" href="">List</a>
-  			</li>
-  			<li class="nav-item px-2 item4">
-    			<a class="nav-link" id="item4" onclick="item4()" href="">Board</a>
-  			</li>
-			<li class="nav-item px-2 item5">
-    			<a class="nav-link" id="item5" onclick="item5()" href="/">Projects</a>
+            <!--
+  			<li class="nav-item px-2 border border-right-0">
+    			<a class="nav-link" id="navbar-home" href="/">Home <span class="sr-only">(current)</span></a>
+			</li>-->
+            <li class="nav-item px-2 border border-right-0">
+                <a class="nav-link" id="navbar-board" href="">Board</a>
+            </li>
+  			<li class="nav-item px-2 border">
+    			<a class="nav-link" id="navbar-time" href="">Time</a>
   			</li>
 		</ul>
 		<div class="my-2 my-lg-0 px-5 item6">
