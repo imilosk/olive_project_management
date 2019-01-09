@@ -13,6 +13,7 @@ require_once __DIR__ . '/../controllers/api/PSPTaskController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorController.php';
 require_once __DIR__ . '/../controllers/api/PSPErrorCategoryController.php';
 require_once __DIR__ . '/../controllers/api/PSPPhaseController.php';
+require_once __DIR__ . '/../controllers/api/UserPSPDataController.php';
 
 // get user email using id or get user id using email
 Flight::route('GET /api/user', function() {
@@ -206,12 +207,27 @@ Flight::route('GET /api/psperrorcategories/@idPSP', function($idPSP) {
 	PSPErrorCategorieController::show($idPSP);
 });
 
-// get all error categories
+// get all error phases
 Flight::route('GET /api/pspphases', function() {
 	PSPPhaseController::index();
 });
 
-// get specific error categorie
+// get specific error phases
 Flight::route('GET /api/pspphases/@idPSP', function($idPSP) {
 	PSPPhaseController::show($idPSP);
+});
+
+// add psp data
+Flight::route('POST /api/userpspdata', function() {
+	UserPSPDataController::store();
+});
+
+// remove psp data
+Flight::route('DELETE /api/userpspdata/@idUser', function($idUser) {
+	UserPSPDataController::delete($idUser);
+});
+
+// get all psps of an user
+Flight::route('GET /api/userpspdata/@idUser', function($idUser) {
+	UserPSPDataController::get_user_psps($idUser);
 });
