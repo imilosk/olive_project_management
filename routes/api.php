@@ -106,6 +106,11 @@ Flight::route('POST /api/task/@id', function($id) {
     TaskController::update($id);
 });
 
+//change task's status
+Flight::route('POST /api/taskstatus', function() {
+    TaskController::changeStatus();
+});
+
 // remove task
 Flight::route('DELETE /api/task/@id', function($id) {
 	TaskController::delete($id);

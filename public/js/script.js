@@ -1,5 +1,6 @@
 let testData;
 const loggedUserId = document.getElementById("test").innerHTML;
+let activeProjectId;
 let projectsLeadersL = {};
 const projectsLeaders ={};
 
@@ -69,7 +70,6 @@ function drawUserList(element, data){
 }
 
 // vrednost(email) dobi iz input fielda
-// POPRAVI !!!
 function addUserToOrganisation(orgId) {
     let email = $("#org" + orgId + "_newUser").val();
     
@@ -140,7 +140,7 @@ function orgOnClick(orgId) {
 }
 
 function displayAddProjectForm(orgId, event){
-    $("#org"+orgId+"-addProject_form").toggle();
+    $("#org"+orgId+"-addProject_form").toggle(200);
 }
 
 function addProjectToOrganisation(orgId, event){
@@ -158,6 +158,43 @@ function addProjectToOrganisation(orgId, event){
             getUserOrganisations();
         });
     });
+}
+
+/*
+function activateProject(projectId){
+    activeProjectId = projectId;
+    getProjectTasks(projectId);
+}*/
+
+function getProjectTasks(projectId){
+    activeProjectId = projectId;
+    sendRequest('/api/tasks/all', 'GET', {idProject: projectId}, function(result){
+        console.log(result);
+        drawProjectTasks(result);
+    });
+}
+
+function drawProjectTasks(data){
+    let template = $("#project-tasks-handle").html();
+    $("#project-tasks").html(makeTemplate(template, data));
+    hideAddOrganisationModal();
+}
+
+// parameter(stevilka) pove status taska (OPEN, CLOSED, ..)
+// ostevilceni so isto kot v bazi 1 - OPEN, 2 - CLOSED, 3 - IN PROGRESS, 4 - REVIEW, 5 - REJECTED
+function addTaskToProject(taskStatus){
+    console.log("projektu "+activeProjectId+" doda task s statusom "+taskStatus);
+}
+
+function changeTaskStatus(taskId, status){
+    sendRequest('/api/taskstatus', 'POST', {taskId: taskId, status: status}, function(result){
+        console.log("task's with id "+taskId+" changed to "+status);
+        getProjectTasks(activeProjectId);
+    });
+}
+
+function openTaskInfo(taskId) {
+    console.log("display task "+taskId);
 }
 
 function deleteProject(projectId){
@@ -251,6 +288,10 @@ var btn = document.getElementById("btn-openSideMenu");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
+function showSideMenu(){
+    $("#sideMenu").hide(500);
+}
+
 btn.onclick = function() {
     modal.style.display = "block";
 }
