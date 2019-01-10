@@ -104,9 +104,9 @@
                 <div class='org-name'>@{{orgName}}</div> 
                 <div class='org-options'> 
                     <div class='org-options-users org-option' onclick='showUsers(@{{idOrganisation}}, 0)'>U</div> 
-                    <div class='org-option-add-project org-option'>+</div> 
+                    <div class='org-option-add-project org-option' onclick='displayAddProjectForm(@{{idOrganisation}}, event)'>+</div> 
                     <div class='org-option-remove org-option' onclick='deleteOrganisation(@{{idOrganisation}})'>-</div> 
-                    <div class='add-project-div'> 
+                    <div class='add-project-div' id='org@{{idOrganisation}}-addProject_form'> 
                         <input type='text' placeholder='Name'> 
                         <input type='text' placeholder='Description'> 
                         <div class='small-btn' onclick='addProjectToOrganisation(@{{idOrganisation}}, event)'> Add </div> 
@@ -126,7 +126,8 @@
             </div> 
             <div class='projects-list'> 
                 @{{#each this}} 
-                    @{{#if idProject}} 
+                    @{{#if idProject}}
+                        @{{#saveProInfo idProject idLeader}}@{{/saveProInfo}} 
                         <div class='pro-div'> 
                             <div class='project-properties'> 
                                 <div class='row'> 

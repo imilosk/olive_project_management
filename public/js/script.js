@@ -1,6 +1,8 @@
 let testData;
 const loggedUserId = document.getElementById("test").innerHTML;
-const projectsLeaders = {};
+let projectsLeadersL = {};
+const projectsLeaders ={};
+
 window.onload = function(){
     init();
 
@@ -137,14 +139,8 @@ function orgOnClick(orgId) {
     console.log(orgId);
 }
 
-function displayAddProjectForm(event) {
-    console.log("i am here");
-    let addProjectForm = event.target.parentElement.lastChild;
-    if (addProjectForm.classList.contains("collapsed")) {
-        addProjectForm.classList.remove("collapsed");
-    } else {
-        addProjectForm.classList.add("collapsed");
-    }
+function displayAddProjectForm(orgId, event){
+    $("#org"+orgId+"-addProject_form").toggle();
 }
 
 function addProjectToOrganisation(orgId, event){
@@ -222,6 +218,10 @@ Handlebars.registerHelper("isMeLeaderP", function(options){
         fnFalse = options.inverse;
     
     return lastClickedProjectInMenu == loggedUserId ? fnTrue(this) : fnFalse(this);
+});
+
+Handlebars.registerHelper("saveProInfo", function(idProject, idLeader){
+    projectsLeadersL[idProject] = idLeader;
 });
 
 function sendRequest(url, type, data, callback) {
