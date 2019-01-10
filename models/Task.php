@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../settings/DBInit.php';
+require_once __DIR__ . '/TaskUserProject.php';
 
 class Task {
 
@@ -81,5 +82,39 @@ class Task {
         $statement->execute();
         return $statement->fetchAll();
     }
+
     
+    public static function get_project_tasks_status($idUser, $idProject) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        // get tasks of the project
+        $statement = $db->prepare("SELECT t.id AS idTask, t.name AS taskName, s.name AS 'status'
+                                    FROM {$table} AS t 
+                                    RIGHT JOIN task_status AS s ON t.idTask_status  = s.id 
+                                    WHERE t.idProject = :idProject 
+                                ");
+
+    
+        $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
+        $statement->execute(); 
+        $result = $statement->fetchAll();
+        
+        
+        $i = 0;
+        foreach ($result as $task) {
+            $temp = $task;
+            $status = $task["status"];
+
+            unset($task["status"]);
+            $users = TaskUserProject::get_task_users($task["idTask"]);
+
+            $task["users"]=$users;
+            $task["access"]=in_array($idUser, $users);
+            $results[$status][]= $task;
+            $i++;
+        }
+
+        return $results;
+    
+}
 }

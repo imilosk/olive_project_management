@@ -231,3 +231,8 @@ Flight::route('DELETE /api/userpspdata/@idUser', function($idUser) {
 Flight::route('GET /api/userpspdata/@idUser', function($idUser) {
 	UserPSPDataController::get_user_psps($idUser);
 });
+
+// get tasks, status and users
+Flight::route('GET /api/tasks/all', function() {
+	TaskController::get_project_tasks_and_users();
+});
