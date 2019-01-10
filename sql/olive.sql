@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Gostitelj: 127.0.0.1
--- Čas nastanka: 09. jan 2019 ob 23.41
--- Različica strežnika: 10.1.32-MariaDB
--- Različica PHP: 7.2.5
+-- Gostitelj: localhost
+-- Čas nastanka: 10. jan 2019 ob 20.30
+-- Različica strežnika: 5.7.24-0ubuntu0.16.04.1
+-- Različica PHP: 7.0.32-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -39,12 +37,6 @@ CREATE TABLE `organisations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- RAZMERJA ZA TABELO `organisations`:
---   `idLeader`
---       `users` -> `id`
---
-
---
 -- Odloži podatke za tabelo `organisations`
 --
 
@@ -66,16 +58,6 @@ CREATE TABLE `organisationsusers` (
   `idOrganisation` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `organisationsusers`:
---   `idUser`
---       `users` -> `id`
---   `idOrganisation`
---       `organisations` -> `id`
---   `idUser`
---       `users` -> `id`
---
 
 --
 -- Odloži podatke za tabelo `organisationsusers`
@@ -103,12 +85,6 @@ CREATE TABLE `projects` (
   `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `projects`:
---   `idOrganisation`
---       `organisations` -> `id`
---
 
 --
 -- Odloži podatke za tabelo `projects`
@@ -144,10 +120,6 @@ CREATE TABLE `psps` (
   `programing_language` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RAZMERJA ZA TABELO `psps`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -166,18 +138,6 @@ CREATE TABLE `psp_errors` (
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RAZMERJA ZA TABELO `psp_errors`:
---   `idCategory`
---       `psp_errors_categories` -> `id`
---   `phaseEntry`
---       `psp_phases` -> `id`
---   `phaseFinish`
---       `psp_phases` -> `id`
---   `idPSP`
---       `psps` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -189,10 +149,6 @@ CREATE TABLE `psp_errors_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `psp_errors_categories`:
---
 
 --
 -- Odloži podatke za tabelo `psp_errors_categories`
@@ -221,10 +177,6 @@ CREATE TABLE `psp_phases` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `psp_phases`:
---
 
 --
 -- Odloži podatke za tabelo `psp_phases`
@@ -259,14 +211,6 @@ CREATE TABLE `psp_tasks` (
   `estimatedunits` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RAZMERJA ZA TABELO `psp_tasks`:
---   `idPhase`
---       `psp_phases` -> `id`
---   `idPSP`
---       `psps` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -277,17 +221,10 @@ DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `idProject` int(10) UNSIGNED NOT NULL,
   `idTask_status` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `tasks`:
---   `idProject`
---       `projects` -> `id`
---   `idTask_status`
---       `task_status` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -302,16 +239,6 @@ CREATE TABLE `tasksusersprojects` (
   `idPSP` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RAZMERJA ZA TABELO `tasksusersprojects`:
---   `idTask`
---       `tasks` -> `id`
---   `idPSP`
---       `psps` -> `id`
---   `idUser`
---       `users` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -323,10 +250,6 @@ CREATE TABLE `task_status` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `task_status`:
---
 
 --
 -- Odloži podatke za tabelo `task_status`
@@ -350,14 +273,6 @@ CREATE TABLE `userprojects` (
   `idProject` int(10) UNSIGNED NOT NULL,
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `userprojects`:
---   `idProject`
---       `projects` -> `id`
---   `idUser`
---       `users` -> `id`
---
 
 --
 -- Odloži podatke za tabelo `userprojects`
@@ -392,15 +307,11 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- RAZMERJA ZA TABELO `users`:
---
-
---
 -- Odloži podatke za tabelo `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(1, 'milos.kostadinovski97@gmail.com', '$2y$10$L.hhOGPeBj9SlNe4uiy8QOwxxWLgWEdsAj/oEBxhpdm1OEZUUtpPO', NULL, 0, 1, 1, 0, 1547067371, 1547067372, 0),
+(1, 'milos.kostadinovski97@gmail.com', '$2y$10$L.hhOGPeBj9SlNe4uiy8QOwxxWLgWEdsAj/oEBxhpdm1OEZUUtpPO', NULL, 0, 1, 1, 0, 1547067371, 1547135859, 0),
 (4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1546018593, 2),
 (5, 'test123@test.si', '$2y$10$ZBCUaBGTWBHgWgdQ7TliKuKIHDaPoBFlKyinlbet4jySwAZhh60p.', NULL, 0, 1, 1, 0, 1544635196, 1547069476, 13),
 (6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1546211433, 4),
@@ -423,10 +334,6 @@ CREATE TABLE `users_confirmations` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RAZMERJA ZA TABELO `users_confirmations`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -441,10 +348,6 @@ CREATE TABLE `users_remembered` (
   `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_cs NOT NULL,
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `users_remembered`:
---
 
 -- --------------------------------------------------------
 
@@ -461,10 +364,6 @@ CREATE TABLE `users_resets` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- RAZMERJA ZA TABELO `users_resets`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -480,16 +379,12 @@ CREATE TABLE `users_throttling` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- RAZMERJA ZA TABELO `users_throttling`:
---
-
---
 -- Odloži podatke za tabelo `users_throttling`
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
 ('0GcsEQwqckFC0DERzaIQdd54qKYKv2gkBDsqINuJtNI', 74, 1547069476, 1547609476),
-('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 71.002, 1547067372, 1547607372),
+('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 74, 1547135858, 1547675858),
 ('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 4, 1547067371, 1547499371);
 
 -- --------------------------------------------------------
@@ -501,36 +396,30 @@ INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_a
 DROP TABLE IF EXISTS `user_psp_data`;
 CREATE TABLE `user_psp_data` (
   `idUser` int(11) UNSIGNED NOT NULL,
-  `size` int(11) NOT NULL,
-  `planning_time` int(11) NOT NULL,
-  `infrastructuring_time` int(11) NOT NULL,
-  `coding_time` int(11) NOT NULL,
-  `code_review_time` int(11) NOT NULL,
-  `compiling_time` int(11) NOT NULL,
-  `testing_time` int(11) NOT NULL,
-  `analysis_time` int(11) NOT NULL,
-  `planning_in_err` int(11) NOT NULL,
-  `infrastructuring_in_err` int(11) NOT NULL,
-  `coding_in_err` int(11) NOT NULL,
-  `code_review_in_err` int(11) NOT NULL,
-  `compiling_in_err` int(11) NOT NULL,
-  `testing_in_err` int(11) NOT NULL,
-  `analysis_in_err` int(11) NOT NULL,
-  `planning_res_err` int(11) NOT NULL,
-  `infrastructuring_res_err` int(11) NOT NULL,
-  `coding_res_err` int(11) NOT NULL,
-  `code_review_res_err` int(11) NOT NULL,
-  `compiling_res_err` int(11) NOT NULL,
-  `testing_res_err` int(11) NOT NULL,
-  `analysis_res_err` int(11) NOT NULL,
-  `psp_number` int(11) NOT NULL
+  `size` int(11) NULL DEFAULT '0',
+  `planning_time` int(11) NULL DEFAULT '0',
+  `infrastructuring_time` int(11) NULL DEFAULT '0',
+  `coding_time` int(11) NULL DEFAULT '0',
+  `code_review_time` int(11) NULL DEFAULT '0',
+  `compiling_time` int(11) NULL DEFAULT '0',
+  `testing_time` int(11) NULL DEFAULT '0',
+  `analysis_time` int(11) NULL DEFAULT '0',
+  `planning_in_err` int(11) NULL DEFAULT '0',
+  `infrastructuring_in_err` int(11) NULL DEFAULT '0',
+  `coding_in_err` int(11) NULL DEFAULT '0',
+  `code_review_in_err` int(11) NULL DEFAULT '0',
+  `compiling_in_err` int(11) NULL DEFAULT '0',
+  `testing_in_err` int(11) NULL DEFAULT '0',
+  `analysis_in_err` int(11) NULL DEFAULT '0',
+  `planning_res_err` int(11) NULL DEFAULT '0',
+  `infrastructuring_res_err` int(11) NULL DEFAULT '0',
+  `coding_res_err` int(11) NULL DEFAULT '0',
+  `code_review_res_err` int(11) NULL DEFAULT '0',
+  `compiling_res_err` int(11) NULL DEFAULT '0',
+  `testing_res_err` int(11) NULL DEFAULT '0',
+  `analysis_res_err` int(11) NULL DEFAULT '0',
+  `psp_number` int(11) NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- RAZMERJA ZA TABELO `user_psp_data`:
---   `idUser`
---       `users` -> `id`
---
 
 --
 -- Indeksi zavrženih tabel
@@ -670,6 +559,7 @@ ALTER TABLE `users_throttling`
 --
 ALTER TABLE `user_psp_data`
   ADD KEY `idUser` (`idUser`);
+  ADD UNIQUE KEY `idUser` (`idUser`);
 
 --
 -- AUTO_INCREMENT zavrženih tabel
@@ -680,79 +570,66 @@ ALTER TABLE `user_psp_data`
 --
 ALTER TABLE `organisations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT tabele `projects`
 --
 ALTER TABLE `projects`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
 --
 -- AUTO_INCREMENT tabele `psps`
 --
 ALTER TABLE `psps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT tabele `psp_errors`
 --
 ALTER TABLE `psp_errors`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT tabele `psp_errors_categories`
 --
 ALTER TABLE `psp_errors_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
 -- AUTO_INCREMENT tabele `psp_phases`
 --
 ALTER TABLE `psp_phases`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT tabele `psp_tasks`
 --
 ALTER TABLE `psp_tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT tabele `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT tabele `task_status`
 --
 ALTER TABLE `task_status`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT tabele `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT tabele `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT tabele `users_remembered`
 --
 ALTER TABLE `users_remembered`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT tabele `users_resets`
 --
 ALTER TABLE `users_resets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 --
 -- Omejitve tabel za povzetek stanja
 --
@@ -819,7 +696,6 @@ ALTER TABLE `userprojects`
 --
 ALTER TABLE `user_psp_data`
   ADD CONSTRAINT `user_psp_data_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

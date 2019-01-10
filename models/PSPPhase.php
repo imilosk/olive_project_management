@@ -10,9 +10,9 @@ class PspPhase {
     public static function get_all() {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT * FROM {$table}");
+        $statement = $db->prepare("SELECT name FROM {$table}");
         $statement->execute();
-        return $statement->fetchAll();
+        return $statement->fetchAll(PDO::FETCH_COLUMN);
     }
 
     public static function get($id) {

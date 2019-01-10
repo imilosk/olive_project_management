@@ -38,9 +38,21 @@ class UserPSPDataController {
         Flight::json($response);
     }
 
-    public static function get_user_psps($idUser) {
-        $user_psps = UserPSPData::get_user_psps($idUser);
-        Flight::json($user_psps);
+    public static function show($idUser) {
+        $pspData = UserPSPData::get_user_psps($idUser);
+        Flight::json($pspData);
+    }
+
+    public static function update_user_psps() {
+        $idUser = Flight::request()->query['idUser'];
+        $response = UserPSPData::updateData($idUser);
+        Flight::json($response);
+    }
+
+    public static function get_user_psps() {
+        $idUser = Flight::request()->query['idUser'];
+        $data = UserPSPData::get_user_psps($idUser);
+        Flight::json($data);
     }
 
 }

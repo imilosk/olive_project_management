@@ -21,6 +21,11 @@ class PSPController {
         echo "true";
     }
 
+    public static function get_data($id) {
+        $data = PSP::get_psp_data($id);
+        Flight::json($data);
+    }
+
 /*
     public static function index() {
         $idProject = (int) Flight::request()->query['idProject'];

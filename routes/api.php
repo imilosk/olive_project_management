@@ -137,6 +137,11 @@ Flight::route('GET /api/psp/@id', function($id) {
 	PSPController::show($id);
 });
 
+// get PSP
+Flight::route('GET /api/pspdata/@id', function($id) {
+	PSPController::get_data($id);
+});
+
 // add PSP
 Flight::route('POST /api/psp', function() {
     PSPController::store();
@@ -229,10 +234,20 @@ Flight::route('DELETE /api/userpspdata/@idUser', function($idUser) {
 
 // get all psps of an user
 Flight::route('GET /api/userpspdata/@idUser', function($idUser) {
-	UserPSPDataController::get_user_psps($idUser);
+	UserPSPDataController::show($idUser);
 });
 
 // get tasks, status and users
 Flight::route('GET /api/tasks/all', function() {
 	TaskController::get_project_tasks_and_users();
+});
+
+// get update big table psp data
+Flight::route('GET /api/update_psp_data', function() {
+	UserPSPDataController::update_user_psps();
+});
+
+// get 
+Flight::route('GET /api/get_user_data', function() {
+	UserPSPDataController::get_user_psps();
 });
