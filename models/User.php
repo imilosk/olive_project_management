@@ -29,7 +29,7 @@ class User {
     public static function getByEmail($email) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT id,email
+        $statement = $db->prepare("SELECT id
                                    FROM {$table}
                                    WHERE email = :email");
         $statement->bindParam(":email", $email, PDO::PARAM_STR);

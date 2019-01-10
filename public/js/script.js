@@ -1,6 +1,8 @@
 let testData;
 const loggedUserId = document.getElementById("test").innerHTML;
-const projectsLeaders = {};
+let projectsLeadersL = {};
+const projectsLeaders ={};
+
 window.onload = function(){
     init();
 
@@ -12,68 +14,10 @@ window.onload = function(){
 function getUserOrganisations(){
     $.get("/api/userorganisationsprojects?idUser="+loggedUserId, function(data){
         console.log(data);
-        let rawTemplate = 
-        "{{#each this}}" +
-            "<div class='org-list'>" +
-                "<div class='org-container'>" +
-                    "<div class='org-div'>" +
-                        "<div class='org-name'>{{orgName}}</div>" +
-                        "<div class='org-options'>" +
-                            "<div class='org-options-users org-option' onclick='showUsers({{idOrganisation}}, 0)'>U</div>" +
-                            "<div class='org-option-add-project org-option'>+</div>" +
-                            "<div class='org-option-remove org-option' onclick='deleteOrganisation({{idOrganisation}})'>-</div>" +
-                            "<div class='add-project-div'>" +
-                                "<input type='text' placeholder='Name'>" +
-                                "<input type='text' placeholder='Description'>" +
-                                "<div class='small-btn' onclick='addProjectToOrganisation({{idOrganisation}}, event)'> Add </div>" +
-                            "</div>" + 
-                        "</div>" +
-                    "</div>" +
-                    "<div class='project-users'>" +
-                        "<div id='org{{idOrganisation}}' class='users-list'></div>" +
-                        "{{#isMeLeader orgLeaderId}}" +
-                            "<div class='project-users-settings'>" +
-                                "<div class='pus-add-user row'>" +
-                                    "<input type='text' id='org{{idOrganisation}}_newUser'class='new-user-id' placeholder='new users email'>" + 
-                                    "<span class='add-stuff-icon' onclick='addUserToOrganisation({{idOrganisation}})'>+</span>" +
-                                "</div>" +   
-                            "</div>" +
-                        "{{/isMeLeader}}" +
-                    "</div>" +
-                    "<div class='projects-list'>" +
-                        "{{#each this}}" +
-                            "{{#if idProject}}" +
-                                "<div class='pro-div'>" +
-                                    "<div class='project-properties'>" +
-                                        "<div class='row'>" +
-                                            "<div class='project-name'>{{pName}}</div>" +
-                                            "<div class='pro-options row'>" +
-                                                "<div class='users-project pro-option' onclick='showUsers({{idProject}}, 1)'>u</div>" +
-                                                "{{#isMeLeader idLeader}}" +
-                                                    "<div class='del-project pro-option' onclick='deleteProject({{idProject}})'>-</div>" +
-                                                "{{/isMeLeader}}" +
-                                            "</div>" +
-                                        "</div>" +
-                                    "</div>" +
-                                    "<div class='project-users'>" +
-                                        "<div id='pro{{idProject}}' class='users-list'></div>" +
-                                        "{{#isMeLeader idLeader}}" +
-                                            "<div class='project-users-settings'>" +
-                                                "<div class='pus-add-user row'>" +
-                                                    "<span class='add-stuff-icon' onclick='addUserToProject({{idProject}})'>+</span>" +
-                                                    "<input type='text' id='pro{{idProject}}_newUser' class='new-user-id' placeholder='new users id'>" + 
-                                            "</div>" +
-                                        "{{/isMeLeader}}" +
-                                    "</div>" +
-                                "</div>" +
-                            "{{/if}}" +
-                        "{{/each}}" +
-                    "</div>" +
-                "</div>" +
-            "</div>" +
-        "{{/each}}";
+        
+        let template = document.getElementById("side-menu-handle").innerHTML;
 
-        document.getElementById("modal-body_organistaions").innerHTML = makeTemplate(rawTemplate, data);
+        document.getElementById("modal-body_organistaions").innerHTML = makeTemplate(template, data);
 
         initClickEvents();
     });
@@ -104,10 +48,12 @@ function getUsersOfOrgOrPro(id, option){
 
 function showUsers(id, option) {
 
-    let element = $("#pro"+id).parent();
+    let element = $("#org"+id).parent();
 
-    if (option == 0)
-        element = $("#org"+id).parent();
+    if (option == 1){
+        lastClickedProjectInMenu = id;
+        element = $("#pro"+id).parent();
+    }
 
     if ($(element).is(":hidden") || $(element).html() == ""){
         getUsersOfOrgOrPro(id, option);
@@ -117,23 +63,7 @@ function showUsers(id, option) {
 }
 
 function drawUserList(element, data){
-    let template = 
-    "{{#each this}}" +
-        "<div class='ul-user row'>" +
-            "<div class='ulu-info'>" +
-                "{{#isMe id}}" +
-                    "<div class='ului-email'>{{email}} (Me)</div>" +
-                "{{else}}" +
-                    "<div class='ului-email'>{{email}}</div>" +
-                "{{/isMe}}" +
-                "<div class='ului-settings row'>"+
-                    "<div class='uluis-id user-setting-item'>User id : {{id}}</div>" +
-                    "<div class='uluis-remove user-setting-item' onclick='removeUserFromProject({{id}}, event)'>-</div>" +
-                "</div>" +
-            "</div>" +
-        "</div>" +
-    "{{/each}}";
-
+    let template = $("#menu-user-list-handle").html();
     let users = element.html(makeTemplate(template, data));
     element.parent().show(500);
 }
@@ -141,12 +71,15 @@ function drawUserList(element, data){
 // vrednost(email) dobi iz input fielda
 // POPRAVI !!!
 function addUserToOrganisation(orgId) {
-    let email = $("#org" + orgId + "_newUser");
-    console.log(email.val());
-    sendRequest("/api/user", "GET", { userEmail: email }, function (result) {
-        console.log(result);
-    });
+    let email = $("#org" + orgId + "_newUser").val();
     
+    sendRequest("/api/user", 'GET', {userEmail: email}, function (result) {
+        let userId = result["id"];
+        sendRequest("/api/organisationsusers", 'POST', {idOrganisation: orgId, idUser: userId}, function(result){
+            //refresh user's organisation list
+            getUserOrganisations();
+        });
+    });
 }
 
 // vrednost(id) dobi iz input fielda
@@ -154,34 +87,7 @@ function addUserToProject(proId) {
     let newUser = $("#pro" + proId + "_newUser").val();
     sendRequest("/api/projectsusers", "POST", { idProject: proId, idUser: newUser }, function (result) {
         console.log("project assigned");
-        getUserOrganisations();
-    });
-}
-
-function getProjectUsers(projectId){
-    lastClickedProjectInMenu = projectId;
-    sendRequest('/api/users', 'GET', {idProject: projectId}, function(result){
-        console.log(result);
-        
-        let template = 
-            "{{#each this}}" +
-                "<div class='ul-user row'>" +
-                    "<div class='ulu-info'>" +
-                        "{{#isMe id}}" +
-                            "<div class='ului-email'>{{email}} (Me)</div>" +
-                        "{{else}}" +
-                            "<div class='ului-email'>{{email}}</div>" +
-                        "{{/isMe}}" +
-                        "<div class='ului-settings row'>"+
-                            "<div class='uluis-id user-setting-item'>User id : {{id}}</div>" +
-                            "<div class='uluis-remove user-setting-item' onclick='removeUserFromProject({{id}}, event)'>-</div>" +
-                        "</div>" +
-                    "</div>" +
-                "</div>" +
-            "{{/each}}";
-
-        let users = $("#pro"+projectId).html(makeTemplate(template, result));
-        $("#pro"+projectId).parent().show(500);
+        showUsers(proId, 1);
     });
 }
 
@@ -233,14 +139,8 @@ function orgOnClick(orgId) {
     console.log(orgId);
 }
 
-function displayAddProjectForm(event) {
-    console.log("i am here");
-    let addProjectForm = event.target.parentElement.lastChild;
-    if (addProjectForm.classList.contains("collapsed")) {
-        addProjectForm.classList.remove("collapsed");
-    } else {
-        addProjectForm.classList.add("collapsed");
-    }
+function displayAddProjectForm(orgId, event){
+    $("#org"+orgId+"-addProject_form").toggle();
 }
 
 function addProjectToOrganisation(orgId, event){
@@ -292,7 +192,6 @@ function showOrgUsers(orgId){
 function removeUserFromProject(userId, event) {
     sendRequest('/api/projectsusers/'+lastClickedProjectInMenu+'/'+userId, 'DELETE', '', function(result){
         console.log("user: "+userId+" was removed from project "+lastClickedProjectInMenu);
-        //getProjectUsers(lastClickedProjectInMenu);
         let row_parent = event.target.parentElement.parentElement.parentElement.parentElement;
         let row_to_delete = event.target.parentElement.parentElement.parentElement;
         row_parent.removeChild(row_to_delete);
@@ -307,7 +206,6 @@ Handlebars.registerHelper("isMe", function(userId, options){
     return userId == loggedUserId ? fnTrue(this) : fnFalse(this);
 });
 
-
 Handlebars.registerHelper("isMeLeader", function(idLeader, options){
     var fnTrue = options.fn, 
         fnFalse = options.inverse;
@@ -315,8 +213,18 @@ Handlebars.registerHelper("isMeLeader", function(idLeader, options){
     return idLeader == loggedUserId ? fnTrue(this) : fnFalse(this);
 });
 
+Handlebars.registerHelper("isMeLeaderP", function(options){
+    var fnTrue = options.fn, 
+        fnFalse = options.inverse;
+    
+    return lastClickedProjectInMenu == loggedUserId ? fnTrue(this) : fnFalse(this);
+});
+
+Handlebars.registerHelper("saveProInfo", function(idProject, idLeader){
+    projectsLeadersL[idProject] = idLeader;
+});
+
 function sendRequest(url, type, data, callback) {
-    console.log(url);
     $.ajax({
         url: url,
         type: type,
