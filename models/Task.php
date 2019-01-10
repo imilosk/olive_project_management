@@ -56,6 +56,15 @@ class Task {
         $statement = $db->prepare("DELETE FROM {$table} WHERE id = :id");
         $statement->bindParam(":id", $id);
         $statement->execute();
+    }
+
+    public static function changeStatus($taskId, $status) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("UPDATE {$table} SET idTask_status = :status WHERE id = :taskId");
+        $statement->bindParam(":status", $status);
+        $statement->bindParam(":taskId", $taskId);
+        $statement->execute();
     } 
 
     public static function get_project_tasks($idProject) {
@@ -94,16 +103,14 @@ class Task {
                                     WHERE t.idProject = :idProject 
                                 ");
 
-    
         $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
         $statement->execute(); 
         $result = $statement->fetchAll();
         
-        
         $i = 0;
         foreach ($result as $task) {
             $temp = $task;
-            $status = $task["status"];
+            $status = str_replace(" ", "_", $task["status"]);
 
             unset($task["status"]);
             $users = TaskUserProject::get_task_users($task["idTask"]);
@@ -113,8 +120,6 @@ class Task {
             $results[$status][]= $task;
             $i++;
         }
-
         return $results;
-    
-}
+    }
 }

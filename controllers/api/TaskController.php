@@ -30,6 +30,12 @@ class TaskController {
         echo "true";
     }
 
+    public static function changeStatus(){
+        $taskId = (int)$_POST["taskId"];
+        $status = (int)$_POST["status"];
+        Task::changeStatus($taskId, $status);
+    }
+
     public static function index() {
         $idProject = (int) Flight::request()->query['idProject'];
         $idUser = (int) Flight::request()->query['idUser'];

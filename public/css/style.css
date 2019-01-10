@@ -235,6 +235,10 @@ select:-webkit-autofill:focus {
 	
 }
 
+#wrapper{
+	padding: 30px;
+}
+
 #btn-openOrganisationModal {
 	background-color: #4ab19d;
 	color: white;
@@ -406,6 +410,61 @@ select:-webkit-autofill:focus {
 	border: 1px solid #4ab19d;
     height: 20px;
     padding-left: 5px;
+}
+
+#project-tasks{
+	margin-top: 50px;
+}
+
+.project-tasks-container{
+	display: flex;
+}
+
+.task-status-div{
+	border: 1px solid;
+}
+
+.task-div{
+	border: 1px solid;
+	display: flex;
+}
+
+.task-container {
+    margin-left: 20px;
+    flex: 1;
+}
+
+.task {
+	border: 1px solid red;
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 20px;
+}
+
+.task-status-text{
+	font-size: 11px;
+	margin-left: 5px;
+}
+
+.task-status{
+	flex: 1;
+}
+
+.task-add{
+	cursor: pointer;
+}
+
+.task_ch-status {
+	display: flex;
+}
+
+.task_status {
+    font-size: 10px;
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 2px;
+    margin-left: 2px;
+    cursor: pointer;
 }
 
 /* Add Animation */
