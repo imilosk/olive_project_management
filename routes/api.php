@@ -244,15 +244,17 @@ Flight::route('GET /api/userpspdata/@idUser', function($idUser) {
 
 // get tasks, status and users
 Flight::route('GET /api/tasks/all', function() {
-	TaskController::get_project_tasks_and_users();
+	$idProject = (int) Flight::request()->query['idProject'];
+    $idUser = (int) Flight::request()->query['idUser'];
+	TaskController::get_project_tasks_and_users($idUser, $idProject);
 });
 
 // get update big table psp data
-Flight::route('GET /api/update_psp_data', function() {
-	UserPSPDataController::update_user_psps();
+Flight::route('POST /api/update_psp_data/@idUser', function($idUser) {
+	UserPSPDataController::update_user_psps($idUser);
 });
 
 // get 
-Flight::route('GET /api/get_user_data', function() {
-	UserPSPDataController::get_user_psps();
+Flight::route('GET /api/get_user_data/@idUser', function($idUser) {
+	UserPSPDataController::get_user_psps($idUser);
 });

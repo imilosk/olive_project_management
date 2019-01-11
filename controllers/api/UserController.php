@@ -21,9 +21,7 @@ class UserController {
 
     public static function getUserInfo() {
         $email = Flight::request()->query['userEmail'];
-
         $id = (int) Flight::request()->query['userId'];
-
         if ($email != "")
             $info = User::getByEmail($email);
         else if ($email == "" && $id != "")

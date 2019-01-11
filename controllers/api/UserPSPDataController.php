@@ -43,14 +43,12 @@ class UserPSPDataController {
         Flight::json($pspData);
     }
 
-    public static function update_user_psps() {
-        $idUser = Flight::request()->query['idUser'];
+    public static function update_user_psps($idUser) {
         $response = UserPSPData::updateData($idUser);
         Flight::json($response);
     }
 
-    public static function get_user_psps() {
-        $idUser = Flight::request()->query['idUser'];
+    public static function get_user_psps($idUser) {
         $data = UserPSPData::get_user_psps($idUser);
         Flight::json($data);
     }

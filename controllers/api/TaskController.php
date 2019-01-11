@@ -46,9 +46,7 @@ class TaskController {
         Flight::json($projects);
     }
 
-    public static function get_project_tasks_and_users() {
-        $idProject = (int) Flight::request()->query['idProject'];
-        $idUser = (int) Flight::request()->query['idUser'];
+    public static function get_project_tasks_and_users($idUser, $idProject) {
         $tasks = Task::get_project_tasks_status($idUser, $idProject);
         Flight::json($tasks);
     }
