@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../models/Task.php';
 class TaskController {
 
     public static function show($id) {
-        $task = Task::get($id);
+        $task = Task::getInfo($id);
         Flight::json($task);
     }
 

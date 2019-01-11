@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../settings/DBInit.php';
 require_once __DIR__ . '/TaskUserProject.php';
+require_once __DIR__ . '/User.php';
 
 class Task {
 
@@ -21,12 +22,35 @@ class Task {
     public static function get($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" SELECT name 
+        $statement = $db->prepare(" SELECT id, name, description, idTask_status 
                                     FROM {$table} 
                                     WHERE id = :id");
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetch();
+    }
+
+    public static function getInfo($id) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare(" SELECT id, name, description, idTask_status 
+                                    FROM {$table} 
+                                    WHERE id = :id");
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->execute();
+        $result = $statement->fetch();
+
+        $usersInTask = TaskUserProject::get_task_users($id);
+        
+        /*
+        $users = [];
+        foreach ($usersInTask as $userId) {
+            $users[$userId] = User::get($userId)["email"];
+        }  */
+
+        $result["users"] = $usersInTask;
+
+        return $result;
     }
 
     public static function insert($name, $idProject) {

@@ -221,6 +221,50 @@ select:-webkit-autofill:focus {
 	animation-duration: 0.4s
 }
 
+#taskInfo .modal-content{
+	margin: 10% auto;
+	height: 60%;
+	width: 60%;
+	animation-name: slideInTaskInfo;
+	position: relative;
+}
+
+#taskInfo .modal-body{
+	overflow: hidden;
+}
+
+#taskInfo_status {
+    display: flex;
+    align-self: center;
+}
+
+#taskInfo_name {
+    background-color: #4ab19d;
+    border: 1px solid #4ab19d;
+    border-radius: 10px;
+    color: white;
+    flex: 1;
+    font-weight: 600;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+#taskInfo_name:hover {
+	border: 1px solid gray;
+}
+
+#taskInfo_modal-footer {
+	display: block;
+}
+
+#taskInfo_users {
+    display: flex;
+}
+
+.taskInfo_user {
+    margin-left: 10px;
+}
+
 /* Modal Header */
 .modal-header {
 	background-color: #4ab19d;
@@ -233,6 +277,41 @@ select:-webkit-autofill:focus {
 /* Modal Footer */
 .modal-footer {
 	
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+	from {left: -300px; opacity: 0} 
+	to {left: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+	from {left: -300px; opacity: 0}
+	to {left: 0; opacity: 1}
+}
+
+@-webkit-keyframes slideInTaskInfo {
+	from {top: -300px; opacity: 0} 
+	to {top: 0; opacity: 1}
+}
+
+@keyframes slideInTaskInfo {
+	from {top: -300px; opacity: 0}
+	to {top: 0; opacity: 1}
+}
+/* The Close Button */
+.close {
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  	color: black;
+  	text-decoration: none;
+  	cursor: pointer;
 }
 
 #wrapper{
@@ -425,8 +504,33 @@ select:-webkit-autofill:focus {
 }
 
 .task-div{
-	border: 1px solid;
+	color: white;
 	display: flex;
+}
+
+#task-status-open > :first-child{
+	border: 1px solid #344E5C;
+	background: #344E5C;
+}
+
+#task-status-in_progress > :first-child{
+	border: 1px solid #EFC958;
+	background: #EFC958;
+}
+
+#task-status-review > :first-child{
+	border: 1px solid #E17A47;
+	background-color: #E17A47;
+}
+
+#task-status-rejected > :first-child{
+	border: 1px solid #EF3D59;
+	background-color: #EF3D59;
+}
+
+#task-status-closed > :first-child{
+	border: 1px solid #4AB19D;
+	background: #4AB19D;
 }
 
 .task-container {
@@ -435,10 +539,11 @@ select:-webkit-autofill:focus {
 }
 
 .task {
-	border: 1px solid red;
+	border: 1px solid #344e5c;
 	border-radius: 5px;
 	padding: 5px;
 	margin-top: 20px;
+	position: relative;
 }
 
 .task-status-text{
@@ -446,12 +551,40 @@ select:-webkit-autofill:focus {
 	margin-left: 5px;
 }
 
-.task-status{
-	flex: 1;
+.task-status {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 
 .task-add{
 	cursor: pointer;
+	font-weight: 600;
+	padding: 3px;
+	background-color: white;
+	transition: 0.5s;
+}
+
+#task-status-open .task-add{
+	color: #344E5C;
+}
+
+#task-status-in_progress .task-add{
+	color: #EFC958;
+}
+
+#task-status-review .task-add{
+	color: #E17A47;
+}
+
+#task-status-rejected .task-add{
+	color: #EF3D59;
+}
+
+#task-status-closed .task-add{
+	color: #4AB19D;
 }
 
 .task_ch-status {
@@ -459,37 +592,43 @@ select:-webkit-autofill:focus {
 }
 
 .task_status {
-    font-size: 10px;
-    border: 1px solid;
-    border-radius: 50%;
-    padding: 2px;
-    margin-left: 2px;
-    cursor: pointer;
+	border-radius: 50%;
+	margin-left: 2px;
+	cursor: pointer;
+	width: 15px;
+	height: 15px;
 }
 
-/* Add Animation */
-@-webkit-keyframes slideIn {
-	from {left: -300px; opacity: 0} 
-	to {left: 0; opacity: 1}
+.task-settings {
+	color: green;
+	border: 1px solid red;
+	border-radius: 50%;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
 }
 
-@keyframes slideIn {
-	from {left: -300px; opacity: 0}
-	to {left: 0; opacity: 1}
-}
-/* The Close Button */
-.close {
-	color: white;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
+.s_open {
+    background-color: #344e5c;
 }
 
-.close:hover,
-.close:focus {
-  	color: black;
-  	text-decoration: none;
-  	cursor: pointer;
+.s_inprogress {
+    background-color: #efc958;
+}
+
+.s_review {
+    background-color: #e17a47;
+}
+
+.s_rejected {
+    background-color: #ef3d59;
+}
+
+.s_closed {
+    background-color: #4ab19d;
 }
 
 #test {

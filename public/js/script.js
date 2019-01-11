@@ -193,8 +193,15 @@ function changeTaskStatus(taskId, status){
     });
 }
 
-function openTaskInfo(taskId) {
+function showTaskInfo(taskId) {
     console.log("display task "+taskId);
+    sendRequest('/api/task/'+taskId, 'GET', '', function(result){
+        $("#taskInfo_name").val(result["name"]);
+        let template = $("#taskInfo-user-list-handle").html();
+        $("#taskInfo_modal-footer").html(makeTemplate(template, result["users"]));
+        console.log(result);
+        $("#taskInfo").show();
+    });
 }
 
 function deleteProject(projectId){
@@ -305,9 +312,10 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+    } else if(event.target.id === "taskInfo"){
+        $("#taskInfo").hide();
     }
 }
-
 
 $("#joke").hover(function(){
     $("#joke").html("Klikni me!");

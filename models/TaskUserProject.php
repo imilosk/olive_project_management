@@ -56,11 +56,12 @@ class TaskUserProject {
     public static function get_task_users($idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" SELECT idUser
-                                    FROM {$table} AS tup
+        $statement = $db->prepare(" SELECT idUser, u.email
+                                    FROM {$table} tup
+                                    INNER JOIN Users u on u.id = tup.idUser
                                     WHERE tup.idTask = :idTask");
         $statement->bindParam(":idTask", $idTask, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_COLUMN);
+        return $statement->fetchAll();
     }
 }

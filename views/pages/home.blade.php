@@ -48,14 +48,25 @@
 
         <div id="taskInfo" class="modal">
             <div class="modal-content">
-                <div class="modal-header"></div>
-                <div class="modal-body"></div>
-                <div class="modal-footer"></div>
+                <div class="modal-header">
+                    <input type="text" id="taskInfo_name" value="Programiranje front-enda"> 
+                    <div id="taskInfo_status">
+                        <div id="taskInfo_open" class="task_status s_open"></div>
+                        <div id="taskInfo_inprogress" class="task_status s_inprogress"></div>
+                        <div id="taskInfo_review" class="task_status s_review"></div>
+                        <div id="taskInfo_rejected" class="task_status s_rejected"></div>
+                        <div id="taskInfo_closed" class="task_status s_closed"></div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="task-description"></div>
+                </div>
+                <div class="modal-footer" id="taskInfo_modal-footer"></div>
             </div>
         </div>
 
 		<div id="test">@php echo $auth->getUserId(); @endphp</div>
-
+        
 		<div id="project-tasks"></div>
 
         {{-- <div id="joke">STOPAR!</div> --}}
@@ -74,14 +85,17 @@
 			<div class='tasks'>
 				@{{#each OPEN}}
 					<div class='task'>
-                        <div class='task_name'>@{{taskName}}</div>
-                        <div class='task_settings'>
+                        <div class='task-info'>
+                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task-settings' onclick='showTaskInfo(@{{idTask}})'></div>
+                        </div>
+                        <div class='task_status-change'>
                             <div class='task-status-text'>change status to</div>
                             <div class='task_ch-status'>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},3)'>In progress</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},4)'>review</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},5)'>rejected</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},2)'>closed</div>
+                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
                             </div>
                         </div>
                     </div>
@@ -97,52 +111,69 @@
 			<div class='tasks'>
 				@{{#each IN_PROGRESS}}
 					<div class='task'>
-                        <div class='task_name'>@{{taskName}}</div>
-                        <div class='task_settings'>
+                        <div class='task-info'>
+                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task-settings' onclick='showTaskInfo(@{{idTask}})'></div>
+                        </div>
+                        <div class='task_status-change'>
                             <div class='task-status-text'>change status to</div>
                             <div class='task_ch-status'>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},1)'>open</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},4)'>review</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},5)'>rejected</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},2)'>closed</div>
+                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
+                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
                             </div>
                         </div>
                     </div>
 				@{{/each}}
 			</div>
 		</div>
+
         <div class='task-container' id='task-status-review'>
-            <div class='task-status-div'>REVIEW</div>
+            <div class='task-div'>
+                <div class='task-status'>REVIEW</div>
+                <div class='task-add' onclick='addTaskToProject(4)'>+</div>
+            </div>
             <div class='tasks'>
                 @{{#each REVIEW}}
                     <div class='task'>
-                        <div class='task_name'>@{{taskName}}</div>
-                        <div class='task_settings'>
+                        <div class='task-info'>
+                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task-settings' onclick='showTaskInfo(@{{idTask}})'></div>
+                        </div>
+                        <div class='task_status-change'>
                             <div class='task-status-text'>change status to</div>
                             <div class='task_ch-status'>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},1)'>open</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},3)'>in progress</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},5)'>rejected</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},2)'>closed</div>
+                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
+                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
                             </div>
                         </div>
                     </div>
                 @{{/each}}
             </div>
         </div>
+
         <div class='task-container' id='task-status-rejected'>
-            <div class='task-status-div'>REJECTED</div>
+            <div class='task-div'>
+                <div class='task-status'>REJECTED</div>
+                <div class='task-add' onclick='addTaskToProject(1)'>+</div>
+            </div>
             <div class='tasks'>
                 @{{#each REJECTED}}
                     <div class='task'>
-                        <div class='task_name'>@{{taskName}}</div>
-                        <div class='task_settings'>
+                        <div class='task-info'>
+                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task-settings' onclick='showTaskInfo(@{{idTask}})'></div>
+                        </div>
+                        <div class='task_status-change'>
                             <div class='task-status-text'>change status to</div>
                             <div class='task_ch-status'>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},1)'>open</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},3)'>in progress</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},4)'>review</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},2)'>closed</div>
+                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
+                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
                             </div>
                         </div>
                     </div>
@@ -150,18 +181,24 @@
             </div>
         </div>
         <div class='task-container' id='task-status-closed'>
-            <div class='task-status-div'>CLOSED</div>
+            <div class='task-div'>
+                <div class='task-status'>CLOSED</div>
+                <div class='task-add' onclick='addTaskToProject(1)'>+</div>
+            </div>
             <div class='tasks'>
                 @{{#each CLOSED}}
                     <div class='task'>
-                        <div class='task_name'>@{{taskName}}</div>
-                        <div class='task_settings'>
+                        <div class='task-info'>
+                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task-settings' onclick='showTaskInfo(@{{idTask}})'></div>
+                        </div>
+                        <div class='task_status-change'>
                             <div class='task-status-text'>change status to</div>
                             <div class='task_ch-status'>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},1)'>open</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},3)'>in progress</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},4)'>review</div>
-                                <div class='task_status' onclick='changeTaskStatus(@{{idTask}},5)'>rejected</div>
+                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
+                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
                             </div>
                         </div>
                     </div>
@@ -169,6 +206,25 @@
             </div>
         </div>
 	</div>
+</script>
+
+<script type="text/x-handlebars-template" id="taskInfo-user-list-handle">
+    <div id="taskInfo_users-text">Users</div>
+    <div id="taskInfo_users">
+        @{{#each this}}
+            <div class="taskInfo_user">
+                @{{#isMe idUser}}
+                    <div class='ului-email'>@{{email}} (Me)</div>
+                @{{else}}
+                    <div class='ului-email'>@{{email}}</div>
+                @{{/isMe}}
+                <div class='ului-settings row'>
+                    <div class='uluis-id user-setting-item'>User id : @{{idUser}}</div>
+                    <div class='uluis-remove user-setting-item' onclick='removeUserFromTask(@{{idUser}}, event)'>-</div>
+                </div>
+            </div>
+        @{{/each}}
+    </div
 </script>
 
 <script type="text/x-handlebars-template" id="menu-user-list-handle">
