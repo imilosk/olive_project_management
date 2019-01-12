@@ -21,8 +21,8 @@ class PSPController {
         echo "true";
     }
 
-    public static function get_data($id) {
-        $data = PSP::get_psp_data($id);
+    public static function get_data($idUser, $idTask) {
+        $data = PSP::get_psp_data($idUser, $idTask);
         Flight::json($data);
     }
 

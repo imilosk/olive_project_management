@@ -126,7 +126,7 @@ Flight::route('DELETE /api/tasksusers/@idUser/@idTask', function($idUser, $idTas
 	TaskUserProjectController::delete($idUser, $idTask);
 });
 
-// get all tasks of a project or get all tasks of an user
+// get all tasks of a project or get all tasks of an user or get available users for a task in a project
 Flight::route('GET /api/tasks', function() {
 	TaskController::index();
 });
@@ -143,8 +143,8 @@ Flight::route('GET /api/psp/@id', function($id) {
 });
 
 // get PSP
-Flight::route('GET /api/pspdata/@id', function($id) {
-	PSPController::get_data($id);
+Flight::route('GET /api/pspdata/@idUser/@idTask', function($idUser, $idTask) {
+	PSPController::get_data($idUser, $idTask);
 });
 
 // add PSP

@@ -4,7 +4,12 @@ require_once __DIR__ . '/../../models/UserPSPData.php';
 
 class UserPSPDataController {
 
-    public static function store() {
+    public static function store($idUser) {
+        $response = UserPSPData::create($idUser);
+        Flight::json($response);
+    }
+
+    public static function store2() {
         $idUser = $_POST["idUser"];
         $size = $_POST["size"];
         $planning_time = $_POST["planning_time"];
