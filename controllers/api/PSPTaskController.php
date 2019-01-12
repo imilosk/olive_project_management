@@ -13,10 +13,10 @@ class PSPTaskController {
         $idPhase = $_POST["idPhase"];
         $idPSP = $_POST["idPSP"];
         $start = $_POST["start"];
-        $end = null;
-        $pause = 0;
+        $end = $_POST["end"];
+        $pause = $_POST["pause"];
         $description = $_POST["description"];
-        $units = 0;
+        $units = $_POST["units"];
         $estimatedtime = $_POST["estimatedtime"];
         $estimatedunits = $_POST["estimatedunits"];
         $response = PSPTask::insert($idPhase, $idPSP, $start, $end, $pause, $description, $units, $estimatedtime, $estimatedunits);

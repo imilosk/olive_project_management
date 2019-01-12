@@ -28,6 +28,17 @@ class TaskUserProject {
         $statement->execute();
     }
 
+    public static function get_idPSP($idUser, $idTask) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare(" SELECT idPSP 
+                                    FROM {$table}
+                                    WHERE idUser=:idUser AND idTask=:idTask");
+        $statement->bindParam(":idUser", $idUser);
+        $statement->bindParam(":idTask", $idTask);
+        $statement->execute();
+    }
+
 /*
     public static function update($idUser, $idTask, $idPSP) {
         $table = self::TABLE_NAME;
