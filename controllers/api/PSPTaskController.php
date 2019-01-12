@@ -11,7 +11,7 @@ class PSPTaskController {
 
     public static function store() {
         $idPhase = $_POST["idPhase"];
-        $idPSP = $_POST["idPSP"];
+        $idPSP = TaskUserProjectController::get_PSP($_POST["idUser"], $_POST["idTask"]);;
         $start = $_POST["start"];
         $end = $_POST["end"];
         $pause = $_POST["pause"];
