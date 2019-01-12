@@ -116,6 +116,19 @@ class Task {
         return $statement->fetchAll();
     }
 
+    public static function get_available_users($idProject, $idTask){
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT up.idUser, u.email
+                                    FROM Users u 
+                                    INNER JOIN userprojects up ON up.idUser = u.id
+                                    WHERE up.idProject = :idProject AND up.idUser NOT IN (SELECT idUser FROM tasksusersprojects WHERE idTask = :idTask)");
+        $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
+        $statement->bindParam(":idTask", $idTask, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
     
     public static function get_project_tasks_status($idUser, $idProject) {
         $table = self::TABLE_NAME;

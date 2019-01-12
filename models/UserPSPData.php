@@ -143,15 +143,14 @@ class UserPSPData {
         $result[0]["sum_in_err"] = array_sum(array_slice($result[0], 9,7));
         $result[0]["sum_res_err"] = array_sum(array_slice($result[0], 16,7));
 
-
         foreach(array_keys(array_slice($result[0], 2,21)) as $wbli){
             $name = substr ($wbli,0,strrpos($wbli, '_', -1));
             $name2 = substr ($wbli,strrpos($wbli, '_', -5)+1);
-            $result[0]["ratios"][$wbli] =  round((int)$result[0][$wbli]/$result[0]["sum_".$name2] *100,2) ;
+            
+            if ($result[0]["sum_".$name2] *100)
+                $result[0]["ratios"][$wbli] =  round((int)$result[0][$wbli]/$result[0]["sum_".$name2] *100,2) ;
         }
             
-
-
         $result[0]["minloc"] = 0;
         $result[0]["loch"] = 0;
         $result[0]["miskloc"] = 0;
@@ -160,13 +159,18 @@ class UserPSPData {
 
         if($result[0]["size"])
             $result[0]["minloc"] =  round($result[0]["sum_time"]/$result[0]["size"],2);
-        $result[0]["loch"] =  round($result[0]["size"]/($result[0]["sum_time"]/60),2);
-        $result[0]["miskloc"] =  round($result[0]["sum_res_err"]/($result[0]["size"]/1000),2);
+
+        if ($result[0]["sum_time"]/60)
+            $result[0]["loch"] =  round($result[0]["size"]/($result[0]["sum_time"]/60),2);
+
+        if ($result[0]["size"]/1000)
+            $result[0]["miskloc"] =  round($result[0]["sum_res_err"]/($result[0]["size"]/1000),2);
+
         if(array_sum(array_slice($result[0], 16,4)))
             $result[0]["ratio"]  =  round(array_sum(array_slice($result[0], 16,4))/array_sum(array_slice($result[0], 9,4))*100,2);
+
         if(($result[0]["compiling_time"]+$result[0]["testing_time"]))
             $result[0]["sfratio"] = round($result[0]["code_review_time"]/($result[0]["compiling_time"]+$result[0]["testing_time"]),2);
-
 
         foreach(array_keys(array_slice($result[0],9,14)) as $one){
             $name = substr ($one,0,strrpos($one, '_', -5));
@@ -175,13 +179,8 @@ class UserPSPData {
             else
                 $result[0]["errh"][$one] = "/";
         }
-
-
-
-
         return $result;
     }
-
 
     public static function updateData($idUser){
         $table = self::TABLE_NAME;
@@ -257,5 +256,4 @@ class UserPSPData {
         }
         self::update($result);
     }
-
 }

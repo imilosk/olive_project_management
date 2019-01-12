@@ -39,11 +39,15 @@ class TaskController {
     public static function index() {
         $idProject = (int) Flight::request()->query['idProject'];
         $idUser = (int) Flight::request()->query['idUser'];
-        if ($idUser == "") 
-            $projects = Task::get_project_tasks($idProject);
+        $idTask = (int) Flight::request()->query['idTask'];
+
+        if ($idProject != "" && $idTask != "")
+            $result = Task::get_available_users($idProject, $idTask);
+        else if ($idUser == "") 
+            $result = Task::get_project_tasks($idProject);
         else
-            $projects = Task::get_user_tasks($idUser, $idProject);
-        Flight::json($projects);
+            $result = Task::get_user_tasks($idUser, $idProject);
+        Flight::json($result);
     }
 
     public static function get_project_tasks_and_users($idUser, $idProject) {

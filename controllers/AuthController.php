@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/api/UserController.php';
+require_once __DIR__ . '/api/UserPSPDataController.php';
 
 class AuthController {
     
@@ -11,6 +12,7 @@ class AuthController {
 			if($_POST['password'] === $_POST['password_repeat']) {
 				$userId = $auth->register($_POST['email'], $_POST['password']);
 				$msg = 'We have signed up a new user with the ID ' . $userId;
+                UserPSPDataController::store($userId);
 				Flight::redirect('/');
 			}
 			else {

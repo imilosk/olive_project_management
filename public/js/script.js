@@ -1,6 +1,8 @@
 let testData;
 const loggedUserId = document.getElementById("test").innerHTML;
 let activeProjectId;
+let activeOrganisationId;
+let activeTask;
 let projectsLeadersL = {};
 const projectsLeaders ={};
 
@@ -9,6 +11,7 @@ window.onload = function(){
 
     function init() {
         getUserOrganisations();
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 
@@ -166,8 +169,9 @@ function activateProject(projectId){
     getProjectTasks(projectId);
 }*/
 
-function getProjectTasks(projectId){
+function getProjectTasks(projectId, orgId){
     activeProjectId = projectId;
+    activeOrganisationId = orgId;
     sendRequest('/api/tasks/all', 'GET', {idProject: projectId}, function(result){
         console.log(result);
         drawProjectTasks(result);
@@ -187,24 +191,137 @@ function addTaskToProject(taskStatus){
 }
 
 function changeTaskStatus(taskId, status){
+
+    // ce je task id 0 pomeni, da to funkcijo klicemo iz tasikInfo modal-a
+    // kar pomeni da je globalna spremenljivka nastavljena na trenuten task
+    if (taskId == 0)
+        taskId = activeTask;
+
     sendRequest('/api/taskstatus', 'POST', {taskId: taskId, status: status}, function(result){
         console.log("task's with id "+taskId+" changed to "+status);
         getProjectTasks(activeProjectId);
+        if (!$("#taskInfo").is(":hidden"))
+            getTaskInfo(activeTask);
     });
 }
 
-function showTaskInfo(taskId) {
+function getTaskInfo(taskId) {
     console.log("display task "+taskId);
     sendRequest('/api/task/'+taskId, 'GET', '', function(result){
-        $("#taskInfo_name").val(result["name"]);
-        let template = $("#taskInfo-user-list-handle").html();
-        $("#taskInfo_modal-footer").html(makeTemplate(template, result["users"]));
         console.log(result);
-        $("#taskInfo").show();
+        showTaskInfo(result);
     });
 }
 
-function deleteProject(projectId){
+function showTaskInfo(data) {
+    activeTask = data["id"];
+    console.log(data);
+
+    $("#taskInfo_name").val(data["name"]);
+    $("#task-description-text").val(data["description"]);
+
+    let header = $(document.querySelector("#taskInfo .modal-header")),
+        header_input = $("#taskInfo_name"),
+        body = $(document.querySelector("#taskInfo .modal-body")),
+        textarea = $("#task-description-text");
+
+    let taskStatus = data["idTask_status"];
+    let color = "#344E5C"; // open
+    if (taskStatus == 2) {color = "#4AB19D";}
+    else if (taskStatus == 3) {color = "#EFC958";}
+    else if (taskStatus == 4) {color = "#E17A47";}
+    else if (taskStatus == 5) {color = "#EF3D59";}
+
+    header.css("background-color", color);
+
+    header_input.css("background-color", color);
+    header_input.css("border-color", color);
+
+    body.css("background-color", color);
+
+    textarea.css("background-color", color);
+    textarea.css("border-color", color);
+
+    showTaskInfo_users(data["users"]);
+    
+    $("#taskInfo").show();
+}
+
+function showTaskInfo_users(users) {
+    let template = $("#taskInfo-user-list-handle").html();
+    $("#taskInfo_modal-footer").html(makeTemplate(template, users));
+}
+
+function removeUserFromTask(idUser, event) {
+    sendRequest('/api/tasksusers/'+idUser+'/'+activeTask, 'DELETE', '', function(result){
+        // odstranim div z userjem, namesto še enkrat narisat modal
+        let userDiv = event.target.parentElement.parentElement;
+        let userDivParent = userDiv.parentElement;
+        userDivParent.removeChild(userDiv);
+    });
+}
+
+function getAvailableUsers(event){
+    sendRequest('/api/tasks', 'GET', {idProject: activeProjectId, idTask:activeTask}, function(result){
+        console.log(result);
+        showAvailableUsers(event, result); 
+    });
+}
+
+function showAvailableUsers(event, data){
+    //create this div
+    let userDropdown = document.createElement("div");
+    userDropdown.id = "taskInfo_user-dropdown";
+
+    let template = $("#taskInfo-add_user-list-handle").html();
+    userDropdown.innerHTML = makeTemplate(template, data);
+    $("#wrapper").append(userDropdown);
+
+    $('#taskInfo_user-dropdown').css('left',event.pageX + 'px' );
+    $('#taskInfo_user-dropdown').css('top',event.pageY + 'px' );
+    
+}
+
+function addUserToTask(idUser, event) {
+    console.log('adding user '+idUser+' to task '+activeTask);
+    sendRequest('/api/tasksusers', 'POST', {idTask: activeTask, idUser: idUser, idPSP: 1}, function(result){
+        //odstranimo kliknjen div
+        let userToRemove = event.target.parentElement.parentElement;
+        let userToRemove_parent = userToRemove.parentElement;
+        userToRemove_parent.removeChild(userToRemove);
+        //refreshamo taskInfo modal
+        console.log(result);
+        getTaskInfo(activeTask);
+    });
+}
+
+/* PSP STUFF!!!!!!!!!!!!!!!!!!!!!!!!! */
+function openNav() {
+    document.getElementById("navPSP").style.display = "block";
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+    document.getElementById("navPSP").style.display= "none";
+}
+
+function getPSPData(idTask) {
+    sendRequest('/api/pspdata/'+loggedUserId+'/'+idTask, 'GET', '', function (data) {
+        console.log(data);
+        let template = $("#psp-data-handle").html();
+        $("#navPSP").html(makeTemplate(template, data));
+        openNav();
+    });
+}
+
+function getUserPSPData() {
+    sendRequest('/api/psp_user_data/5', 'GET', '', function (data) {
+        let template = $("#user-data-handle").html();
+        $("#navPSP").html(makeTemplate(template, data));
+    });
+}
+
+function deleteProject(projectId) {
     /*
     sendRequest("/api/project/"+projectId, 'DELETE', '',function(result){
         console.log("Project deleted! v novi metodi");
@@ -309,13 +426,20 @@ span.onclick = function() {
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
+window.addEventListener("click", function(event){
+    console.log(event.target);
+    let dropdown = document.getElementById("taskInfo_user-dropdown");
+    
+    if ($("#taskInfo_user-dropdown").html() && !$.contains(dropdown, event.target)){
+        $("#taskInfo_user-dropdown").remove();
+    } else if (event.target == modal) {
         modal.style.display = "none";
-    } else if(event.target.id === "taskInfo"){
+    } else if(event.target.id === "navPSP") {
+        closeNav();
+    } else if(event.target.id === "taskInfo") {
         $("#taskInfo").hide();
     }
-}
+}, true);
 
 $("#joke").hover(function(){
     $("#joke").html("Klikni me!");

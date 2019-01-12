@@ -35,11 +35,16 @@ class ProjectController {
     public static function index() {
         $idOrganisation = (int) Flight::request()->query['idOrganisation'];
         $idUser = (int) Flight::request()->query['idUser'];
-        if ($idUser == "") 
-            $projects = Project::get_organisation_projects($idOrganisation);
+        $idProject = (int) Flight::request()->query['idProject'];
+
+        if ($idProject != "")
+            $result = Project::get_users_in_project($idProject);
+        else if ($idUser == "" && $idOrganisation != "")
+            $result = Project::get_organisation_projects($idOrganisation);
         else
-            $projects = Project::get_user_projects($idUser, $idOrganisation);
-        Flight::json($projects);
+            $result = Project::get_user_projects($idUser, $idOrganisation);
+
+        Flight::json($result);
     }
 
 
