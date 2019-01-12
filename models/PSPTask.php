@@ -70,14 +70,16 @@ class PSPTask {
         $statement->execute();
     }
 
-    public static function get_psp_tasks($idPSP) {
+    public static function get_psp_tasks($idUser, $idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" SELECT pt.id,pt.description
+        $statement = $db->prepare(" SELECT pt.id,pp.name, pt.description, pt.start, pt.end, pt.pause, pt.estimatedtime, pt.estimatedunits, pt.units
                                     FROM {$table} AS pt
-                                    INNER JOIN psps AS p ON pt.idPSP=p.id
-                                    WHERE p.id = :idPSP");
-        $statement->bindParam(":idPSP", $idPSP, PDO::PARAM_INT);
+                                    INNER JOIN psp_phases pp ON pt.idPhase=pp.id
+                                    INNER JOIN tasksusersprojects AS tup ON pt.idPSP=tup.idPSP
+                                    WHERE tup.idUser = :idUser AND tup.idTask = :idTask");
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->bindParam(":idTask", $idTask, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }

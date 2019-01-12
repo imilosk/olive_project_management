@@ -178,8 +178,8 @@ Flight::route('DELETE /api/psptask/@id', function($id) {
 });
 
 // get all tasks of a psp
-Flight::route('GET /api/psptasks/@idPSP', function($idPSP) {
-	PSPTaskController::get_psp_tasks($idPSP);
+Flight::route('GET /api/psptasks/@idUser/@idTask', function($idUser,$idTask) {
+	PSPTaskController::get_psp_tasks($idUser,$idTask);
 });
 
 // get psp error
@@ -203,8 +203,8 @@ Flight::route('DELETE /api/psperror/@id', function($id) {
 });
 
 // get all errors of a psp
-Flight::route('GET /api/psperrors/@idPSP', function($idPSP) {
-	PSPErrorController::get_psp_errors($idPSP);
+Flight::route('GET /api/psperrors/@idUser/@idTask', function($idUser,$idTask) {
+	PSPErrorController::get_psp_errors($idUser,$idTask);
 });
 
 // get all error categories

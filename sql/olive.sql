@@ -183,7 +183,7 @@ CREATE TABLE `psp_phases` (
 --
 
 INSERT INTO `psp_phases` (`id`, `name`) VALUES
-(1, 'Planing'),
+(1, 'Planning'),
 (2, 'Infrastructuring'),
 (3, 'Coding'),
 (4, 'Code review'),

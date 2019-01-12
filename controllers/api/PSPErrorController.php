@@ -37,8 +37,8 @@ class PSPErrorController {
         Flight::json($response);
     }
 
-    public static function get_psp_errors($idPsp) {
-        $psp_errors = PspError::get_psp_errors($idPsp);
+    public static function get_psp_errors($idUser,$idTask) {
+        $psp_errors = PspError::get_psp_errors($idUser,$idTask);
         Flight::json($psp_errors);
     }
 

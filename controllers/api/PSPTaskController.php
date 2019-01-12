@@ -38,8 +38,8 @@ class PSPTaskController {
         Flight::json($response);
     }
 
-     public static function get_psp_tasks($idPsp) {
-        $psp_tasks = PSPTask::get_psp_tasks($idPsp);
+     public static function get_psp_tasks($idUser,$idTask) {
+        $psp_tasks = PSPTask::get_psp_tasks($idUser,$idTask);
         Flight::json($psp_tasks);
     }
 
