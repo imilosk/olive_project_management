@@ -182,6 +182,7 @@ function getProjectTasks(projectId, orgId){
     sendRequest('/api/tasks/all', 'GET', {idProject: projectId, idUser: loggedUserId}, function(result){
         console.log(result);
         drawProjectTasks(result);
+        hideSideMenu();
     });
 }
 
@@ -468,16 +469,25 @@ function addPSPError(){
     let description = $("#error_description").val();
     console.log(description);
 
-    //sendRequest('/api/psperror', 'POST', {idUser: loggedUserId, idTask: activeTask, phaseEntry:phaseEntry, phaseFinish: phaseFinish, idCategory: category, resolve_time: resolve_time, num_fixed_errors:num_fixed_errors, description : description}, function(result){
-       //refresh table
-   // });
+    sendRequest('/api/psperror', 'POST', {idUser: loggedUserId, idTask: activeTask, phaseEntry:phaseEntry, phaseFinish: phaseFinish, idCategory: category, resolve_time: resolve_time, num_fixed_errors:num_fixed_errors, description : description}, function(result){
+       getPSPMistakes(activeTask);
+    });
 
     $("#phaseEntry").val(null);
     $("#phaseFinish").val(null);
     $("#category").val(null);
     $("#resolve_time").val(null);
     $("#num_fixed_errors").val(null);
-    $("#description").val(null);
+    $("#error_description").val(null);
+}
+
+function showPSPErrorRecord(id) {
+    $("#phaseEntry").val($("#record_pIdEntry_"+id).val());
+    $("#phaseFinish").val($("#record_pIdFinish_"+id).val());
+    $("#category").val($("#record_idCategory_"+id).val());
+    $("#resolve_time").val($("#record_resolve_time_"+id).html());
+    $("#num_fixed_errors").val($("#record_num_fixed_errors_"+id).html());
+    $("#error_description").val($("#record_description_"+id).html());
 }
 
 function deleteProject(projectId) {
@@ -588,16 +598,20 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
 function showSideMenu(){
+    $("#sideMenu").show(500);
+}
+
+function hideSideMenu(){
     $("#sideMenu").hide(500);
 }
 
 btn.onclick = function() {
-    modal.style.display = "block";
+    showSideMenu();
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-    modal.style.display = "none";
+    hideSideMenu();
 }
 
 // When the user clicks anywhere outside of the modal, close it

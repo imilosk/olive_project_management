@@ -231,11 +231,28 @@ select:-webkit-autofill:focus {
 	position: relative;
 }
 
-#navPSP-tasks .modal-body,
 #navPSPError .modal-body{
 	padding: 0;
-	overflow: hidden;
-	display: flex;
+	overflow: auto;
+}
+
+#navPSPError .modal-header {
+    background-color: #344e5c;
+    font-size: 20px;
+}
+
+#description,
+#error_description {
+	resize: none;
+}
+
+#psp_forms {
+    padding: 10px;
+}
+
+#navPSP-tasks .modal-body {
+    overflow: auto;
+    padding: 0;
 }
 
 #taskInfo .modal-body{
@@ -383,6 +400,21 @@ select:-webkit-autofill:focus {
 	display: none;
 }
 
+#addOrganisationModal_header{
+	font-size: 18px;
+	padding: 5px;
+}
+
+#addOrganisation-name {
+    width: 100%;
+}
+
+#addOrganisation-description {
+    margin-top: 5px;
+    width: 100%;
+    height: 50px;
+}
+
 #btn-openOrganisationModal {
 	background-color: #4ab19d;
 	color: white;
@@ -393,10 +425,18 @@ select:-webkit-autofill:focus {
 
 #btn-addNewOrganisation {
 	background-color: #344e5c;
+	border: 1px solid #344e5c;;
 	width: 60px;
 	text-align: center;
 	border-radius: 100px;
 	color: white;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+#btn-addNewOrganisation:hover{
+	background-color: white;
+	color: #344e5c;
 }
 
 #btn-openSideMenu {
@@ -1005,8 +1045,11 @@ label{
 }
 
 #tasks-record-list{
-	flex: 1;
-	background-color: yellow;
+	background-color: #344E5C;
+	color: white;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	padding: 10px;
 }
 
 #psp-form {
@@ -1015,7 +1058,7 @@ label{
 }
 
 .record_hidden{
-	display: none;
+	display: none !important;
 }
 
 .form-group {
@@ -1027,3 +1070,78 @@ label{
 	border: 1px solid black;
 }
 
+#psp-task-submit{
+	width: 100px;
+	background-color: #344e5c;
+	border: 1px solid #344e5c;
+	color: white;
+	margin-top: 10px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 20px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+#psp-task-submit:hover{
+	background-color: #fff;
+	color: #344e5c;
+}
+
+#t-headers {
+    display: table-header-group;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+.t-header {
+    display: table-cell;
+    width: 10%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#records {
+	display: table;
+	width: 100%;
+}
+
+.record {
+    display: table-row;
+    width: 100%;
+}
+
+.record_item {
+    display: table-cell;
+    width: 10%;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.details-btn:hover{
+	background-color: white;
+	color: #344e5c;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+#psp-task-title {
+    padding: 5px 10px;
+    font-size: 20px;
+    background-color: #344e5c;
+    color: white;
+    font-weight: 600;
+}
+
+#error-form {
+    padding: 10px;
+}
+
+#error-list {
+	background-color: #344e5c;
+	color: white;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	padding: 10px;
+}

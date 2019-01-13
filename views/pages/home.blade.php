@@ -38,7 +38,7 @@
                     <div id="addOrganisationModal_header">Add organisation</div>
                     <div id="addOrganisationModal_body">
                         <input type="text" id="addOrganisation-name" name="name" placeholder="Name">
-                        <input type="text" id="addOrganisation-description" placeholder="Description">
+                        <textarea id="addOrganisation-description" placeholder="Description"></textarea>
                     </div>
                     <div id="btn-addNewOrganisation">Create</div>
                 </div>
@@ -70,85 +70,85 @@
         </div>
 
         <div id="navPSP-tasks" class="modal">
-            <!-- Button to close the overlay navigation -->
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
             <!-- Overlay content --> 
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="psp-form">
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="insertphase">Phase</label>
-                                <select id="idPhase" class="form-control">
-                                    <option value="" selected disabled hidden>Choose here</option>
-                                    <option value="1">Planning</option>
-                                    <option value="2">Infrastructuring</option>
-                                    <option value="3">Coding</option>
-                                    <option value="4">Code review</option>
-                                    <option value="5">Compiling</option>
-                                    <option value="6">Testing</option>
-                                    <option value="7">Analysis</option>
-                                </select>
+                    <div id="psp-task-title">Time Notes</div>
+                    <div id="psp_forms">
+                        <div id="psp-form_1">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="insertphase">Phase</label>
+                                    <select id="idPhase" class="form-control">
+                                        <option value="" selected disabled hidden>Choose here</option>
+                                        <option value="1">Planning</option>
+                                        <option value="2">Infrastructuring</option>
+                                        <option value="3">Coding</option>
+                                        <option value="4">Code review</option>
+                                        <option value="5">Compiling</option>
+                                        <option value="6">Testing</option>
+                                        <option value="7">Analysis</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="estimatedtime">Estimated time</label>
+                                    <input type="number" class="form-control" id="estimatedtime" placeholder="(Min)">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="estimatedunits">Estimated units</label>
+                                    <input type="number" class="form-control" id="estimatedunits">
+                                </div>
+                           
                             </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="startDate">Start-date</label>
+                                    <input type="date" class="form-control" id="startDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="startTime">Start-time</label>
+                                    <input type="time" class="form-control" id="startTime">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="endDate">End-date</label>
+                                    <input type="date" id="endDate" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="endTime">End-time</label>
+                                    <input type="time" id="endTime" class="form-control">
+                                </div>
+                            </div>      
                         </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="startDate">Start-date</label>
-                                <input type="date" class="form-control" id="startDate">
+                        <div id="psp-form_2">
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="units">Units</label>
+                                    <input type="number" class="form-control" id="units" >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pause">Interruption</label>
+                                    <input type="number" class="form-control" id="pause" placeholder="(Min)">
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="startTime">Start-time</label>
-                                <input type="time" class="form-control" id="startTime">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" id="description"></textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label for="endDate">End-date</label>
-                                <input type="date" id="endDate" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="endTime">End-time</label>
-                                <input type="time" id="endTime" class="form-control">
-                            </div>
-
-                        </div>      
-
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="pause">Interruption</label>
-                                <input type="number" class="form-control" id="pause">
-                            </div>
+                            <div id="psp-task-submit" onclick="addPSPTask()">+</div>
                         </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="estimatedtime">Estimated time</label>
-                                <input type="number" class="form-control" id="estimatedtime">
-                            </div>
-                            <div class="form-group">
-                                <label for="estimatedunits">Estimated units</label>
-                                <input type="number" class="form-control" id="estimatedunits">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="units">Units</label>
-                                <input type="number" class="form-control" id="units" >
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" class="form-control" id="description">
-                        </div>
-
-                        <div id="submit" onclick="addPSPTask()">+</div>
                     </div>
                     <div id="tasks-record-list"></div>
                 </div>
             </div>
-            <div class="modal-footer" id="navPSP-tasks_modal-footer"></div>
         </div>
 
 		<div id="test">@php echo $auth->getUserId(); @endphp</div>
@@ -158,11 +158,9 @@
         <div id="navPSP" class="modal"></div>
 
         <div id="navPSPError" class="modal">
-            <!-- Button to close the overlay navigation -->
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <!-- Overlay content --> 
             <div id="frame" class="modal-content">
-                <div class="modal-header"></div>
+                <div class="modal-header">Mistakes Notes</div>
                 <div class="modal-body">
                     <div id="error-form">
                         <div class="row">
@@ -223,39 +221,13 @@
                         <div class="row">                               
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <input type="text" class="form-control" id="error_description">
+                                <textarea class="form-control" id="error_description"></textarea>
                             </div>
-                            <div id="submit" onclick="addPSPError()">+</div>
-                        </div>      
+                        </div>    
+                        <div id="psp-task-submit" onclick="addPSPError()">+</div>  
                     </div>
                     <div id="error-list">
-                        <div id="inside-list">
-                            <div id="record" class="row">
-                                <div id="id" class="record_hidden">
-                                    @{{id}}
-                                </div>
-                                <div id="phaseEntry">
-                                    @{{phaseEntry}}
-                                </div>
-                                <div id="phaseFinish">
-                                    @{{phaseFinish}}
-                                </div>
-                                <div id="categoty" class="record_hidden">
-                                    @{{categoty}}
-                                </div>
-                                <div id="resolve_time">
-                                    @{{resolve_time}}
-                                </div>
-                                <div id="num_fixed_errors"">
-                                    @{{num_fixed_errors}}
-                                </div>
-                                <div id="description" class="record_hidden">
-                                    @{{num_fixed_errors}}
-                                </div>
-                                <div id="info_btn">
-                                    i
-                                </div>
-                            </div>
+                        
                         </div>
                     </div>
                 </div>
@@ -268,21 +240,31 @@
 	</div>
 
 <script type="text/x-handlebars-template" id="error-PSP-handle">
-    @{{#each this}}
-        <div id="record" class="row">
-            <div id="record_id_@{{id}}"class="record_item" class="record_hidden record_item">@{{id}}</div>
-            <div id="record_pIdEntry_@{{id}}"class="record_item" class="record_hidden record_item">@{{pIdEntry}}</div>
-            <div id="record_phaseEntry_@{{id}}"class="record_item">@{{phaseEntry}}</div>
-            <div id="record_pIdFinish_@{{id}}"class="record_item" class="record_hidden record_item">@{{IdFinish}}</div>
-            <div id="record_phaseFinish_@{{id}}"class="record_item">@{{phaseFinish}}</div>
-            <div id="record_idCategory_@{{id}}"class="record_item" class="record_hidden record_item">@{{idCategory}}</div>
-            <div id="record_categoty_@{{id}}" class="record_hidden record_item">@{{categoty}}</div>
-            <div id="record_resolve_time_@{{id}}"class="record_item">@{{resolve_time}}</div>
-            <div id="record_num_fixed_errors_@{{id}}"class="record_item">@{{num_fixed_errors}}</div>
-            <div id="record_description_@{{id}}" class="record_hidden record_item">@{{num_fixed_errors}}</div>
-            <div id="info_btn_@{{id}}">i</div>
+    <div id="error-inside-list">
+        <div id="t-headers">
+            <div class="t-header">Category</div>
+            <div class="t-header">Phase Entry</div>
+            <div class="t-header">Phase Finish</div>
+            <div class="t-header">Resolve time</div>
+            <div class="t-header"># Fixed Errors</div>
+            <div class="t-header">Info</div>
         </div>
-    @{{/each}}
+        @{{#each this}}
+            <div id="record_@{{id}}" class="record row">
+                <div id="record_id_@{{id}}" class="record_hidden record_item">@{{id}}</div>
+                <div id="record_pIdEntry_@{{id}}" class="record_hidden record_item">@{{pIdEntry}}</div>
+                <div id="record_phaseEntry_@{{id}}"class="record_item">@{{phaseEntry}}</div>
+                <div id="record_pIdFinish_@{{id}}" class="record_hidden record_item">@{{IdFinish}}</div>
+                <div id="record_phaseFinish_@{{id}}"class="record_item">@{{phaseFinish}}</div>
+                <div id="record_idCategory_@{{id}}" class="record_hidden record_item">@{{idCategory}}</div>
+                <div id="record_categoty_@{{id}}" class="record_hidden record_item">@{{categoty}}</div>
+                <div id="record_resolve_time_@{{id}}"class="record_item">@{{resolve_time}}</div>
+                <div id="record_num_fixed_errors_@{{id}}"class="record_item">@{{num_fixed_errors}}</div>
+                <div id="record_description_@{{id}}" class="record_hidden record_item">@{{num_fixed_errors}}</div>
+                <div id="info_btn_@{{id}}" class="record_item details-btn" onclick="showPSPErrorRecord(@{{id}})">details</div>
+            </div>
+        @{{/each}}
+    </div>
 </script>
 
 <script type="text/x-handlebars-template" id="tasks-PSP-handle">
@@ -308,7 +290,7 @@
                     <div id="record_estimatedunits_@{{id}}" class="record_hidden record-item">@{{estimatedunits}}</div>
                     <div id="record_units_@{{id}}" class="record_item" >@{{units}}</div>
                     <div id="record_description_@{{id}}" class="record_hidden record-item">@{{description}}</div>
-                    <div id="record_info_btn_@{{id}}" class="record_item" onclick="showPSPTaskRecord(@{{id}})">i</div>
+                    <div id="record_info_btn_@{{id}}" class="record_item details-btn" onclick="showPSPTaskRecord(@{{id}})">details</div>
                 </div>
             @{{/each}}
         </div>
@@ -394,7 +376,7 @@
                                 <div class="tasks-psp-mistakes" onclick="getPSPMistakes(@{{idTask}})">M</div>
                                 <div class="tasks-psp-overview" onclick="getPSPData(@{{idTask}})">O</div>
                                 <div class="task-delete" onclick="deleteTask(@{{idTask}})">X</div>
-                                <div onclick="getPSPTaskData(@{{idTask}})">Test</div>
+                                <div onclick="getPSPTaskData(@{{idTask}})">N</div>
                             @{{/hasTaskAccess}}
                             <div onclick="getAvailableUsers(event, @{{idTask}})">U</div>
                         </div>
