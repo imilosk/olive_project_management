@@ -25,8 +25,12 @@ class TaskController {
     public static function update($id) {
         $id = (int) $id;
         $name = $_POST["name"];
-        $response = Task::update($id, $name);
-        echo "true";
+        $desc = $_POST["description"];
+
+        if ($desc != "")
+            Task::updateDesc($id, $desc);
+        else if ($name != "")
+            $response = Task::update($id, $name);
     }
 
     public static function changeStatus(){

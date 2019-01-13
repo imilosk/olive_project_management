@@ -66,7 +66,7 @@ class Organisation {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         // get organisations info of the user
-        $statement = $db->prepare("SELECT o.id AS idOrganisation, o.name AS orgName, o.description AS orgDesc, ou.idUser AS orgLeaderId
+        $statement = $db->prepare("SELECT o.id AS idOrganisation, o.name AS orgName, o.description AS orgDesc, o.idLeader AS orgLeaderId
                                     FROM {$table} AS o 
                                     INNER JOIN organisationsusers AS ou ON ou.idOrganisation = o.id 
                                     WHERE ou.idUser =  :idUser 

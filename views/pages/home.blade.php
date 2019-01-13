@@ -49,7 +49,7 @@
         <div id="taskInfo" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <input type="text" id="taskInfo_name" placeholder="Task name"> 
+                    <input type="text" id="taskInfo_name" name="taskInfo_name-input" placeholder="Task name" onchange="updateTaskName()"> 
                     <div id="taskInfo_status">
                         <div id="taskInfo_open" class="task_status s_open" onclick="changeTaskStatus(0, 1)"></div>
                         <div id="taskInfo_inprogress" class="task_status s_inprogress" onclick="changeTaskStatus(0, 3)"></div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="task-description">
-                        <textarea id="task-description-text" placeholder="Description"></textarea>
+                        <textarea id="task-description-text" placeholder="Description" onchange="updateTaskDescription()"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer" id="taskInfo_modal-footer">
@@ -158,6 +158,7 @@
                                 </th>
                                 <th id="submit" onclick="addPSPTask()">+</th>
                             </tr>
+                            {{-- <div id="PSP-task-data"></div> --}}
                         </table>
                     </div>
                 </div>
@@ -244,7 +245,7 @@
 					<div class='task'>
                         <div class="task-overview">
                             <div class='task-info'>
-                                <div class='task_name'>@{{taskName}}</div>
+                                <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
                                 <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
                             </div>
                             <div class='task_status-change'>
@@ -258,10 +259,13 @@
                             </div>
                         </div>
                         <div class="tasks-options">
-                            <div class="tasks-psp-mistakes">M</div>
-                            <div class="tasks-psp-overview" onclick="getPSPData(@{{idTask}})">O</div>
-                            <div class="task-delete" onclick="deleteTask(@{{idTask}})">X</div>
-                            <div onclick="openPSPTasksNav(@{{idTask}})">Test</div>
+                            <div>access : @{{access}}</div>
+                            @{{#hasTaskAccess access}}
+                                <div class="tasks-psp-mistakes">M</div>
+                                <div class="tasks-psp-overview" onclick="getPSPData(@{{idTask}})">O</div>
+                                <div class="task-delete" onclick="deleteTask(@{{idTask}})">X</div>
+                                <div onclick="getPSPTaskData(@{{idTask}})">Test</div>
+                            @{{/hasTaskAccess}}
                             <div onclick="getAvailableUsers(event, @{{idTask}})">U</div>
                         </div>
                     </div>
@@ -282,7 +286,7 @@
 				@{{#each IN_PROGRESS}}
 					<div class='task'>
                         <div class='task-info'>
-                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
                             <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
                         <div class='task_status-change'>
@@ -312,7 +316,7 @@
                 @{{#each REVIEW}}
                     <div class='task'>
                         <div class='task-info'>
-                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
                             <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
                         <div class='task_status-change'>
@@ -342,7 +346,7 @@
                 @{{#each REJECTED}}
                     <div class='task'>
                         <div class='task-info'>
-                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
                             <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
                         <div class='task_status-change'>
@@ -372,7 +376,7 @@
                 @{{#each CLOSED}}
                     <div class='task'>
                         <div class='task-info'>
-                            <div class='task_name'>@{{taskName}}</div>
+                            <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
                             <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
                         <div class='task_status-change'>
@@ -401,8 +405,11 @@
                     <div class='ului-email'>@{{email}}</div>
                 @{{/isMe}}
                 <div class='ului-settings row'>
-                <div class='uluis-id user-setting-item'>User id : @{{id}}</div>
-                    <div class='uluis-remove user-setting-item' onclick='removeUserFromProject(@{{id}}, event)'>-</div>
+                    <div class='uluis-id user-setting-item'>User id : @{{id}}</div>
+                    @{{#isMeLeader}}
+                        <div class='uluis-remove user-setting-item' onclick='removeUserFromProject(@{{id}}, event)'>-</div>
+                        <div class='user-setting-item' onclick='getUserPSPData(@{{id}})'>O</div>
+                    @{{/isMeLeader}}
                 </div>
             </div>
         </div>
@@ -411,14 +418,17 @@
 
 <script type="text/x-handlebars-template" id="side-menu-handle">
     @{{#each this}} 
+        @{{#saveOrgInfo idOrganisation orgLeaderId}}@{{/saveOrgInfo}}
         <div class='org-list'> 
             <div class='org-container'> 
                 <div class='org-div'> 
                     <div class='org-name'>@{{orgName}}</div> 
                     <div class='org-options'> 
                         <div class='org-options-users org-option' onclick='showUsers(@{{idOrganisation}}, 0)'>U</div> 
-                        <div class='org-option-add-project org-option' onclick='displayAddProjectForm(@{{idOrganisation}}, event)'>+</div> 
-                        <div class='org-option-remove org-option' onclick='deleteOrganisation(@{{idOrganisation}})'>-</div> 
+                        <div class='org-option-add-project org-option' onclick='displayAddProjectForm(@{{idOrganisation}})'>+</div> 
+                        @{{#isMeLeaderPO orgLeaderId}}
+                            <div class='org-option-remove org-option' onclick='deleteOrganisation(@{{idOrganisation}})'>-</div> 
+                        @{{/isMeLeaderPO}}
                         <div class='add-project-div' id='org@{{idOrganisation}}-addProject_form'> 
                             <input type='text' placeholder='Name'> 
                             <input type='text' placeholder='Description'> 
@@ -428,14 +438,14 @@
                 </div> 
                 <div class='project-users'> 
                     <div id='org@{{idOrganisation}}' class='users-list'></div> 
-                    @{{#isMeLeader orgLeaderId}} 
+                    @{{#isMeLeaderPO orgLeaderId}} 
                         <div class='project-users-settings'> 
                             <div class='pus-add-user row'> 
                                 <input type='text' id='org@{{idOrganisation}}_newUser'class='new-user-id' placeholder='new users email'>  
                                 <span class='add-stuff-icon' onclick='addUserToOrganisation(@{{idOrganisation}})'>+</span> 
                             </div>    
                         </div> 
-                    @{{/isMeLeader}} 
+                    @{{/isMeLeaderPO}} 
                 </div> 
                 <div class='projects-list'> 
                     @{{#each this}} 
@@ -447,21 +457,21 @@
                                         <div onclick='getProjectTasks(@{{idProject}}, @{{../idOrganisation}})' class='project-name'>@{{pName}}</div> 
                                         <div class='pro-options row'> 
                                             <div class='users-project pro-option' onclick='showUsers(@{{idProject}}, 1)'>u</div> 
-                                            @{{#isMeLeader idLeader}} 
+                                            @{{#isMeLeaderPO idLeader}} 
                                                 <div class='del-project pro-option' onclick='deleteProject(@{{idProject}})'>-</div> 
-                                            @{{/isMeLeader}} 
+                                            @{{/isMeLeaderPO}} 
                                         </div> 
                                     </div> 
                                 </div> 
                                 <div class='project-users'> 
                                     <div id='pro@{{idProject}}' class='users-list'></div> 
-                                    @{{#isMeLeader idLeader}} 
+                                    @{{#isMeLeaderPO idLeader}} 
                                         <div class='project-users-settings'> 
                                             <div class='pus-add-user row'> 
                                                 <span class='add-stuff-icon' onclick='addUserToProject(@{{idProject}})'>+</span> 
                                                 <input type='text' id='pro@{{idProject}}_newUser' class='new-user-id' placeholder='new users id'>  
                                         </div> 
-                                    @{{/isMeLeader}} 
+                                    @{{/isMeLeaderPO}} 
                                 </div> 
                             </div> 
                         @{{/if}} 

@@ -75,6 +75,17 @@ class Task {
         $statement->execute();
     }
 
+     public static function updateDesc($id, $description) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare(" UPDATE {$table} SET 
+                                    description = :description
+                                    WHERE id = :id");
+        $statement->bindParam(":description", $description);
+        $statement->bindParam(":id", $id);
+        $statement->execute();
+     }
+
     public static function delete($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
@@ -155,7 +166,12 @@ class Task {
             $users = TaskUserProject::get_task_users($task["idTask"]);
 
             $task["users"]=$users;
-            $task["access"]=in_array($idUser, $users);
+            $temp_users=[];
+
+            foreach($users as $user)
+                $temp_user[]=$user["idUser"];
+            
+            $task["access"]=in_array($idUser, $temp_user);
             $results[$status][]= $task;
             $i++;
         }

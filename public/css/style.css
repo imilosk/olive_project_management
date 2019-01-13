@@ -849,6 +849,10 @@ select:-webkit-autofill:focus {
 	border-bottom-left-radius: 20px;
 }
 
+#data {
+    text-align: center;
+}
+
 .info-e_text {
     font-size: 10px;
 } 

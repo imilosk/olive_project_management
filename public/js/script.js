@@ -5,6 +5,8 @@ let activeOrganisationId;
 let activeTask;
 let projectsLeadersL = {};
 const projectsLeaders ={};
+const orgLeaders = {};
+let projectOrOrgClicked;
 
 window.onload = function(){
     init();
@@ -23,7 +25,7 @@ function getUserOrganisations(){
 
         document.getElementById("modal-body_organistaions").innerHTML = makeTemplate(template, data);
 
-        initClickEvents();
+       //initClickEvents();
     });
 }
 
@@ -51,10 +53,13 @@ function getUsersOfOrgOrPro(id, option){
 }
 
 function showUsers(id, option) {
-
-    let element = $("#org"+id).parent();
-
-    if (option == 1){
+    let element;
+    if (option == 0){
+        activeOrganisationId = id; 
+        element = $("#org"+id).parent();
+        projectOrOrgClicked = 0;
+    } else if (option == 1){
+        projectOrOrgClicked = 1;
         lastClickedProjectInMenu = id;
         element = $("#pro"+id).parent();
     }
@@ -142,8 +147,8 @@ function orgOnClick(orgId) {
     console.log(orgId);
 }
 
-function displayAddProjectForm(orgId, event){
-    $("#org"+orgId+"-addProject_form").toggle(200);
+function displayAddProjectForm(orgId){
+    $("#org"+orgId+"-addProject_form").toggle(500);
 }
 
 function addProjectToOrganisation(orgId, event){
@@ -172,7 +177,7 @@ function activateProject(projectId){
 function getProjectTasks(projectId, orgId){
     activeProjectId = projectId;
     activeOrganisationId = orgId;
-    sendRequest('/api/tasks/all', 'GET', {idProject: projectId}, function(result){
+    sendRequest('/api/tasks/all', 'GET', {idProject: projectId, idUser: loggedUserId}, function(result){
         console.log(result);
         drawProjectTasks(result);
     });
@@ -224,6 +229,18 @@ function getTaskInfo(taskId) {
         console.log(result);
         showTaskInfo(result);
     });
+}
+
+function updateTaskName(){
+    let newName = $("#taskInfo_name").val();
+    sendRequest('/api/task/'+activeTask, 'POST', {name: newName}, function(){
+        $("#task_name-taks_"+activeTask).html(newName);
+    });
+}
+
+function updateTaskDescription(){
+    let newDesc = $("#task-description-text").val();
+    sendRequest('/api/task/'+activeTask, 'POST', {description: newDesc, name: ""}, function(){});
 }
 
 function showTaskInfo(data) {
@@ -345,22 +362,32 @@ function getPSPData(idTask) {
     });
 }
 
-function getUserPSPData() {
-    sendRequest('/api/psp_user_data/5', 'GET', '', function (data) {
+function getUserPSPData(idUser) {
+    sendRequest('/api/psp_user_data/'+idUser, 'GET', '', function (data) {
+        console.log(data);
         let template = $("#user-data-handle").html();
         $("#navPSP").html(makeTemplate(template, data));
+        openNav();
     });
 }
 
 /* PSP TASKS STUFF!!!! */
 function openPSPTasksNav(idTask) {
-    activeTask = idTask;
     document.getElementById("navPSP-tasks").style.display = "block";
     //$("#navPSP-tasks").show();
 }
 
 function closePSPTasksNav() {
     $("#navPSP-tasks").hide();
+}
+
+function getPSPTaskData(idTask){
+    activeTask = idTask;
+    sendRequest('/api/psptasks/'+loggedUserId+'/'+idTask, 'GET', '', function(result){
+        let template = $("#tasks-PSP-handle").html()
+        $("#PSP-task-data").html(makeTemplate(template, result));
+        openPSPTasksNav();
+    });
 }
 
 function addPSPTask(){
@@ -431,22 +458,38 @@ Handlebars.registerHelper("isMe", function(userId, options){
     return userId == loggedUserId ? fnTrue(this) : fnFalse(this);
 });
 
-Handlebars.registerHelper("isMeLeader", function(idLeader, options){
+Handlebars.registerHelper("isMeLeader", function(options){
     var fnTrue = options.fn, 
         fnFalse = options.inverse;
-    console.log(idLeader+" == "+loggedUserId);
-    return idLeader == loggedUserId ? fnTrue(this) : fnFalse(this);
+
+        let compare = projectOrOrgClicked == 0 ? orgLeaders[activeOrganisationId] : projectsLeaders[lastClickedProjectInMenu]
+
+        return compare == loggedUserId ? fnTrue(this) : fnFalse(this);
+        
 });
 
-Handlebars.registerHelper("isMeLeaderP", function(options){
+Handlebars.registerHelper("isMeLeaderPO", function(idLeader, options){
     var fnTrue = options.fn, 
         fnFalse = options.inverse;
     
-    return lastClickedProjectInMenu == loggedUserId ? fnTrue(this) : fnFalse(this);
+    return idLeader == loggedUserId ? fnTrue(this) : fnFalse(this);
 });
 
 Handlebars.registerHelper("saveProInfo", function(idProject, idLeader){
-    projectsLeadersL[idProject] = idLeader;
+    projectsLeaders[idProject] = idLeader;
+});
+
+Handlebars.registerHelper("saveOrgInfo", function(idOrganisation, idLeader){
+    orgLeaders[idOrganisation] = idLeader;
+});
+
+Handlebars.registerHelper("hasTaskAccess", function(access, options){
+    var fnTrue = options.fn, 
+        fnFalse = options.inverse;
+
+    if (access)
+        return fnTrue(this);
+    return fnFalse(this);
 });
 
 function sendRequest(url, type, data, callback) {
@@ -516,3 +559,4 @@ $("#joke").hover(function(){
 $("#joke").click(function(){
     window.open("https://www.youtube.com/watch?v=DVx8L7a3MuE");
 });
+

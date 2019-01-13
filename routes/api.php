@@ -237,6 +237,11 @@ Flight::route('POST /api/userpspdata', function() {
 	UserPSPDataController::store();
 });
 
+// update PSP
+Flight::route('POST /api/psp/@idPSP', function($idPSP) {
+    PSPController::update($idPSP);
+});
+
 // remove psp data
 Flight::route('DELETE /api/userpspdata/@idUser', function($idUser) {
 	UserPSPDataController::delete($idUser);
