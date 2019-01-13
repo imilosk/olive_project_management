@@ -169,7 +169,8 @@ Flight::route('GET /api/psptask/@id', function($id) {
 
 // add psp task
 Flight::route('POST /api/psptask', function() {
-    PSPTaskController::store();
+	PSPTaskController::store();
+	
 });
 
 // update psp task
