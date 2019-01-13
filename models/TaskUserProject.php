@@ -37,6 +37,7 @@ class TaskUserProject {
         $statement->bindParam(":idUser", $idUser);
         $statement->bindParam(":idTask", $idTask);
         $statement->execute();
+        return $statement->fetchColumn();
     }
 
 /*

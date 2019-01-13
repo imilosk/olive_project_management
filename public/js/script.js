@@ -274,8 +274,21 @@ function removeUserFromTask(idUser, event) {
     });
 }
 
-function getAvailableUsers(event){
-    sendRequest('/api/tasks', 'GET', {idProject: activeProjectId, idTask:activeTask}, function(result){
+function deleteTask(idTask) {
+    sendRequest('/api/task/'+idTask, 'DELETE', '', function(result){
+        //refresh tasks
+        getProjectTasks(activeProjectId, activeOrganisationId);
+    })
+}
+
+function getAvailableUsers(event, idTask){
+    
+    if (idTask == 0)
+        idTask = activeTask;
+    else
+        activeTask = idTask;
+
+    sendRequest('/api/tasks', 'GET', {idProject: activeProjectId, idTask:idTask}, function(result){
         console.log(result);
         showAvailableUsers(event, result); 
     });
@@ -290,7 +303,11 @@ function showAvailableUsers(event, data){
     userDropdown.innerHTML = makeTemplate(template, data);
     $("#wrapper").append(userDropdown);
 
-    $('#taskInfo_user-dropdown').css('left',event.pageX + 'px' );
+    let left = event.pageX;
+    if (left < 160)
+        left = 160;
+
+    $('#taskInfo_user-dropdown').css('left',left + 'px' );
     $('#taskInfo_user-dropdown').css('top',event.pageY + 'px' );
     
 }
@@ -304,7 +321,8 @@ function addUserToTask(idUser, event) {
         userToRemove_parent.removeChild(userToRemove);
         //refreshamo taskInfo modal
         console.log(result);
-        getTaskInfo(activeTask);
+        if (!$("#taskInfo").is(":hidden"))
+            getTaskInfo(activeTask);
     });
 }
 
@@ -332,6 +350,39 @@ function getUserPSPData() {
         let template = $("#user-data-handle").html();
         $("#navPSP").html(makeTemplate(template, data));
     });
+}
+
+/* PSP TASKS STUFF!!!! */
+function openPSPTasksNav(idTask) {
+    activeTask = idTask;
+    document.getElementById("navPSP-tasks").style.display = "block";
+    //$("#navPSP-tasks").show();
+}
+
+function closePSPTasksNav() {
+    $("#navPSP-tasks").hide();
+}
+
+function addPSPTask(){
+    let idPhase = $("#idPhase").val();
+    let startDate = $("#startDate").val();
+    let startTime = $("#startTime").val();
+    let endDate = $("#endDate").val();
+    let endTime = $("#endTime").val();
+    let pause = $("#pause").val();
+    let description = $("#description").val();
+    let estimatedtime = $("#estimatedtime").val();
+    let estimatedunits = $("#estimatedunits").val();
+    let units = $("#units").val();
+    let start = new Date(startDate + " " + startTime);
+    start = (start.setHours(start.getHours()+1));
+    console.log(start);
+    let end = new Date(endDate + " " + endTime).toISOString().slice(0, 19).replace('T', ' ');
+    console.log(start.setHours(start.getHours()+1));
+    //sendRequest('/api/psptask', 'POST', {idPhase: idPhase, idUser: loggedUserId, idTask: activeTask, start:start, end:end, pause, description: description, units: units, estimatedtime: estimatedtime, estimatedunits: estimatedunits}, function(result){
+    //    console.log(result);
+        //refresh table
+    //});
 }
 
 function deleteProject(projectId) {
@@ -449,6 +500,8 @@ window.addEventListener("click", function(event){
         modal.style.display = "none";
     } else if(event.target.id === "navPSP") {
         closeNav();
+    } else if(event.target.id === "navPSP-tasks") {
+        closePSPTasksNav();
     } else if(event.target.id === "taskInfo") {
         $("#taskInfo").hide();
     }

@@ -20,7 +20,8 @@ class TaskUserProjectController {
 
     public static function get_PSP($idUser, $idTask) {
         $response = TaskUserProject::get_idPSP($idUser, $idTask);
-        Flight::json($response);
+        return (int) $response;
+        //Flight::json($response);
     }
 
 }

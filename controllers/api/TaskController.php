@@ -20,7 +20,6 @@ class TaskController {
     public static function delete($id) {
         $response = Task::delete($id);
         Flight::json($response);
-        echo "true";
     }
 
     public static function update($id) {

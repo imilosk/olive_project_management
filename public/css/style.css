@@ -919,3 +919,67 @@ select:-webkit-autofill:focus {
     display: block;
   }
 }
+
+#frame {
+	border: 1px solid #707070;
+	width: 70%;
+	height: 500px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+}
+
+#inserts {
+	height: 500px;
+}
+
+#insertstable td, #insertstable th {
+	vertical-align: middle;
+	text-align: center;
+}
+
+#insertadd {
+	color: #4ab19d;
+	font-size: 40px;
+}
+
+#insertadd:hover {
+	cursor: pointer;
+}
+
+.table-responsive {
+	height: 500px;
+}
+
+.table-wrapper-scroll-y {
+	display: block;
+	height: 100%;
+	overflow-y: auto;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table {
+	width: 100%;
+}
+
+.table td {
+	width: 10%;
+	word-break: break-all;
+}
+
+@media screen and (max-height: 450px) {
+	#frame, #insertsm, .table-responsive {
+		height: 300px;
+	}
+	
+	#frame {
+		width: 50%;
+		font-size: 13px;
+		position: -webkit-sticky; /* Safari */
+		position: sticky;
+		top: 5px;
+		transform: translate(-50%, 0);
+	}
+}

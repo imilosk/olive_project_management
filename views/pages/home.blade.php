@@ -49,7 +49,7 @@
         <div id="taskInfo" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <input type="text" id="taskInfo_name" value="Programiranje front-enda"> 
+                    <input type="text" id="taskInfo_name" placeholder="Task name"> 
                     <div id="taskInfo_status">
                         <div id="taskInfo_open" class="task_status s_open" onclick="changeTaskStatus(0, 1)"></div>
                         <div id="taskInfo_inprogress" class="task_status s_inprogress" onclick="changeTaskStatus(0, 3)"></div>
@@ -74,9 +74,114 @@
 
         <div id="navPSP" class="modal"></div>
 
+        <div id="navPSP-tasks" class="modal">
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closePSPTasksNav()">&times;</a>
+            <!-- Overlay content --> 
+            <div id="frame">
+                <div id="inserts">
+                    <div class="table-responsive"> 
+                        <table class="table" id="insertstable">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="insertphase">Phase</label>
+                                        <select id="idPhase" class="form-control">
+                                            <option value="1">Planning</option>
+                                            <option value="2">Infrastructuring</option>
+                                            <option value="3">Coding</option>
+                                            <option value="4">Code review</option>
+                                            <option value="5">Compiling</option>
+                                            <option value="6">Testing</option>
+                                            <option value="7">Analysis</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="startDate">Start-date</label>
+                                        <input type="date" class="form-control" id="startDate">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="startTime">Start-time</label>
+                                        <input type="time" class="form-control" id="startTime">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="endDate">End-date</label>
+                                        <input type="date" id="endDate" class="form-control">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="endTime">End-time</label>
+                                        <input type="time" id="endTime" class="form-control">
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="form-group">
+                                        <label for="pause">Interruption</label>
+                                        <input type="number" class="form-control" id="pause">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <input type="text" class="form-control" id="description">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="estimatedtime">Estimated time</label>
+                                        <input type="number" class="form-control" id="estimatedtime">
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <label for="estimatedunits">Estimated units</label>
+                                        <input type="number" class="form-control" id="estimatedunits">
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="form-group">
+                                        <label for="units">Units</label>
+                                        <input type="number" class="form-control" id="units" >
+                                    </div>
+                                </th>
+                                <th id="submit" onclick="addPSPTask()">+</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- <div id="joke">STOPAR!</div> --}}
 
 	</div>
+
+<script type="text/x-handlebars-template" id="tasks-PSP-handle">
+    @{{#each this}}
+        <tr>
+            <td>@{{id}}</td>
+            <td>@{{name}}</td>
+            <td>@{{start}}</td>
+            <td>@{{end}}</td>
+            <td>@{{pause}}</td>
+            <td>@{{estimatedtime}}</td>
+            <td>@{{estimatedunits}}</td>
+            <td>@{{units}}</td>
+        </tr>
+    @{{/each}}
+</script>
 
 <script type="text/x-handlebars-template" id="taskInfo-add_user-list-handle">
     <div id="taskInfo-add_user-options">
@@ -102,7 +207,7 @@
 <script type="text/x-handlebars-template" id="taskInfo-user-list-handle">
     <div id="taskInfo_options" class="row">
         <div id="taskInfo_users-text">Users assigned to this task</div>
-        <div id="taskInfo_users-add_users" onclick="getAvailableUsers(event)">+</div>
+        <div id="taskInfo_users-add_users" onclick="getAvailableUsers(event, 0)">+</div>
     </div>
     <div id="taskInfo_users">
         @{{#each this}}
@@ -155,7 +260,9 @@
                         <div class="tasks-options">
                             <div class="tasks-psp-mistakes">M</div>
                             <div class="tasks-psp-overview" onclick="getPSPData(@{{idTask}})">O</div>
-                            <div class="task-delete">X</div>
+                            <div class="task-delete" onclick="deleteTask(@{{idTask}})">X</div>
+                            <div onclick="openPSPTasksNav(@{{idTask}})">Test</div>
+                            <div onclick="getAvailableUsers(event, @{{idTask}})">U</div>
                         </div>
                     </div>
 				@{{/each}}
