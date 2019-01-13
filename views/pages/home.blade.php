@@ -34,12 +34,14 @@
 			    	</div>
 			  	</div>
 
-			  	<div class="modal" id="addOrganisationModal">
-			  		<div id="addOrganisationModal_header"></div>
-				  	<input type="text" id="addOrganisation-name" name="name" placeholder="Name">
-				  	<input type="text" id="addOrganisation-description" placeholder="Description">
-				  	<div id="btn-addNewOrganisation">Create</div>
-			  	</div>
+                <div class="modal-footer" id="addOrgForm">
+                    <div id="addOrganisationModal_header">Add organisation</div>
+                    <div id="addOrganisationModal_body">
+                        <input type="text" id="addOrganisation-name" name="name" placeholder="Name">
+                        <input type="text" id="addOrganisation-description" placeholder="Description">
+                    </div>
+                    <div id="btn-addNewOrganisation">Create</div>
+                </div>
 			  	<div class="modal-footer">
 			  		<div id="btn-openOrganisationModal" data-toggle="tooltip" title="test">Add Organisation</div>
 			  	</div>
@@ -63,9 +65,90 @@
                         <textarea id="task-description-text" placeholder="Description" onchange="updateTaskDescription()"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer" id="taskInfo_modal-footer">
+                <div class="modal-footer" id="taskInfo_modal-footer"></div>
+            </div>
+        </div>
+
+        <div id="navPSP-tasks" class="modal">
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <!-- Overlay content --> 
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="psp-form">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="insertphase">Phase</label>
+                                <select id="idPhase" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="1">Planning</option>
+                                    <option value="2">Infrastructuring</option>
+                                    <option value="3">Coding</option>
+                                    <option value="4">Code review</option>
+                                    <option value="5">Compiling</option>
+                                    <option value="6">Testing</option>
+                                    <option value="7">Analysis</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="startDate">Start-date</label>
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startTime">Start-time</label>
+                                <input type="time" class="form-control" id="startTime">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endDate">End-date</label>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endTime">End-time</label>
+                                <input type="time" id="endTime" class="form-control">
+                            </div>
+
+                        </div>      
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="pause">Interruption</label>
+                                <input type="number" class="form-control" id="pause">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="estimatedtime">Estimated time</label>
+                                <input type="number" class="form-control" id="estimatedtime">
+                            </div>
+                            <div class="form-group">
+                                <label for="estimatedunits">Estimated units</label>
+                                <input type="number" class="form-control" id="estimatedunits">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="units">Units</label>
+                                <input type="number" class="form-control" id="units" >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description">
+                        </div>
+
+                        <div id="submit" onclick="addPSPTask()">+</div>
+                    </div>
+                    <div id="tasks-record-list"></div>
                 </div>
             </div>
+            <div class="modal-footer" id="navPSP-tasks_modal-footer"></div>
         </div>
 
 		<div id="test">@php echo $auth->getUserId(); @endphp</div>
@@ -74,94 +157,109 @@
 
         <div id="navPSP" class="modal"></div>
 
-        <div id="navPSP-tasks" class="modal">
+        <div id="navPSPError" class="modal">
             <!-- Button to close the overlay navigation -->
-            <a href="javascript:void(0)" class="closebtn" onclick="closePSPTasksNav()">&times;</a>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <!-- Overlay content --> 
-            <div id="frame">
-                <div id="inserts">
-                    <div class="table-responsive"> 
-                        <table class="table" id="insertstable">
-                            <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="insertphase">Phase</label>
-                                        <select id="idPhase" class="form-control">
-                                            <option value="1">Planning</option>
-                                            <option value="2">Infrastructuring</option>
-                                            <option value="3">Coding</option>
-                                            <option value="4">Code review</option>
-                                            <option value="5">Compiling</option>
-                                            <option value="6">Testing</option>
-                                            <option value="7">Analysis</option>
-                                        </select>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="startDate">Start-date</label>
-                                        <input type="date" class="form-control" id="startDate">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="startTime">Start-time</label>
-                                        <input type="time" class="form-control" id="startTime">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="endDate">End-date</label>
-                                        <input type="date" id="endDate" class="form-control">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="endTime">End-time</label>
-                                        <input type="time" id="endTime" class="form-control">
-                                    </div>
-                                </th>
+            <div id="frame" class="modal-content">
+                <div class="modal-header"></div>
+                <div class="modal-body">
+                    <div id="error-form">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="phaseEntry">Phase Entry</label>
+                                <select id="phaseEntry" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="1">Planning</option>
+                                    <option value="2">Infrastructuring</option>
+                                    <option value="3">Coding</option>
+                                    <option value="4">Code review</option>
+                                    <option value="5">Compiling</option>
+                                    <option value="6">Testing</option>
+                                    <option value="7">Analysis</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="phaseFinish">Phase Finish</label>
+                                <select id="phaseFinish" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="1">Planning</option>
+                                    <option value="2">Infrastructuring</option>
+                                    <option value="3">Coding</option>
+                                    <option value="4">Code review</option>
+                                    <option value="5">Compiling</option>
+                                    <option value="6">Testing</option>
+                                    <option value="7">Analysis</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="2">Documentation</option>
+                                    <option value="3">Syntax</option>
+                                    <option value="4">Construction</option>
+                                    <option value="5">Arranging</option>
+                                    <option value="6">Interface</option>
+                                    <option value="7">Checking</option>
+                                    <option value="8">Data</option>
+                                    <option value="9">Functions</option>
+                                    <option value="10">System</option>
+                                    <option value="11">Environment</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="resolve_time">Resolve time</label>
+                                <input type="number" class="form-control" id="resolve_time">
+                            </div>
+                            <div class="form-group">
+                                <label for="num_fixed_errors"># of fixed errors</label>
+                                <input type="number" class="form-control" id="num_fixed_errors">
+                            </div>
+                        </div>
 
-                                <th>
-                                    <div class="form-group">
-                                        <label for="pause">Interruption</label>
-                                        <input type="number" class="form-control" id="pause">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <input type="text" class="form-control" id="description">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="estimatedtime">Estimated time</label>
-                                        <input type="number" class="form-control" id="estimatedtime">
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="form-group">
-                                        <label for="estimatedunits">Estimated units</label>
-                                        <input type="number" class="form-control" id="estimatedunits">
-                                    </div>
-                                </th>
-
-                                <th>
-                                    <div class="form-group">
-                                        <label for="units">Units</label>
-                                        <input type="number" class="form-control" id="units" >
-                                    </div>
-                                </th>
-                                <th id="submit" onclick="addPSPTask()">+</th>
-                            </tr>
-                            {{-- <div id="PSP-task-data"></div> --}}
-                        </table>
+                        <div class="row">                               
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="error_description">
+                            </div>
+                            <div id="submit" onclick="addPSPError()">+</div>
+                        </div>      
+                    </div>
+                    <div id="error-list">
+                        <div id="inside-list">
+                            <div id="record" class="row">
+                                <div id="id" class="record_hidden">
+                                    @{{id}}
+                                </div>
+                                <div id="phaseEntry">
+                                    @{{phaseEntry}}
+                                </div>
+                                <div id="phaseFinish">
+                                    @{{phaseFinish}}
+                                </div>
+                                <div id="categoty" class="record_hidden">
+                                    @{{categoty}}
+                                </div>
+                                <div id="resolve_time">
+                                    @{{resolve_time}}
+                                </div>
+                                <div id="num_fixed_errors"">
+                                    @{{num_fixed_errors}}
+                                </div>
+                                <div id="description" class="record_hidden">
+                                    @{{num_fixed_errors}}
+                                </div>
+                                <div id="info_btn">
+                                    i
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="modal-footer"></div>
             </div>
         </div>
 
@@ -169,19 +267,51 @@
 
 	</div>
 
-<script type="text/x-handlebars-template" id="tasks-PSP-handle">
+<script type="text/x-handlebars-template" id="error-PSP-handle">
     @{{#each this}}
-        <tr>
-            <td>@{{id}}</td>
-            <td>@{{name}}</td>
-            <td>@{{start}}</td>
-            <td>@{{end}}</td>
-            <td>@{{pause}}</td>
-            <td>@{{estimatedtime}}</td>
-            <td>@{{estimatedunits}}</td>
-            <td>@{{units}}</td>
-        </tr>
+        <div id="record" class="row">
+            <div id="record_id_@{{id}}"class="record_item" class="record_hidden record_item">@{{id}}</div>
+            <div id="record_pIdEntry_@{{id}}"class="record_item" class="record_hidden record_item">@{{pIdEntry}}</div>
+            <div id="record_phaseEntry_@{{id}}"class="record_item">@{{phaseEntry}}</div>
+            <div id="record_pIdFinish_@{{id}}"class="record_item" class="record_hidden record_item">@{{IdFinish}}</div>
+            <div id="record_phaseFinish_@{{id}}"class="record_item">@{{phaseFinish}}</div>
+            <div id="record_idCategory_@{{id}}"class="record_item" class="record_hidden record_item">@{{idCategory}}</div>
+            <div id="record_categoty_@{{id}}" class="record_hidden record_item">@{{categoty}}</div>
+            <div id="record_resolve_time_@{{id}}"class="record_item">@{{resolve_time}}</div>
+            <div id="record_num_fixed_errors_@{{id}}"class="record_item">@{{num_fixed_errors}}</div>
+            <div id="record_description_@{{id}}" class="record_hidden record_item">@{{num_fixed_errors}}</div>
+            <div id="info_btn_@{{id}}">i</div>
+        </div>
     @{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="tasks-PSP-handle">
+        <div id="inside-list">
+            <div id="t-headers">
+                <div class="t-header">Phase</div>
+                <div class="t-header">Start date</div>
+                <div class="t-header">End date</div>
+                <div class="t-header">Units</div>
+                <div class="t-header">Info</div>
+            </div>
+            @{{#each this}}
+                <div class="record" id="record_@{{id}}" class="row">
+                    <div id="record_id_@{{id}}" class="record_hidden record_item">@{{id}}</div>
+                    <div id="record_phaseid_@{{id}}" class="record_hidden record_item">@{{idPhase}}</div>
+                    <div id="record_phase_@{{id}}" class="record_item" >@{{name}}</div>
+                    <div id="record_startDate_@{{id}}" class="record_item" >@{{startDate}}</div>
+                    <div id="record_startTime_@{{id}}" class="record_hidden record-item">@{{startTime}}</div>
+                    <div id="record_endDate_@{{id}}" class="record_item" >@{{endDate}}</div>
+                    <div id="record_endTime_@{{id}}" class="record_hidden record-item">@{{endTime}}</div>
+                    <div id="record_pause_@{{id}}" class="record_hidden record-item">@{{pause}}</div>
+                    <div id="record_estimatedtime_@{{id}}" class="record_hidden record-item">@{{estimatedtime}}</div>
+                    <div id="record_estimatedunits_@{{id}}" class="record_hidden record-item">@{{estimatedunits}}</div>
+                    <div id="record_units_@{{id}}" class="record_item" >@{{units}}</div>
+                    <div id="record_description_@{{id}}" class="record_hidden record-item">@{{description}}</div>
+                    <div id="record_info_btn_@{{id}}" class="record_item" onclick="showPSPTaskRecord(@{{id}})">i</div>
+                </div>
+            @{{/each}}
+        </div>
 </script>
 
 <script type="text/x-handlebars-template" id="taskInfo-add_user-list-handle">
@@ -261,7 +391,7 @@
                         <div class="tasks-options">
                             <div>access : @{{access}}</div>
                             @{{#hasTaskAccess access}}
-                                <div class="tasks-psp-mistakes">M</div>
+                                <div class="tasks-psp-mistakes" onclick="getPSPMistakes(@{{idTask}})">M</div>
                                 <div class="tasks-psp-overview" onclick="getPSPData(@{{idTask}})">O</div>
                                 <div class="task-delete" onclick="deleteTask(@{{idTask}})">X</div>
                                 <div onclick="getPSPTaskData(@{{idTask}})">Test</div>
@@ -1002,8 +1132,8 @@
     @{{/each}}
 </script>
 
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/handlebars-v4.0.12.js"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 @endsection

@@ -221,12 +221,21 @@ select:-webkit-autofill:focus {
 	animation-duration: 0.4s
 }
 
-#taskInfo .modal-content{
+#taskInfo .modal-content,
+#navPSP-tasks .modal-content,
+#navPSPError .modal-content{
 	margin: 10% auto;
 	height: 60%;
 	width: 60%;
 	animation-name: slideInTaskInfo;
 	position: relative;
+}
+
+#navPSP-tasks .modal-body,
+#navPSPError .modal-body{
+	padding: 0;
+	overflow: hidden;
+	display: flex;
 }
 
 #taskInfo .modal-body{
@@ -293,6 +302,12 @@ select:-webkit-autofill:focus {
 	background-color: white;
 	color: #4ab19d;
 	border-color: #4ab19d;
+}
+
+#tasks-record-list {
+    flex: 1;
+    background-color: yellow;
+    overflow: auto;
 }
 
 .taskInfo_user {
@@ -362,6 +377,10 @@ select:-webkit-autofill:focus {
 
 #wrapper{
 	padding: 30px;
+}
+
+#addOrgForm {
+	display: none;
 }
 
 #btn-openOrganisationModal {
@@ -646,6 +665,10 @@ select:-webkit-autofill:focus {
 	display: flex;
 }
 
+.task_name{
+	word-break: break-all;
+}
+
 .task_status {
 	border-radius: 50%;
 	margin-left: 2px;
@@ -924,17 +947,6 @@ select:-webkit-autofill:focus {
   }
 }
 
-#frame {
-	border: 1px solid #707070;
-	width: 70%;
-	height: 500px;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: white;
-}
-
 #inserts {
 	height: 500px;
 }
@@ -987,3 +999,31 @@ select:-webkit-autofill:focus {
 		transform: translate(-50%, 0);
 	}
 }
+
+label{
+	margin: 0;
+}
+
+#tasks-record-list{
+	flex: 1;
+	background-color: yellow;
+}
+
+#psp-form {
+    flex: 2;
+    padding: 10px;
+}
+
+.record_hidden{
+	display: none;
+}
+
+.form-group {
+    margin-bottom: 0;
+    flex: 1;
+}
+
+#info_btn{
+	border: 1px solid black;
+}
+

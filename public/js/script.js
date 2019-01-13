@@ -131,11 +131,13 @@ function addOrganisation(){
             getUserOrganisations();
         });
     });
-
-    hideAddOrganisationModal();
+    $("#addOrgForm").hide(500);
 }
 
-$("#btn-openOrganisationModal").click(openAddOrganisationModal);
+$("#btn-openOrganisationModal").click(function(){
+    $("#addOrgForm").toggle(500);
+});
+
 $("#btn-addNewOrganisation").click(addOrganisation);
 $(".project-users-list").click(testF);
 
@@ -233,7 +235,7 @@ function getTaskInfo(taskId) {
 
 function updateTaskName(){
     let newName = $("#taskInfo_name").val();
-    sendRequest('/api/task/'+activeTask, 'POST', {name: newName}, function(){
+    sendRequest('/api/task/'+activeTask, 'POST', {name: newName, description: ""}, function(){
         $("#task_name-taks_"+activeTask).html(newName);
     });
 }
@@ -363,12 +365,20 @@ function getPSPData(idTask) {
 }
 
 function getUserPSPData(idUser) {
+
+    if (idUser == 0)
+        idUser = loggedUserId;
+
     sendRequest('/api/psp_user_data/'+idUser, 'GET', '', function (data) {
         console.log(data);
         let template = $("#user-data-handle").html();
         $("#navPSP").html(makeTemplate(template, data));
         openNav();
     });
+}
+
+function updatePLanguage(){
+    sendRequest('/api/psp/@idPSP','POST', {programing_language});
 }
 
 /* PSP TASKS STUFF!!!! */
@@ -384,8 +394,9 @@ function closePSPTasksNav() {
 function getPSPTaskData(idTask){
     activeTask = idTask;
     sendRequest('/api/psptasks/'+loggedUserId+'/'+idTask, 'GET', '', function(result){
+        console.log(result);
         let template = $("#tasks-PSP-handle").html()
-        $("#PSP-task-data").html(makeTemplate(template, result));
+        $("#tasks-record-list").html(makeTemplate(template, result));
         openPSPTasksNav();
     });
 }
@@ -410,6 +421,60 @@ function addPSPTask(){
     //    console.log(result);
         //refresh table
     //});
+}
+
+function showPSPTaskRecord(id){
+    $("#idPhase").val($("#record_phaseid_"+id).html());
+    $("#startDate").val($("#record_startDate_"+id).html());
+    $("#startTime").val($("#record_startTime_"+id).html());
+    $("#endDate").val($("#record_endDate_"+id).html());
+    $("#endTime").val($("#record_endTime_"+id).html());
+    $("#pause").val($("#record_pause_"+id).html());
+    $("#description").val($("#record_description_"+id).html());
+    $("#estimatedtime").val($("#record_estimatedtime_"+id).html());
+    $("#estimatedunits").val($("#record_estimatedunits_"+id).html());
+    $("#units").val($("#record_units_"+id).html());
+}
+
+
+/* PSP MISTAKES STUFF!!!!!!!!!!!!! */
+
+function openPSPMistakes(){
+    document.getElementById("navPSPError").style.display = "block";
+}
+function closePSPMistakes(){
+    document.getElementById("navPSPError").style.display = "none";
+}
+
+function getPSPMistakes(idTask){
+    activeTask = idTask;
+    sendRequest('/api/psperrors/'+loggedUserId+'/'+idTask, 'GET', '', function(result){
+        console.log(result);
+        let template = $("#error-PSP-handle").html();
+        $("#error-list").html(makeTemplate(template, result));
+        openPSPMistakes();
+    })
+}
+
+function addPSPError(){
+    let phaseEntry = $("#phaseEntry").val();
+    let phaseFinish = $("#phaseFinish").val();
+    let category = $("#category").val();
+    let resolve_time = $("#resolve_time").val();
+    let num_fixed_errors = $("#num_fixed_errors").val();
+    let description = $("#error_description").val();
+    console.log(description);
+
+    //sendRequest('/api/psperror', 'POST', {idUser: loggedUserId, idTask: activeTask, phaseEntry:phaseEntry, phaseFinish: phaseFinish, idCategory: category, resolve_time: resolve_time, num_fixed_errors:num_fixed_errors, description : description}, function(result){
+       //refresh table
+   // });
+
+    $("#phaseEntry").val(null);
+    $("#phaseFinish").val(null);
+    $("#category").val(null);
+    $("#resolve_time").val(null);
+    $("#num_fixed_errors").val(null);
+    $("#description").val(null);
 }
 
 function deleteProject(projectId) {
@@ -541,6 +606,8 @@ window.addEventListener("click", function(event){
         $("#taskInfo_user-dropdown").remove();
     } else if (event.target == modal) {
         modal.style.display = "none";
+    } else if(event.target.id === "navPSPError"){
+        closePSPMistakes();
     } else if(event.target.id === "navPSP") {
         closeNav();
     } else if(event.target.id === "navPSP-tasks") {

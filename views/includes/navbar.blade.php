@@ -8,24 +8,14 @@
 	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
-            <!--
-  			<li class="nav-item px-2 border border-right-0">
-    			<a class="nav-link" id="navbar-home" href="/">Home <span class="sr-only">(current)</span></a>
-			</li>-->
-            <li class="nav-item px-2 border border-right-0">
-                <a class="nav-link" id="navbar-board" href="">Board</a>
-            </li>
-  			<li class="nav-item px-2 border">
-    			<a class="nav-link" id="navbar-time" href="">Time</a>
-  			</li>
-		</ul>
+		<ul class="navbar-nav mr-auto"></ul>
 		<div class="my-2 my-lg-0 px-5 item6">
     		<div class="nav-item dropdown">
     		<a class="nav-link dropdown-toggle mr-sm-2" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     		<img src="/img/user.png" width="35" height="35" class="d-inline-block userimg">
     		</a>
     	    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" onclick="getUserPSPData(0)">My PSP</a>
     			<a class="dropdown-item" href="/logout">Logout</a>
     		</div>
     		</div>

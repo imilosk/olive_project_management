@@ -73,7 +73,7 @@ class PSPTask {
     public static function get_psp_tasks($idUser, $idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" SELECT pt.id,pp.name, pt.description, pt.start, pt.end, pt.pause, pt.estimatedtime, pt.estimatedunits, pt.units
+        $statement = $db->prepare(" SELECT pt.id,pp.id as idPhase, pp.name, pt.description, DATE(pt.start) as startDate, TIME(pt.start) as startTime, DATE(pt.end) as endDate, TIME(pt.end) as endTime, pt.pause, pt.estimatedtime, pt.estimatedunits, pt.units
                                     FROM {$table} AS pt
                                     INNER JOIN psp_phases pp ON pt.idPhase=pp.id
                                     INNER JOIN tasksusersprojects AS tup ON pt.idPSP=tup.idPSP

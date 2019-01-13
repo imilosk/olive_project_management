@@ -167,16 +167,10 @@ class Task {
 
             $task["users"]=$users;
             $temp_users=[];
-<<<<<<< HEAD
-
-            foreach($users as $user)
-                $temp_user[]=$user["idUser"];
             
-=======
             foreach($users as $user)
                 $temp_user[]=$user["idUser"];
-                
->>>>>>> 6a15157e0da3914f47a39a8809b7f7b16e4e4534
+
             $task["access"]=in_array($idUser, $temp_user);
             $results[$status][]= $task;
             $i++;
