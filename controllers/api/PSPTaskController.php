@@ -26,11 +26,16 @@ class PSPTaskController {
 
     public static function update($id) {
         $id = (int) $id;
-        $description = $_POST["description"];
+        $idPhase = $_POST["idPhase"];
+        $idPSP = TaskUserProjectController::get_PSP($_POST["idUser"], $_POST["idTask"]);
+        $start = $_POST["start"];
         $end = $_POST["end"];
         $pause = $_POST["pause"];
+        $description = $_POST["description"];
         $units = $_POST["units"];
-        $response = PSPTask::update($id, $description, $end, $pause, $units);
+        $estimatedtime = $_POST["estimatedtime"];
+        $estimatedunits = $_POST["estimatedunits"];
+        $response = PSPTask::update($id, $idPhase, $start, $end, $pause, $description, $units, $estimatedtime, $estimatedunits);
         echo "true";
     }
 

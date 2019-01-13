@@ -651,7 +651,7 @@
 
                     <div class="info-e">
                         <div class="info-e_text">Programing language</div>
-                        <div class="info-e_main"><input type="input" name="prog_language" value=@{{info.programing_language}}></div>
+                        <div class="info-e_main"><input type="input" id="prog_language" value="@{{info.programing_language}}" onchange="updatePLanguage( @{{info.idPSP}} )"></div>
                     </div>
                 </div>
                 <div id="data">

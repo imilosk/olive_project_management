@@ -26,10 +26,11 @@ class PSPErrorController {
         $id = (int) $id;
         $idCategory = $_POST["idCategory"];
         $description = $_POST["description"];
+        $phaseFinish = $_POST["phaseEntry"];
         $phaseFinish = $_POST["phaseFinish"];
         $resolve_time = $_POST["resolve_time"];
         $num_fixed_errors = $_POST["num_fixed_errors"];
-        $response = PspError::update($id, $idCategory, $phaseFinish, $resolve_time, $num_fixed_errors, $description);
+        $response = PspError::update($id, $idCategory, $phaseEntry, $phaseFinish, $resolve_time, $num_fixed_errors, $description);
         echo "true";
     }
 

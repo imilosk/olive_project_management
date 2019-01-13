@@ -377,8 +377,11 @@ function getUserPSPData(idUser) {
     });
 }
 
-function updatePLanguage(){
-    sendRequest('/api/psp/@idPSP','POST', {programing_language});
+function updatePLanguage(idPSP) {
+    prog_lang = $("#prog_language").val();
+    console.log($("#prog_language").val());
+    sendRequest('/api/psp/' + idPSP, 'POST', { programing_language: prog_lang}, function(result) {
+        });
 }
 
 /* PSP TASKS STUFF!!!! */

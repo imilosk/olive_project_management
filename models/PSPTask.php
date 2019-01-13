@@ -53,20 +53,28 @@ class PSPTask {
         $statement->execute();
     } 
 
-    public static function update($id, $description, $end, $pause, $units) {
+    public static function update($id, $idPhase, $start, $end, $pause, $description, $units, $estimatedtime, $estimatedunits) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare(" UPDATE {$table} SET 
+                                    idPhase = :idPhase,
+                                    start = :start,
+                                    estimatedtime = :estimatedtime,
+                                    estimatedunits = :estimatedunits,
                                     description = :description,
                                     end = :end,
                                     pause = :pause,
                                     units = :units
                                     WHERE id = :id");
         $statement->bindParam(":id", $id);
-        $statement->bindParam(":description", $description);
-        $statement->bindParam(":end", $end);
+        $statement->bindParam(":idPhase", $idPhase);
+        $statement->bindParam(":start", $start);
+        $statement->bindParam(":endtime", $end);
         $statement->bindParam(":pause", $pause);
+        $statement->bindParam(":description", $description);
         $statement->bindParam(":units", $units);
+        $statement->bindParam(":estimatedtime", $estimatedtime);
+        $statement->bindParam(":estimatedunits", $estimatedunits);
         $statement->execute();
     }
 
