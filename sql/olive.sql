@@ -117,7 +117,7 @@ DELIMITER ;
 DROP TABLE IF EXISTS `psps`;
 CREATE TABLE `psps` (
   `id` int(10) UNSIGNED NOT NULL,
-  `programing_language` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `programing_language` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -559,7 +559,6 @@ ALTER TABLE `users_throttling`
 --
 ALTER TABLE `user_psp_data`
   ADD KEY `idUser` (`idUser`);
-  ADD UNIQUE KEY `idUser` (`idUser`);
 
 --
 -- AUTO_INCREMENT zavrženih tabel

@@ -144,6 +144,7 @@ class Task {
         $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
         $statement->execute(); 
         $result = $statement->fetchAll();
+        $results=[];
         
         $i = 0;
         foreach ($result as $task) {

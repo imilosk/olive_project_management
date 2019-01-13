@@ -147,6 +147,7 @@ class UserPSPData {
             $name = substr ($wbli,0,strrpos($wbli, '_', -1));
             $name2 = substr ($wbli,strrpos($wbli, '_', -5)+1);
             
+            $result[0]["ratios"][$wbli]=0;
             if ($result[0]["sum_".$name2] *100)
                 $result[0]["ratios"][$wbli] =  round((int)$result[0][$wbli]/$result[0]["sum_".$name2] *100,2) ;
         }

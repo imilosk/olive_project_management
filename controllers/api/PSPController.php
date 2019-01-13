@@ -11,8 +11,7 @@ class PSPController {
 
     public static function store() {
         $response = PSP::insert();
-        Flight::json($response);
-        echo "true";
+        return (int) $response;
     }
 
     public static function delete($id) {

@@ -260,6 +260,6 @@ Flight::route('POST /api/update_psp_data/@idUser', function($idUser) {
 });
 
 // get 
-Flight::route('GET /api/get_user_data/@idUser', function($idUser) {
+Flight::route('GET /api/psp_user_data/@idUser', function($idUser) {
 	UserPSPDataController::get_user_psps($idUser);
 });

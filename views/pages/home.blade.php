@@ -708,6 +708,7 @@
                                 <div class="cell" id="sumTask_mistakes">@{{err.sum}}</div>
                                 <div class="cell" id="sum_mistakes">@{{user.sum_in_err}}</div>
                                 <div class="cell">100</div>
+                                <div class="cell" id="sum_time_dev"></div>
                             </div>
                         </div>
                     </fieldset>
@@ -786,6 +787,7 @@
                                 <div class="cell">@{{res.sum}}</div>
                                 <div class="cell">@{{user.sum_res_err}}</div>
                                 <div class="cell">100</div>
+                                <div class="cell" id="sum_time_dev"></div>
                             </div>
                         </div>
                     </fieldset>
@@ -936,7 +938,7 @@
                             <div class="cell"> Analysis </div><div class="cell">@{{analysis_in_err}}</div><div class="cell">@{{ratios.analysis_in_err}}</div><div class="cell">@{{errh.analysis_in_err}}</div>
                         </div>
                         <div class="psp-row">
-                            <div class="cell"> Sum </div><div class="cell">@{{sum_in_err}}</div><div class="cell">100</div>
+                            <div class="cell"> Sum </div><div class="cell">@{{sum_in_err}}</div><div class="cell">100</div><div class="cell"></div>
                         </div>
                     </div>
                 </fieldset>
@@ -981,7 +983,7 @@
                             <div class="cell"> Analysis </div><div class="cell">@{{analysis_res_err}}</div><div class="cell">@{{ratios.analysis_res_err}}</div><div class="cell">@{{errh.analysis_res_err}}</div>
                         </div>
                         <div class="psp-row">
-                            <div class="cell"> Sum </div><div class="cell">@{{sum_res_err}}</div><div class="cell">100</div>
+                            <div class="cell"> Sum </div><div class="cell">@{{sum_res_err}}</div><div class="cell">100</div><div class="cell" id="sum_time_dev"></div>
                         </div>
                     </div>
                 </fieldset>

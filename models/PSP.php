@@ -33,8 +33,9 @@ class PSP {
     public static function insert() {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" INSERT INTO {$table} VALUES (null)");
+        $statement = $db->prepare(" INSERT INTO {$table} (programing_language) VALUES (null)");
         $statement->execute();
+        return $db->lastInsertId();
     }
 
     public static function delete($id) {
@@ -64,6 +65,9 @@ class PSP {
 
         $idPSP = $result["info"]["idPSP"];
 
+        $result["size"]["p_size"] =0;
+        $result["size"]["a_size"] =0;
+
         $statement = $db->prepare(" SELECT sum(estimatedunits) as p_size, sum(units) as a_size
                                     from {$table} as psps
                                     inner join tasksusersprojects tup on tup.idPSP=psps.id
@@ -73,6 +77,11 @@ class PSP {
         $statement->bindParam(":idPSP", $idPSP, PDO::PARAM_INT);
         $statement->execute();
         $result["size"]=$statement->fetchAll()[0];
+
+        if($result["size"]["p_size"]===null)
+            $result["size"]["p_size"]=0;
+        if($result["size"]["a_size"]===null)   
+            $result["size"]["a_size"]=0;
 
         $result["time"]=array_fill_keys(PSPPhase::get_all(), array_fill_keys(["estimatedtime","time"],0));
 

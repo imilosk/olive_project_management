@@ -8,7 +8,7 @@ class TaskUserProjectController {
     public static function store() {
         $idTask = $_POST["idTask"];
         $idUser = $_POST["idUser"];
-        $idPSP = $_POST["idPSP"];
+        $idPSP = PSPController::store();;
         $response = TaskUserProject::insert($idUser, $idTask, $idPSP);
         Flight::json($response);
     }
