@@ -53,13 +53,14 @@ class Task {
         return $result;
     }
 
-    public static function insert($name, $idProject) {
+    public static function insert($name, $idProject, $status) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" INSERT INTO {$table} (name, idProject)
-                                    VALUES (:name,:idProject)");
+        $statement = $db->prepare(" INSERT INTO {$table} (name, idProject, idTask_status)
+                                    VALUES (:name,:idProject,:status)");
         $statement->bindParam(":name", $name);
         $statement->bindParam(":idProject", $idProject);
+        $statement->bindParam(":status", $status);
         $statement->execute();
     }
 

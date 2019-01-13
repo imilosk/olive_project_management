@@ -128,9 +128,12 @@
 		<div class='task-container' id='task-status-open'>
 			<div class='task-div'>
                 <div class='task-status'>OPEN</div>
-                <div class='task-add' onclick='addTaskToProject(1)'>+</div>
+                <div class='task-add' onclick='showAddTaskForm(1)'>+</div>
             </div>
-            <div class="add-task-form"></div>
+            <div class="add-task-form" id="add-task-form_1" style="display:none;">
+                <input type="text" class="task-name_input" id="task_name_1" placeholder="Task name">
+                <div class="task-add" onclick="addTaskToProject(1)"">+</div>
+            </div>
 			<div class='tasks'>
 				@{{#each OPEN}}
 					<div class='task'>
@@ -162,7 +165,11 @@
 		<div class='task-container' id='task-status-in_progress'>
 			<div class='task-div'>
                 <div class='task-status'>IN PROGRESS</div>
-                <div class='task-add' onclick='addTaskToProject(3)'>+</div>
+                <div class='task-add' onclick='showAddTaskForm(3)'>+</div>
+            </div>
+            <div class="add-task-form" id="add-task-form_3" style="display:none;">
+                <input type="text" class="task-name_input" id="task_name_3" placeholder="Task name">
+                <div class="task-add" onclick="addTaskToProject(3)"">+</div>
             </div>
 			<div class='tasks'>
 				@{{#each IN_PROGRESS}}
@@ -188,7 +195,11 @@
         <div class='task-container' id='task-status-review'>
             <div class='task-div'>
                 <div class='task-status'>REVIEW</div>
-                <div class='task-add' onclick='addTaskToProject(4)'>+</div>
+                <div class='task-add' onclick='showAddTaskForm(4)'>+</div>
+            </div>
+            <div class="add-task-form" id="add-task-form_4" style="display:none;">
+                <input type="text" class="task-name_input" id="task_name_4" placeholder="Task name">
+                <div class="task-add" onclick="addTaskToProject(4)"">+</div>
             </div>
             <div class='tasks'>
                 @{{#each REVIEW}}
@@ -214,7 +225,11 @@
         <div class='task-container' id='task-status-rejected'>
             <div class='task-div'>
                 <div class='task-status'>REJECTED</div>
-                <div class='task-add' onclick='addTaskToProject(1)'>+</div>
+                <div class='task-add' onclick='showAddTaskForm(5)'>+</div>
+            </div>
+            <div class="add-task-form" id="add-task-form_5" style="display:none;">
+                <input type="text" class="task-name_input" id="task_name_5" placeholder="Task name">
+                <div class="task-add" onclick="addTaskToProject(5)"">+</div>
             </div>
             <div class='tasks'>
                 @{{#each REJECTED}}
@@ -236,10 +251,15 @@
                 @{{/each}}
             </div>
         </div>
+
         <div class='task-container' id='task-status-closed'>
             <div class='task-div'>
                 <div class='task-status'>CLOSED</div>
-                <div class='task-add' onclick='addTaskToProject(1)'>+</div>
+                <div class='task-add' onclick='showAddTaskForm(2)'>+</div>
+            </div>
+            <div class="add-task-form" id="add-task-form_2" style="display:none;">
+                <input type="text" class="task-name_input" id="task_name_2" placeholder="Task name">
+                <div class="task-add" onclick="addTaskToProject(2)"">+</div>
             </div>
             <div class='tasks'>
                 @{{#each CLOSED}}

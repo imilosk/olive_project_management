@@ -187,7 +187,20 @@ function drawProjectTasks(data){
 // parameter(stevilka) pove status taska (OPEN, CLOSED, ..)
 // ostevilceni so isto kot v bazi 1 - OPEN, 2 - CLOSED, 3 - IN PROGRESS, 4 - REVIEW, 5 - REJECTED
 function addTaskToProject(taskStatus){
-    console.log("projektu "+activeProjectId+" doda task s statusom "+taskStatus);
+    let taskName = $("#task_name_"+taskStatus).val();
+    sendRequest('/api/task', 'POST', {idProject: activeProjectId, name: taskName, status: taskStatus}, function(result){
+        //hide add task form
+          //TODO
+
+        console.log("projektu "+activeProjectId+" doda task s statusom "+taskStatus);
+
+        //refresh tasks
+        getProjectTasks(activeProjectId, activeOrganisationId);
+    });
+}
+
+function showAddTaskForm(statusId){
+    $("#add-task-form_"+statusId).toggle(500);
 }
 
 function changeTaskStatus(taskId, status){

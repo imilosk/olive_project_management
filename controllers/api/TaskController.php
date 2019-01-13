@@ -12,9 +12,9 @@ class TaskController {
     public static function store() {
         $name = $_POST["name"];
         $idProject = $_POST["idProject"];
-        $response = Task::insert($name, $idProject);
+        $status = $_POST["status"];
+        $response = Task::insert($name, $idProject, $status);
         Flight::json($response);
-        echo "true";
     }
 
     public static function delete($id) {
