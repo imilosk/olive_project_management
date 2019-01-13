@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/../../models/PSPTask.php';
+require_once __DIR__ . '/TaskUserProjectController.php';
 
 class PSPTaskController {
 
@@ -11,7 +12,7 @@ class PSPTaskController {
 
     public static function store() {
         $idPhase = $_POST["idPhase"];
-        $idPSP = TaskUserProjectController::get_PSP($_POST["idUser"], $_POST["idTask"]);;
+        $idPSP = TaskUserProjectController::get_PSP($_POST["idUser"], $_POST["idTask"]);
         $start = $_POST["start"];
         $end = $_POST["end"];
         $pause = $_POST["pause"];

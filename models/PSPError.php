@@ -61,18 +61,18 @@ class PSPError {
         $statement->execute();
     } 
 
-    public static function get_psp_errors($idPSP) {
+    public static function get_psp_errors($idUser, $idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" SELECT pe.id, pec.name, ppe.name, ppf.name, pe.resolve_time, pe.num_fixed_errors, pe.description
+        $statement = $db->prepare(" SELECT pe.id, pec.name as pStart, ppe.name as pFinish, ppf.name as category, pe.resolve_time, pe.num_fixed_errors, pe.description
                                     FROM {$table} AS pe
                                     INNER JOIN psp_errors_categories AS pec ON pe.idCategory=pec.id
                                     INNER JOIN psp_phases AS ppe ON pe.phaseEntry=ppe.id
                                     INNER JOIN psp_phases AS ppf ON pe.phaseFinish=ppf.id
                                     INNER JOIN tasksusersprojects AS tup ON pe.idPSP=tup.idPSP
                                     WHERE tup.idUser = :idUser AND tup.idTask = :idTask");
-        $statement->bindParam(":idUser", $idPSP, PDO::PARAM_INT);
-        $statement->bindParam(":idTask", $idPSP, PDO::PARAM_INT);
+        $statement->bindParam(":idUser", $idUser, PDO::PARAM_INT);
+        $statement->bindParam(":idTask", $idTask, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }

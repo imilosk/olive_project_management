@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/../../models/PSPError.php';
+require_once __DIR__ . '/TaskUserProjectController.php';
 
 class PSPErrorController {
 
@@ -12,10 +13,10 @@ class PSPErrorController {
     public static function store() {
         $idCategory = $_POST["idCategory"];
         $phaseEntry = $_POST["phaseEntry"];
-        $phaseFinish = 8;
-        $idPSP = $_POST["idPSP"];
-        $resolve_time = 0;
-        $num_fixed_errors = 0;
+        $phaseFinish = $_POST["phaseFinish"];
+        $idPSP = TaskUserProjectController::get_PSP($_POST["idUser"], $_POST["idTask"]);
+        $resolve_time = $_POST["resolve_time"];
+        $num_fixed_errors = $_POST["num_fixed_errors"];
         $description = $_POST["description"];
         $response = PspError::insert($idCategory, $phaseEntry, $phaseFinish, $idPSP, $resolve_time, $num_fixed_errors, $description);
         Flight::json($response);
