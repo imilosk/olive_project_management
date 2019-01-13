@@ -155,7 +155,11 @@ class Task {
             $users = TaskUserProject::get_task_users($task["idTask"]);
 
             $task["users"]=$users;
-            $task["access"]=in_array($idUser, $users);
+            $temp_users=[];
+            foreach($users as $user)
+                $temp_user[]=$user["idUser"];
+                
+            $task["access"]=in_array($idUser, $temp_user);
             $results[$status][]= $task;
             $i++;
         }
