@@ -38,6 +38,15 @@ class PSP {
         return $db->lastInsertId();
     }
 
+    public static function update($idPSP,$prog_lang) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare(" UPDATE {$table} SET programing_language=:prog_lang WHERE id=:idPSP");
+        $statement->bindParam(":prog_lang", $prog_lang);
+        $statement->bindParam(":idPSP", $idPSP);
+        $statement->execute();
+    }
+
     public static function delete($id) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();

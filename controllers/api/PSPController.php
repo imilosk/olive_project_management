@@ -14,6 +14,14 @@ class PSPController {
         return (int) $response;
     }
 
+    public static function update($idPSP) {
+        $prog_lang = $_POST["programing_language"];
+        $response = PSP::update($idPSP, $prog_lang);
+        Flight::json($response);
+        echo "true";
+    }
+
+
     public static function delete($id) {
         $response = PSP::delete($id);
         Flight::json($response);
