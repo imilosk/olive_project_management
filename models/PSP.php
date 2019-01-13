@@ -94,7 +94,7 @@ class PSP {
 
         $result["time"]=array_fill_keys(PSPPhase::get_all(), array_fill_keys(["estimatedtime","time"],0));
 
-        $statement = $db->prepare(" SELECT pp.name,sum(estimatedtime) as estimatedtime,sum(TIMESTAMPDIFF(MINUTE,start,end)) as time
+        $statement = $db->prepare(" SELECT pp.name,sum(estimatedtime) as estimatedtime,sum(TIMESTAMPDIFF(MINUTE,start,end))-sum(pause) as time
                                     from {$table}
                                     inner join psp_tasks pt on psps.id=pt.idPSP
                                     inner join psp_phases pp on pt.idPhase=pp.id

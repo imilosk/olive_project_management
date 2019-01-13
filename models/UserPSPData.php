@@ -212,7 +212,7 @@ class UserPSPData {
         $result["psp_number"]=$temp[0]["num"];
         
         // število time
-        $statement = $db->prepare("SELECT pp.name,sum(TIMESTAMPDIFF(MINUTE,start,end)) as time
+        $statement = $db->prepare("SELECT pp.name,sum(TIMESTAMPDIFF(MINUTE,start,end))-sum(pause) as time
                                     from tasksusersprojects tup
                                     inner join psps on psps.id=tup.idPSP
                                     inner join psp_tasks pt on psps.id=pt.idPSP
