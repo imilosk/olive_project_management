@@ -65,6 +65,15 @@ class TaskUserProject {
         $statement->execute();
     } 
 
+    public static function delete_task($idTask) {
+        $table = self::TABLE_NAME;
+        $db = DBInit::getInstance();
+        $statement = $db->prepare(" DELETE FROM {$table} 
+        							WHERE idTask = :idTask");
+        $statement->bindParam(":idTask", $idTask);
+        $statement->execute();
+    } 
+
     public static function get_task_users($idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();

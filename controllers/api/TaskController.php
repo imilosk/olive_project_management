@@ -1,6 +1,7 @@
 <?php 
 
 require_once __DIR__ . '/../../models/Task.php';
+require_once __DIR__ . '/TaskUserProjectController.php';
 
 class TaskController {
 
@@ -18,6 +19,7 @@ class TaskController {
     }
 
     public static function delete($id) {
+        TaskUserProjectController::delete_task($id);
         $response = Task::delete($id);
         Flight::json($response);
     }
