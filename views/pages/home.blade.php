@@ -384,9 +384,9 @@
                                     <div class='task-status-text'>change status to</div>
                                     <div class='task-statuses row'>
                                         <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)' data-toggle="tooltip" title="In progress" ></div>
-                                        <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                        <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
-                                        <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                        <div class='task_status s_review' data-toggle="tooltip" title="Review" onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                        <div class='task_status s_rejected' data-toggle="tooltip" title="Rejected" onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                        <div class='task_status s_closed' data-toggle="tooltip" title="Closed" onclick='changeTaskStatus(@{{idTask}},2)'></div>
                                     </div>
                                 </div>
                                 <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
@@ -434,10 +434,10 @@
                             <div class='task_ch-status'>
                                 <div class='task-status-text'>change status to</div>
                                 <div class='task-statuses row'>
-                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
-                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
-                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                    <div class='task_status s_open' data-toggle="tooltip" title="Open" onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
+                                    <div class='task_status s_review' data-toggle="tooltip" title="Review" onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                    <div class='task_status s_rejected' data-toggle="tooltip" title="Rejected" onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                    <div class='task_status s_closed' data-toggle="tooltip" title="Closed" onclick='changeTaskStatus(@{{idTask}},2)'></div>
                                 </div>
                             </div>
                             <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
@@ -483,10 +483,10 @@
                             <div class='task_ch-status'>
                                 <div class='task-status-text'>change status to</div>
                                 <div class='task-statuses row'>
-                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
-                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
-                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
-                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                    <div class='task_status s_open' data-toggle="tooltip" title="Open" onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
+                                    <div class='task_status s_inprogress' data-toggle="tooltip" title="In progress" onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                    <div class='task_status s_rejected' data-toggle="tooltip" title="Rejected" onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                    <div class='task_status s_closed' data-toggle="tooltip" title="Closed" onclick='changeTaskStatus(@{{idTask}},2)'></div>
                                 </div>
                             </div>
                             <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
@@ -532,10 +532,10 @@
                             <div class='task_ch-status'>
                                 <div class='task-status-text'>change status to</div>
                                 <div class='task-statuses row'>
-                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
-                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
-                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="Open" ></div>
+                                    <div class='task_status s_inprogress' data-toggle="tooltip" title="In progress" onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                    <div class='task_status s_review' data-toggle="tooltip" title="Review" onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                    <div class='task_status s_closed' data-toggle="tooltip" title="Closed" onclick='changeTaskStatus(@{{idTask}},2)'></div>
                                 </div>
                             </div>
                             <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
@@ -581,10 +581,10 @@
                             <div class='task_ch-status'>
                                 <div class='task-status-text'>change status to</div>
                                 <div class='task-statuses row'>
-                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
-                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
-                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="Open" ></div>
+                                    <div class='task_status s_inprogress' data-toggle="tooltip" title="In progress" onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                    <div class='task_status s_review' data-toggle="tooltip" title="Review" onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                    <div class='task_status s_rejected' data-toggle="tooltip" title="Rejected" onclick='changeTaskStatus(@{{idTask}},5)'></div>
                                 </div>
                             </div>
                             <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
