@@ -231,7 +231,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer"></div>
             </div>
         </div>
 
@@ -368,8 +367,8 @@
                                 <div class="tasks-left-options">
                                     @{{#hasTaskAccess access}}
                                         <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
-                                        <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
-                                        <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                        <div class="tasks-psp-overview task-option fa fa-file" onclick="getPSPData(@{{idTask}})" data-toggle="tooltip" title="PSP report" ></div>
+                                        <div class="task-option fa fa-calendar" data-toggle="tooltip" title="Time notes" onclick="getPSPTaskData(@{{idTask}})"></div>
                                     @{{/hasTaskAccess}}
                                 </div>
                                 <div class="tasks-right-options">
@@ -627,18 +626,21 @@
                 <div class='org-div'> 
                     <div class='org-name'>@{{orgName}}</div> 
                     <div class='org-options'> 
-                        <div class='org-options-users org-option' onclick='showUsers(@{{idOrganisation}}, 0)'>U</div> 
-                        <div class='org-option-add-project org-option' onclick='displayAddProjectForm(@{{idOrganisation}})'>+</div> 
+                        <div class='org-options-users org-option fa fa-users' data-toggle="tooltip" title="Show users" onclick='showUsers(@{{idOrganisation}}, 0)'></div> 
+                        <div class='org-option-add-project org-option' onclick='displayAddProjectForm(@{{idOrganisation}})' data-toggle="tooltip" title="Add project">+</div> 
                         @{{#isMeLeaderPO orgLeaderId}}
-                            <div class='org-option-remove org-option' onclick='deleteOrganisation(@{{idOrganisation}})'>-</div> 
-                        @{{/isMeLeaderPO}}
-                        <div class='add-project-div' id='org@{{idOrganisation}}-addProject_form'> 
-                            <input type='text' placeholder='Name'> 
-                            <input type='text' placeholder='Description'> 
-                            <div class='small-btn' onclick='addProjectToOrganisation(@{{idOrganisation}}, event)'> Add </div> 
-                        </div>  
+                            <div class='org-option-remove org-option' data-toggle="tooltip" title="Delete organisation" onclick='deleteOrganisation(@{{idOrganisation}})'>-</div> 
+                        @{{/isMeLeaderPO}}  
                     </div> 
                 </div> 
+
+                <div class='add-project-div' id='org@{{idOrganisation}}-addProject_form'> 
+                    <div id="addProjectModal_header">Add project</div>
+                    <input class="addProject-Name" type="text" placeholder="Name">
+                    <textarea class="addProject-Desc" placeholder="Description"></textarea>
+                    <div class='small-btn' id="btn-addNewProject" onclick='addProjectToOrganisation(@{{idOrganisation}}, event)'> Create </div> 
+                </div>
+
                 <div class='project-users'> 
                     <div id='org@{{idOrganisation}}' class='users-list'></div> 
                     @{{#isMeLeaderPO orgLeaderId}} 
@@ -659,9 +661,9 @@
                                     <div class='row'> 
                                         <div onclick='getProjectTasks(@{{idProject}}, @{{../idOrganisation}})' class='project-name'>@{{pName}}</div> 
                                         <div class='pro-options row'> 
-                                            <div class='users-project pro-option' onclick='showUsers(@{{idProject}}, 1)'>u</div> 
+                                            <div class='users-project pro-option fa fa-users' onclick='showUsers(@{{idProject}}, 1)' data-toggle="tooltip" title="Show project users"></div> 
                                             @{{#isMeLeaderPO idLeader}} 
-                                                <div class='del-project pro-option' onclick='deleteProject(@{{idProject}})'>-</div> 
+                                                <div class='del-project pro-option' data-toggle="tooltip" title="Delete project" onclick='deleteProject(@{{idProject}})'>-</div> 
                                             @{{/isMeLeaderPO}} 
                                         </div> 
                                     </div> 
@@ -691,6 +693,7 @@
             
         <!-- Overlay content -->
             <div class="overlay-content">
+                <div id="psp-data-title">Project plan</div>
                 <div id="info">
                     <div class="info-e">
                         <div class="info-e_text">Task name</div>
@@ -1010,11 +1013,18 @@
 
                 <!-- Overlay content -->
                 <div class="overlay-content">
+                    <div id="psp-data-title">PSP summary</div>
                     <div id="info">
-                        Name: @{{email}}
-                        <br/>
-                        Number: @{{psp_number}}
-    </div>
+                        <div class="info-e">
+                            <div class="info-e_text">User email</div>
+                            <div class="info-e_main" id="task_name"> @{{email}}</div>
+                        </div>
+                        <div class="info-e">
+                            <div class="info-e_text">Number</div>
+                            <div class="info-e_main" id="task_name">@{{psp_number}}</div>
+                        </div>
+                
+                    </div>
     <div id="data">
                 <fieldset>
                     <legend>Summary</legend>

@@ -153,14 +153,14 @@ function orgOnClick(orgId) {
 }
 
 function displayAddProjectForm(orgId){
-    $("#org"+orgId+"-addProject_form").toggle(500);
+    $("#org"+orgId+"-addProject_form").toggle();
 }
 
 function addProjectToOrganisation(orgId, event){
     console.log("ahooj");
     let parent = event.target.parentElement;
-    let projectName = parent.children[0].value;
-    let projectDesc = parent.children[1].value;
+    let projectName = parent.children[1].value;
+    let projectDesc = parent.children[2].value;
 
     sendRequest("/api/project", "POST", { idOrganisation: orgId, name: projectName, description: projectDesc, idLeader: loggedUserId}, function(result){
         let proId = result;
@@ -543,18 +543,18 @@ function showPSPErrorRecord(id) {
 }
 
 function deleteProject(projectId) {
-    
+    /*
     sendRequest("/api/project/"+projectId, 'DELETE', '',function(result){
         console.log("Project deleted! v novi metodi");
         //refresh menu
         getUserOrganisations();
-    });
-    /*
+    });*/
+    
     sendRequest("/api/projectsusers/"+ projectId +"/"+loggedUserId, 'DELETE', '', function(){
         console.log("You have been removed from this project.");
         //refresh menu
         getUserOrganisations();
-    });*/
+    });
 }
 
 function deleteOrganisation(orgId){
