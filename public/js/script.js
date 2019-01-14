@@ -24,8 +24,6 @@ function getUserOrganisations(){
         let template = document.getElementById("side-menu-handle").innerHTML;
 
         document.getElementById("modal-body_organistaions").innerHTML = makeTemplate(template, data);
-
-       //initClickEvents();
     });
 }
 
@@ -101,14 +99,6 @@ function addUserToProject(proId) {
 
 function testF(event){
     console.log(event.target);
-}
-
-function initClickEvents(){
-    let addProjectForms = $(".org-option-add-project");
-    console.log(addProjectForms);
-    $.each(addProjectForms, (index) => {
-        addProjectForms[index].addEventListener("click", displayAddProjectForm);
-    });
 }
 
 function openAddOrganisationModal(){
@@ -416,15 +406,30 @@ function addPSPTask(){
     let estimatedtime = $("#estimatedtime").val();
     let estimatedunits = $("#estimatedunits").val();
     let units = $("#units").val();
-    let start = new Date(startDate + " " + startTime);
-    start = (start.setHours(start.getHours()+1));
-    console.log(start);
-    let end = new Date(endDate + " " + endTime).toISOString().slice(0, 19).replace('T', ' ');
-    console.log(start.setHours(start.getHours()+1));
+    console.log(startDate);
+    console.log(startTime);
+    let start = null;
+    if (startDate != null){
+        start = new Date(startDate + " " + startTime);
+        start = start.toISOString().slice(0, 19).replace('T', ' ');
+        console.log(start);
+    }
+    
+    let end = null;
+    if (endDate != null)
+        end = new Date(endDate + " " + endTime).toISOString().slice(0, 19).replace('T', ' ');
+
     //sendRequest('/api/psptask', 'POST', {idPhase: idPhase, idUser: loggedUserId, idTask: activeTask, start:start, end:end, pause, description: description, units: units, estimatedtime: estimatedtime, estimatedunits: estimatedunits}, function(result){
     //    console.log(result);
         //refresh table
+    //    getPSPTaskData(activeTask);
     //});
+}
+
+function deletePSPTaskRecord(idRecord){
+    sendRequest('/api/psptask/'+idRecord, 'DELETE', '', function(result){
+        getPSPTaskData(activeTask);
+    });
 }
 
 function showPSPTaskRecord(id){
@@ -434,7 +439,7 @@ function showPSPTaskRecord(id){
     $("#endDate").val($("#record_endDate_"+id).html());
     $("#endTime").val($("#record_endTime_"+id).html());
     $("#pause").val($("#record_pause_"+id).html());
-    $("#description").val($("#record_description_"+id).html());
+    $("#description").html($("#record_description_"+id).html());
     $("#estimatedtime").val($("#record_estimatedtime_"+id).html());
     $("#estimatedunits").val($("#record_estimatedunits_"+id).html());
     $("#units").val($("#record_units_"+id).html());
@@ -481,13 +486,19 @@ function addPSPError(){
     $("#error_description").val(null);
 }
 
+function deletePSPErrorRecord(idRecord) {
+    sendRequest('/api/psperror/'+idRecord, 'DELETE', '', function(result){
+        getPSPMistakes(activeTask);
+    });
+}
+
 function showPSPErrorRecord(id) {
-    $("#phaseEntry").val($("#record_pIdEntry_"+id).val());
-    $("#phaseFinish").val($("#record_pIdFinish_"+id).val());
-    $("#category").val($("#record_idCategory_"+id).val());
+    $("#phaseEntry").val($("#record_pIdEntry_"+id).html());
+    $("#phaseFinish").val($("#record_pIdFinish_"+id).html());
+    $("#category").val($("#record_idCategory_"+id).html());
     $("#resolve_time").val($("#record_resolve_time_"+id).html());
     $("#num_fixed_errors").val($("#record_num_fixed_errors_"+id).html());
-    $("#error_description").val($("#record_description_"+id).html());
+    $("#error_description").html($("#record_description_"+id).html());
 }
 
 function deleteProject(projectId) {

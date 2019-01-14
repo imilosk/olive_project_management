@@ -72,8 +72,8 @@
         <div id="navPSP-tasks" class="modal">
             <!-- Overlay content --> 
             <div class="modal-content">
+                <div class="modal-header">Time Notes</div>
                 <div class="modal-body">
-                    <div id="psp-task-title">Time Notes</div>
                     <div id="psp_forms">
                         <div id="psp-form_1">
                             <div class="row">
@@ -253,15 +253,16 @@
             <div id="record_@{{id}}" class="record row">
                 <div id="record_id_@{{id}}" class="record_hidden record_item">@{{id}}</div>
                 <div id="record_pIdEntry_@{{id}}" class="record_hidden record_item">@{{pIdEntry}}</div>
-                <div id="record_phaseEntry_@{{id}}"class="record_item">@{{phaseEntry}}</div>
-                <div id="record_pIdFinish_@{{id}}" class="record_hidden record_item">@{{IdFinish}}</div>
+                <div id="record_category_@{{id}}" class="record_item">@{{category}}</div>
+                <div id="record_pIdFinish_@{{id}}" class="record_hidden record_item">@{{pIdFinish}}</div>
                 <div id="record_phaseFinish_@{{id}}"class="record_item">@{{phaseFinish}}</div>
                 <div id="record_idCategory_@{{id}}" class="record_hidden record_item">@{{idCategory}}</div>
-                <div id="record_categoty_@{{id}}" class="record_hidden record_item">@{{categoty}}</div>
+                <div id="record_phaseEntry_@{{id}}"class="record_item">@{{phaseEntry}}</div>              
                 <div id="record_resolve_time_@{{id}}"class="record_item">@{{resolve_time}}</div>
                 <div id="record_num_fixed_errors_@{{id}}"class="record_item">@{{num_fixed_errors}}</div>
-                <div id="record_description_@{{id}}" class="record_hidden record_item">@{{num_fixed_errors}}</div>
+                <div id="record_description_@{{id}}" class="record_hidden record_item">@{{description}}</div>
                 <div id="info_btn_@{{id}}" class="record_item details-btn" onclick="showPSPErrorRecord(@{{id}})">details</div>
+                <div id="delete_btn_@{{id}}" class="record_item delete-btn" onclick="deletePSPErrorRecord(@{{id}})">X</div>
             </div>
         @{{/each}}
     </div>
@@ -291,6 +292,7 @@
                     <div id="record_units_@{{id}}" class="record_item" >@{{units}}</div>
                     <div id="record_description_@{{id}}" class="record_hidden record-item">@{{description}}</div>
                     <div id="record_info_btn_@{{id}}" class="record_item details-btn" onclick="showPSPTaskRecord(@{{id}})">details</div>
+                    <div id="record_delete_btn_@{{id}}" class="record_item delete-btn" onclick="deletePSPTaskRecord(@{{id}})">X</div>
                 </div>
             @{{/each}}
         </div>

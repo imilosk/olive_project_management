@@ -66,7 +66,7 @@ class PSPError {
     public static function get_psp_errors($idUser, $idTask) {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
-        $statement = $db->prepare(" SELECT pe.id, pec.id as pIdEntry, ppe.id as pIdFinish, pec.name as phaseEntry, ppe.name as phaseFinish, ppf.name as category, ppf.id as idCategory,pe.resolve_time, pe.num_fixed_errors, pe.description
+        $statement = $db->prepare(" SELECT pe.id, ppe.id as pIdEntry, ppf.id as pIdFinish, ppe.name as phaseEntry, ppf.name as phaseFinish, pec.name as category, pec.id as idCategory,pe.resolve_time, pe.num_fixed_errors, pe.description
                                     FROM {$table} AS pe
                                     INNER JOIN psp_errors_categories AS pec ON pe.idCategory=pec.id
                                     INNER JOIN psp_phases AS ppe ON pe.phaseEntry=ppe.id

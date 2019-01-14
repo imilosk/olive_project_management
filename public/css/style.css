@@ -236,9 +236,23 @@ select:-webkit-autofill:focus {
 	overflow: auto;
 }
 
-#navPSPError .modal-header {
+#navPSPError .modal-header,
+#navPSP-tasks .modal-header{
     background-color: #344e5c;
-    font-size: 21px;
+    font-size: 20px;
+}
+
+.delete-btn {
+    color: #EF3D59;
+    cursor: pointer;
+  	font-weight: 600;
+    border-radius: 20px;
+    width: 5% !important;
+    height: 20px;
+}
+
+.delete-btn:hover {
+	background: #fff;
 }
 
 #description,
