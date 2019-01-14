@@ -14,13 +14,11 @@ class PSPErrorController {
         $idCategory = $_POST["idCategory"];
         $phaseEntry = $_POST["phaseEntry"];
         $phaseFinish = $_POST["phaseFinish"];
-        $idUser=$_POST["idUser"];
-        $idPSP = TaskUserProjectController::get_PSP($idUser, $_POST["idTask"]);
+        $idPSP = TaskUserProjectController::get_PSP($_POST["idUser"], $_POST["idTask"]);
         $resolve_time = $_POST["resolve_time"];
         $num_fixed_errors = $_POST["num_fixed_errors"];
         $description = $_POST["description"];
         $response = PspError::insert($idCategory, $phaseEntry, $phaseFinish, $idPSP, $resolve_time, $num_fixed_errors, $description);
-        UserPSPDataController::update_user_psps($idUser);
         Flight::json($response);
     }
 
@@ -33,7 +31,6 @@ class PSPErrorController {
         $resolve_time = $_POST["resolve_time"];
         $num_fixed_errors = $_POST["num_fixed_errors"];
         $response = PspError::update($id, $idCategory, $phaseEntry, $phaseFinish, $resolve_time, $num_fixed_errors, $description);
-        //UserPSPDataController::update_user_psps($idUser);
         echo "true";
     }
 
