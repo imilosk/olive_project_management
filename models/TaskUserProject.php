@@ -70,7 +70,7 @@ class TaskUserProject {
         $db = DBInit::getInstance();
         $statement = $db->prepare(" SELECT idUser, u.email
                                     FROM {$table} tup
-                                    INNER JOIN Users u on u.id = tup.idUser
+                                    INNER JOIN users u on u.id = tup.idUser
                                     WHERE tup.idTask = :idTask");
         $statement->bindParam(":idTask", $idTask, PDO::PARAM_INT);
         $statement->execute();
