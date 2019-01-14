@@ -624,11 +624,6 @@
                     </div>
 
                     <div class="info-e">
-                        <div class="info-e_text">Date</div>
-                        <div class="info-e_main"><input type="Date" name="date" required></div>
-                    </div>
-
-                    <div class="info-e">
                         <div class="info-e_text">project id</div>
                         <div class="info-e_main">@{{ info.idPSP }}</div>
                     </div>

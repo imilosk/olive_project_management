@@ -130,7 +130,7 @@ class UserPSPData {
     } 
 
     public static function get_user_psps($idUser) {
-        self::updateData($idUser);
+        
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare(" SELECT pd.*,u.email

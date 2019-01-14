@@ -360,11 +360,13 @@ function getUserPSPData(idUser) {
     if (idUser == 0)
         idUser = loggedUserId;
 
-    sendRequest('/api/psp_user_data/'+idUser, 'GET', '', function (data) {
-        console.log(data);
-        let template = $("#user-data-handle").html();
-        $("#navPSP").html(makeTemplate(template, data));
-        openNav();
+    sendRequest('api/update_psp_data/'+idUser, 'POST', '',function(){
+        sendRequest('/api/psp_user_data/'+idUser, 'GET', '', function (data) {
+            console.log(data);
+            let template = $("#user-data-handle").html();
+            $("#navPSP").html(makeTemplate(template, data));
+            openNav();
+        });
     });
 }
 
@@ -419,11 +421,11 @@ function addPSPTask(){
     if (endDate != null)
         end = new Date(endDate + " " + endTime).toISOString().slice(0, 19).replace('T', ' ');
 
-    //sendRequest('/api/psptask', 'POST', {idPhase: idPhase, idUser: loggedUserId, idTask: activeTask, start:start, end:end, pause, description: description, units: units, estimatedtime: estimatedtime, estimatedunits: estimatedunits}, function(result){
-    //    console.log(result);
+    sendRequest('/api/psptask', 'POST', {idPhase: idPhase, idUser: loggedUserId, idTask: activeTask, start:start, end:end, pause, description: description, units: units, estimatedtime: estimatedtime, estimatedunits: estimatedunits}, function(result){
+        console.log(result);
         //refresh table
-    //    getPSPTaskData(activeTask);
-    //});
+        getPSPTaskData(activeTask);
+    });
 }
 
 function deletePSPTaskRecord(idRecord){
