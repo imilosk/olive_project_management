@@ -9,7 +9,20 @@ const orgLeaders = {};
 let projectOrOrgClicked;
 
 window.onload = function(){
+
     init();
+
+    if (typeof(Storage) !== "undefined") {
+        let history = JSON.parse(localStorage.getItem("history")); 
+        console.log(history);
+        if (history[loggedUserId]){
+            activeProjectId = history[loggedUserId]["lastOpenedPro"];
+            activeOrganisationId = history[loggedUserId]["lastOpenedOrg"];
+            getProjectTasks(activeProjectId, activeOrganisationId);
+        }
+    } else {
+        // Sorry! No Web Storage support..
+    }
 
     function init() {
         getUserOrganisations();
@@ -168,7 +181,19 @@ function activateProject(projectId){
 
 function getProjectTasks(projectId, orgId){
     activeProjectId = projectId;
-    activeOrganisationId = orgId;
+
+    if (orgId)
+        activeOrganisationId = orgId;
+
+    let saveTostorage = {};
+    saveTostorage[loggedUserId] = {lastOpenedOrg: activeOrganisationId, lastOpenedPro: activeProjectId};
+
+    window.localStorage.setItem("history", JSON.stringify(saveTostorage));
+
+    console.log("get project tasks");
+    console.log("pro id: "+ activeProjectId);
+    console.log("org id: "+ activeOrganisationId);
+
     sendRequest('/api/tasks/all', 'GET', {idProject: projectId, idUser: loggedUserId}, function(result){
         console.log(result);
         drawProjectTasks(result);
@@ -281,6 +306,8 @@ function removeUserFromTask(idUser, event) {
         let userDiv = event.target.parentElement.parentElement;
         let userDivParent = userDiv.parentElement;
         userDivParent.removeChild(userDiv);
+
+        getProjectTasks(activeProjectId);
     });
 }
 
@@ -641,13 +668,12 @@ span.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener("click", function(event){
-    console.log(event.target);
     let dropdown = document.getElementById("taskInfo_user-dropdown");
     
     if ($("#taskInfo_user-dropdown").html() && !$.contains(dropdown, event.target)){
         $("#taskInfo_user-dropdown").remove();
     } else if (event.target == modal) {
-        modal.style.display = "none";
+        hideSideMenu()
     } else if(event.target.id === "navPSPError"){
         closePSPMistakes();
     } else if(event.target.id === "navPSP") {

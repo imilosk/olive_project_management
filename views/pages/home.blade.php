@@ -18,7 +18,7 @@
     </header>
 
     <div id="wrapper">
-    	
+
 		<div id="btn-openSideMenu"></div>
 
 		<div id="sideMenu" class="modal">
@@ -360,29 +360,37 @@
                         <div class="task-overview">
                             <div class='task-info'>
                                 <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
-                                <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
+                                <div class='task-settings fa fa-gear task-option' onclick='getTaskInfo(@{{idTask}})'></div>
                             </div>
 
 
                             <div class="tasks-options">
-                                @{{#hasTaskAccess access}}
-                                    <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
-                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
-                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
-                                    <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
-                                @{{/hasTaskAccess}}
-                                <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
+                                <div class="tasks-left-options">
+                                    @{{#hasTaskAccess access}}
+                                        <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
+                                        <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
+                                        <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                    @{{/hasTaskAccess}}
+                                </div>
+                                <div class="tasks-right-options">
+                                    @{{#hasTaskAccess access}}
+                                        <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
+                                    @{{/hasTaskAccess}}
+                                </div>
                             </div>
 
 
-                            <div class='task_status-change'>
-                                <div class='task-status-text'>change status to</div>
+                            <div class='task_status-change row'>
                                 <div class='task_ch-status'>
-                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)' data-toggle="tooltip" title="In progress" ></div>
-                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
-                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                    <div class='task-status-text'>change status to</div>
+                                    <div class='task-statuses row'>
+                                        <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)' data-toggle="tooltip" title="In progress" ></div>
+                                        <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                        <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                        <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                    </div>
                                 </div>
+                                <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
                             </div>
                         </div>
                         
@@ -405,16 +413,35 @@
 					<div class='task'>
                         <div class='task-info'>
                             <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
-                            <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
+                            <div class='task-settings fa fa-gear task-option' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
-                        <div class='task_status-change'>
-                            <div class='task-status-text'>change status to</div>
-                            <div class='task_ch-status'>
-                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
-                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
-                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+
+                        <div class="tasks-options">
+                            <div class="tasks-left-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
+                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
+                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                @{{/hasTaskAccess}}
                             </div>
+                            <div class="tasks-right-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
+                                @{{/hasTaskAccess}}
+                            </div>
+                        </div>
+
+                        <div class='task_status-change row'>
+                            <div class='task_ch-status'>
+                                <div class='task-status-text'>change status to</div>
+                                <div class='task-statuses row'>
+                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
+                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                </div>
+                            </div>
+                            <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
                         </div>
                     </div>
 				@{{/each}}
@@ -435,16 +462,35 @@
                     <div class='task'>
                         <div class='task-info'>
                             <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
-                            <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
+                            <div class='task-settings fa fa-gear task-option' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
-                        <div class='task_status-change'>
-                            <div class='task-status-text'>change status to</div>
-                            <div class='task_ch-status'>
-                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
-                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
-                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
-                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+
+                        <div class="tasks-options">
+                            <div class="tasks-left-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
+                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
+                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                @{{/hasTaskAccess}}
                             </div>
+                            <div class="tasks-right-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
+                                @{{/hasTaskAccess}}
+                            </div>
+                        </div>
+
+                        <div class='task_status-change row'>
+                            <div class='task_ch-status'>
+                                <div class='task-status-text'>change status to</div>
+                                <div class='task-statuses row'>
+                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
+                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                </div>
+                            </div>
+                            <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
                         </div>
                     </div>
                 @{{/each}}
@@ -465,16 +511,35 @@
                     <div class='task'>
                         <div class='task-info'>
                             <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
-                            <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
+                            <div class='task-settings fa fa-gear task-option' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
-                        <div class='task_status-change'>
-                            <div class='task-status-text'>change status to</div>
-                            <div class='task_ch-status'>
-                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
-                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
-                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+
+                        <div class="tasks-options">
+                            <div class="tasks-left-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
+                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
+                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                @{{/hasTaskAccess}}
                             </div>
+                            <div class="tasks-right-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
+                                @{{/hasTaskAccess}}
+                            </div>
+                        </div>
+
+                        <div class='task_status-change row'>
+                            <div class='task_ch-status'>
+                                <div class='task-status-text'>change status to</div>
+                                <div class='task-statuses row'>
+                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
+                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                    <div class='task_status s_closed' onclick='changeTaskStatus(@{{idTask}},2)'></div>
+                                </div>
+                            </div>
+                            <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
                         </div>
                     </div>
                 @{{/each}}
@@ -495,17 +560,37 @@
                     <div class='task'>
                         <div class='task-info'>
                             <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
-                            <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
+                            <div class='task-settings fa fa-gear task-option' onclick='getTaskInfo(@{{idTask}})'></div>
                         </div>
-                        <div class='task_status-change'>
-                            <div class='task-status-text'>change status to</div>
-                            <div class='task_ch-status'>
-                                <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)'></div>
-                                <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
-                                <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
-                                <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+
+                        <div class="tasks-options">
+                            <div class="tasks-left-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
+                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
+                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                @{{/hasTaskAccess}}
+                            </div>
+                            <div class="tasks-right-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
+                                @{{/hasTaskAccess}}
                             </div>
                         </div>
+
+                        <div class='task_status-change row'>
+                            <div class='task_ch-status'>
+                                <div class='task-status-text'>change status to</div>
+                                <div class='task-statuses row'>
+                                    <div class='task_status s_open' onclick='changeTaskStatus(@{{idTask}},1)' data-toggle="tooltip" title="In progress" ></div>
+                                    <div class='task_status s_inprogress' onclick='changeTaskStatus(@{{idTask}},3)'></div>
+                                    <div class='task_status s_review' onclick='changeTaskStatus(@{{idTask}},4)'></div>
+                                    <div class='task_status s_rejected' onclick='changeTaskStatus(@{{idTask}},5)'></div>
+                                </div>
+                            </div>
+                            <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
+                        </div>
+
                     </div>
                 @{{/each}}
             </div>

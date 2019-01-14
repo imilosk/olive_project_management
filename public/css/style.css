@@ -231,6 +231,10 @@ select:-webkit-autofill:focus {
 	position: relative;
 }
 
+#taskInfo .modal-content{
+	height: 50%;
+}
+
 #navPSPError .modal-body{
 	padding: 0;
 	overflow: auto;
@@ -278,6 +282,7 @@ select:-webkit-autofill:focus {
 
 #taskInfo .modal-header {
 	border: none;
+	overflow: auto;
 }
 
 #taskInfo_status {
@@ -308,13 +313,38 @@ select:-webkit-autofill:focus {
 
 #taskInfo_users {
     display: flex;
-    padding: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
 }
 
-#taskInfo_users-text{
-	flex: 1;
+#taskInfo_options {
+    padding-top: 2px;
 }
 
+#taskInfo_users-add_users {
+    font-size: 20px;
+    background-color: #4AB19D;
+    border: 1px solid #4AB19D;
+    color: white;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#taskInfo_users-add_users:hover {
+	color: #4AB19D;
+	background-color: #fff;
+}
+
+#taskInfo_users-text {
+    flex: 1;
+    padding-left: 20px;
+    font-weight: 600;
+}
 #taskInfo_user-dropdown{
 	position: absolute;
 	z-index: 99;
@@ -349,12 +379,14 @@ select:-webkit-autofill:focus {
 	width: 100%;
 	height: 95px;
 	border: 1px solid #4ab19d;
+	border-radius: 10px;
 	resize: none;
 	color: white;
+	padding: 5px;
 }
 
 #task-description-text:hover {
-	border: 1px solid gray;
+	border: 1px solid gray !important;
 }
 
 /* Modal Header */
@@ -454,14 +486,17 @@ select:-webkit-autofill:focus {
 }
 
 #btn-openSideMenu {
-	position: absolute;
+    position: absolute;
     left: -25px;
     top: 50%;
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    background-color: red;
+    background-color: #344e5c;
     cursor: pointer;
+    border: 6px solid #4ab19d;
+    box-shadow: 2px 1px 1px grey;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .org-name {
@@ -612,6 +647,7 @@ select:-webkit-autofill:focus {
 
 #project-tasks{
 	margin-top: 50px;
+	overflow: auto;
 }
 
 .project-tasks-container{
@@ -677,6 +713,7 @@ select:-webkit-autofill:focus {
 .task-status-text{
 	font-size: 11px;
 	margin-left: 5px;
+	white-space: nowrap;
 }
 
 .task-status {
@@ -693,6 +730,10 @@ select:-webkit-autofill:focus {
 	padding: 3px;
 	background-color: white;
 	transition: 0.5s;
+}
+
+.task_ch-status{
+	flex: 1;
 }
 
 #task-status-open .task-add{
@@ -715,12 +756,9 @@ select:-webkit-autofill:focus {
 	color: #4AB19D;
 }
 
-.task_ch-status {
-	display: flex;
-}
-
-.task_name{
-	word-break: break-all;
+.task_name {
+    white-space: nowrap;
+    flex: 1;
 }
 
 .task_status {
@@ -731,36 +769,44 @@ select:-webkit-autofill:focus {
 	height: 15px;
 }
 
+.task-info {
+    display: flex;
+    padding-bottom: 5px;
+}
+
 .task-settings {
-	color: green;
-	border: 1px solid red;
-	border-radius: 50%;
-	width: 10px;
-	height: 10px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	cursor: pointer;
+    color: green;
+    border: 1px solid red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    align-self: center;
 }
 
 .tasks-options {
     display: flex;
 }
 
+.tasks-left-options {
+    display: flex;
+    flex: 1;
+}
+
 .task-option {
     color: white;
-    border: 1px solid #344e5c;;
+    border: 1px solid #344e5c;
     background-color: #344e5c;
     padding: 2px;
     border-radius: 20px;
     display: flex;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    flex: 1;
     margin-left: 5px;
+    font-size: 13px;
 }
 
 .task-option:hover{
@@ -768,9 +814,13 @@ select:-webkit-autofill:focus {
 	background-color: white;
 }
 
+.add-user{
+	align-self: center;
+}
+
 .task-delete {
-    background-color: red;
-    border: 1px solid red;
+    background-color: #ef3d59;
+    border: 1px solid #ef3d59;
     border-radius: 20px;
     color: white;
     display: flex;
@@ -782,7 +832,7 @@ select:-webkit-autofill:focus {
 
 .task-delete:hover {
 	background-color: white;
-	color: red;
+	color: #ef3d59;
 }
 
 .s_open {
