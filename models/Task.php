@@ -132,7 +132,7 @@ class Task {
         $table = self::TABLE_NAME;
         $db = DBInit::getInstance();
         $statement = $db->prepare("SELECT up.idUser, u.email
-                                    FROM Users u 
+                                    FROM users u 
                                     INNER JOIN userprojects up ON up.idUser = u.id
                                     WHERE up.idProject = :idProject AND up.idUser NOT IN (SELECT idUser FROM tasksusersprojects WHERE idTask = :idTask)");
         $statement->bindParam(":idProject", $idProject, PDO::PARAM_INT);
