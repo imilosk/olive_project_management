@@ -36,16 +36,7 @@ CREATE TABLE `organisations` (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Odloži podatke za tabelo `organisations`
---
 
-INSERT INTO `organisations` (`id`, `idLeader`, `name`, `description`) VALUES
-(1, 1, 'Olive developers', 'This is the olive developers organisation description'),
-(2, 1, 'Test org', 'This is a test description'),
-(5, 1, 'Mobilen test', 'Danes je 25'),
-(6, 1, 'Albania', 'adasdsad'),
-(7, 1, 'PicaB', 'Pica bureeek');
 
 -- --------------------------------------------------------
 
@@ -63,14 +54,6 @@ CREATE TABLE `organisationsusers` (
 -- Odloži podatke za tabelo `organisationsusers`
 --
 
-INSERT INTO `organisationsusers` (`idOrganisation`, `idUser`) VALUES
-(1, 1),
-(1, 7),
-(2, 1),
-(5, 6),
-(6, 1),
-(7, 6);
-
 -- --------------------------------------------------------
 
 --
@@ -86,16 +69,6 @@ CREATE TABLE `projects` (
   `description` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Odloži podatke za tabelo `projects`
---
-
-INSERT INTO `projects` (`id`, `idOrganisation`, `idLeader`, `name`, `description`) VALUES
-(2, 2, 0, 'Test ', 'Testi projekt za katalon'),
-(3, 2, 0, 'Test proje', 'Testi projekt za katalon'),
-(11, 2, 0, 'Katalon', 'Katalon test project'),
-(12, 1, 0, 'Faks', '#naredimoFaks'),
-(18, 6, 1, 'siptarian', 'siptarian darkness');
 
 --
 -- Sprožilci `projects`
@@ -274,16 +247,7 @@ CREATE TABLE `userprojects` (
   `idUser` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Odloži podatke za tabelo `userprojects`
---
 
-INSERT INTO `userprojects` (`idProject`, `idUser`) VALUES
-(2, 1),
-(2, 4),
-(11, 1),
-(12, 1),
-(18, 1);
 
 -- --------------------------------------------------------
 
@@ -305,18 +269,6 @@ CREATE TABLE `users` (
   `last_login` int(10) UNSIGNED DEFAULT NULL,
   `force_logout` mediumint(7) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Odloži podatke za tabelo `users`
---
-
-INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(1, 'milos.kostadinovski97@gmail.com', '$2y$10$L.hhOGPeBj9SlNe4uiy8QOwxxWLgWEdsAj/oEBxhpdm1OEZUUtpPO', NULL, 0, 1, 1, 0, 1547067371, 1547135859, 0),
-(4, 'test@test.si', '$2y$10$9upbq0vAnoZ6lpiJ/4QCOOQgSV6OCyqUL0bErgRnBRQJ7bR3iJiie', NULL, 0, 1, 1, 0, 1544460326, 1546018593, 2),
-(5, 'test123@test.si', '$2y$10$ZBCUaBGTWBHgWgdQ7TliKuKIHDaPoBFlKyinlbet4jySwAZhh60p.', NULL, 0, 1, 1, 0, 1544635196, 1547069476, 13),
-(6, 'blaz@test.si', '$2y$10$xbaYJSfXnuiu8LMNGa7ADe7lLrY1n9UGGStUoSF3APtEgabkbgDFW', NULL, 0, 1, 1, 0, 1544721905, 1546211433, 4),
-(7, 'test1@gmail.com', '$2y$10$ntUMiByO3v5DfPjoi4Mp/.waIUr6Y.TENZJsBo6FZYZ2cflNn5rZa', NULL, 0, 1, 1, 0, 1544988424, 1545489068, 0),
-(8, 'mihad@hotmail.com', '$2y$10$EIIvIJJ3/9diBRO4Gy2lWOiHFwbEvktIRHJnR2i6TKlpjZHuAHJT.', NULL, 0, 1, 1, 0, 1545062843, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -378,14 +330,7 @@ CREATE TABLE `users_throttling` (
   `expires_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Odloži podatke za tabelo `users_throttling`
---
 
-INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
-('0GcsEQwqckFC0DERzaIQdd54qKYKv2gkBDsqINuJtNI', 74, 1547069476, 1547609476),
-('hNaWWBEVaqkgKxP5d1y7w961eYZsZx1mqj83GKp44LI', 74, 1547135858, 1547675858),
-('So76zVeqLV3-uvj9fL-KjhATBHBJo58pg2LDFe_voNc', 4, 1547067371, 1547499371);
 
 -- --------------------------------------------------------
 
