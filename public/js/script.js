@@ -330,9 +330,11 @@ function addUserToTask(idUser, event) {
         let userToRemove_parent = userToRemove.parentElement;
         userToRemove_parent.removeChild(userToRemove);
         //refreshamo taskInfo modal
-        console.log(result);
         if (!$("#taskInfo").is(":hidden"))
             getTaskInfo(activeTask);
+
+        //refreshamo taske
+        getProjectTasks(activeProjectId);
     });
 }
 
@@ -435,6 +437,11 @@ function deletePSPTaskRecord(idRecord){
 }
 
 function showPSPTaskRecord(id){
+
+    //scrolla na zacetek, da vidimo vrednosti
+    let el = document.querySelector("#navPSP-tasks .modal-body")
+    el.scrollTo(0, 0);
+
     $("#idPhase").val($("#record_phaseid_"+id).html());
     $("#startDate").val($("#record_startDate_"+id).html());
     $("#startTime").val($("#record_startTime_"+id).html());
@@ -495,6 +502,11 @@ function deletePSPErrorRecord(idRecord) {
 }
 
 function showPSPErrorRecord(id) {
+
+    //scrolla na zacetek, da vidimo vrednosti
+    let el = document.querySelector("#navPSPError .modal-body");
+    el.scrollTo(0, 0);
+
     $("#phaseEntry").val($("#record_pIdEntry_"+id).html());
     $("#phaseFinish").val($("#record_pIdFinish_"+id).html());
     $("#category").val($("#record_idCategory_"+id).html());
@@ -504,18 +516,18 @@ function showPSPErrorRecord(id) {
 }
 
 function deleteProject(projectId) {
-    /*
+    
     sendRequest("/api/project/"+projectId, 'DELETE', '',function(result){
         console.log("Project deleted! v novi metodi");
         //refresh menu
         getUserOrganisations();
-    });*/
-    
+    });
+    /*
     sendRequest("/api/projectsusers/"+ projectId +"/"+loggedUserId, 'DELETE', '', function(){
         console.log("You have been removed from this project.");
         //refresh menu
         getUserOrganisations();
-    });
+    });*/
 }
 
 function deleteOrganisation(orgId){

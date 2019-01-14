@@ -362,6 +362,19 @@
                                 <div class='task_name' id="task_name-taks_@{{idTask}}">@{{taskName}}</div>
                                 <div class='task-settings' onclick='getTaskInfo(@{{idTask}})'></div>
                             </div>
+
+
+                            <div class="tasks-options">
+                                @{{#hasTaskAccess access}}
+                                    <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
+                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
+                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                    <div class="task-delete task-option" onclick="deleteTask(@{{idTask}})" data-toggle="tooltip" title="Delete task">X</div>
+                                @{{/hasTaskAccess}}
+                                <div onclick="getAvailableUsers(event, @{{idTask}})" data-toggle="tooltip" title="Add user" class="fa fa-user-plus add-user task-option"></div>
+                            </div>
+
+
                             <div class='task_status-change'>
                                 <div class='task-status-text'>change status to</div>
                                 <div class='task_ch-status'>
@@ -372,16 +385,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tasks-options">
-                            <div>access : @{{access}}</div>
-                            @{{#hasTaskAccess access}}
-                                <div class="tasks-psp-mistakes" onclick="getPSPMistakes(@{{idTask}})">M</div>
-                                <div class="tasks-psp-overview" onclick="getPSPData(@{{idTask}})">O</div>
-                                <div class="task-delete" onclick="deleteTask(@{{idTask}})">X</div>
-                                <div onclick="getPSPTaskData(@{{idTask}})">N</div>
-                            @{{/hasTaskAccess}}
-                            <div onclick="getAvailableUsers(event, @{{idTask}})">U</div>
-                        </div>
+                        
                     </div>
 				@{{/each}}
 			</div>
@@ -910,8 +914,7 @@
                             </div>
                         </div>
                     </fieldset>
-                </div>
-                        
+                </div>          
         </div>
 </script>
 
@@ -1113,6 +1116,7 @@
 
 <script type="text/javascript" src="js/handlebars-v4.0.12.js"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 @endsection

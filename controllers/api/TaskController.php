@@ -21,7 +21,7 @@ class TaskController {
     public static function delete($id) {
         TaskUserProjectController::delete_task($id);
         $response = Task::delete($id);
-        Flight::json($response);
+        //Flight::json($response);
     }
 
     public static function update($id) {
