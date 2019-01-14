@@ -419,8 +419,8 @@
                             <div class="tasks-left-options">
                                 @{{#hasTaskAccess access}}
                                     <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
-                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
-                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                    <div class="tasks-psp-overview task-option fa fa-file" onclick="getPSPData(@{{idTask}})" data-toggle="tooltip" title="PSP report" ></div>
+                                    <div class="task-option fa fa-calendar" data-toggle="tooltip" title="Time notes" onclick="getPSPTaskData(@{{idTask}})"></div>
                                 @{{/hasTaskAccess}}
                             </div>
                             <div class="tasks-right-options">
@@ -468,8 +468,8 @@
                             <div class="tasks-left-options">
                                 @{{#hasTaskAccess access}}
                                     <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
-                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
-                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                    <div class="tasks-psp-overview task-option fa fa-file" onclick="getPSPData(@{{idTask}})" data-toggle="tooltip" title="PSP report" ></div>
+                                    <div class="task-option fa fa-calendar" data-toggle="tooltip" title="Time notes" onclick="getPSPTaskData(@{{idTask}})"></div>
                                 @{{/hasTaskAccess}}
                             </div>
                             <div class="tasks-right-options">
@@ -517,8 +517,8 @@
                             <div class="tasks-left-options">
                                 @{{#hasTaskAccess access}}
                                     <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
-                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
-                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                    <div class="tasks-psp-overview task-option fa fa-file" onclick="getPSPData(@{{idTask}})" data-toggle="tooltip" title="PSP report" ></div>
+                                    <div class="task-option fa fa-calendar" data-toggle="tooltip" title="Time notes" onclick="getPSPTaskData(@{{idTask}})"></div>
                                 @{{/hasTaskAccess}}
                             </div>
                             <div class="tasks-right-options">
@@ -566,8 +566,8 @@
                             <div class="tasks-left-options">
                                 @{{#hasTaskAccess access}}
                                     <div class="tasks-psp-mistakes task-option fa fa-warning" data-toggle="tooltip" title="Mistake notes" onclick="getPSPMistakes(@{{idTask}})"></div>
-                                    <div class="tasks-psp-overview task-option" onclick="getPSPData(@{{idTask}})">O</div>
-                                    <div class="task-option" onclick="getPSPTaskData(@{{idTask}})">N</div>
+                                    <div class="tasks-psp-overview task-option fa fa-file" onclick="getPSPData(@{{idTask}})" data-toggle="tooltip" title="PSP report" ></div>
+                                    <div class="task-option fa fa-calendar" data-toggle="tooltip" title="Time notes" onclick="getPSPTaskData(@{{idTask}})"></div>
                                 @{{/hasTaskAccess}}
                             </div>
                             <div class="tasks-right-options">
